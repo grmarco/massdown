@@ -1,5 +1,5 @@
 
-package hackseriesyonkis;
+package es.gmarco.massdown;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
