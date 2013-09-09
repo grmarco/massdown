@@ -16,10 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
-/**
- *
- * @author eduard
- */
 public class Download {
 
     private URL url;
