@@ -30,12 +30,12 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-public class MassDown extends JFrame {
+public class Main extends JFrame {
 
     private Serie serie;
     private ArrayList capitulosAMostrar = new ArrayList();
     
-    public MassDown() {
+    public Main() {
         initComponents();
        
     }
@@ -428,7 +428,7 @@ public class MassDown extends JFrame {
             catch (IOException ex) {
                 JOptionPane.showMessageDialog(new JOptionPane(), "Error: " + ex.getMessage());
             } catch (Exception ex) {
-                Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }                         
         }
     }
@@ -498,14 +498,14 @@ public class MassDown extends JFrame {
     
     
     public static void main(String[] args) throws Exception {
-        final MassDown gui = new MassDown(); 
+        final Main gui = new Main(); 
         
         
         
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         
         
@@ -642,14 +642,14 @@ class agregarDescarga extends Thread {
             download.descarga(pbDescarga, lblEstatus, timer, lstCapitulos.getSelectedValue().toString(), lblVelocidadDescarga);
         } catch (IOException ex) {
             new agregarDescarga(capituloSeleccionado);
-            Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
-            Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JOptionPane(), "Error en al agregar descarga, vuelve a intentarlo. \n Si el error persiste significa que no es compatible con MassDown :(");
             
         }
     }
-}
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDescargar;

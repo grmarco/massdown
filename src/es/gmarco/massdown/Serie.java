@@ -246,7 +246,7 @@ public class Serie {
                     System.out.println(finCargaCapitulos);
                     runningThread = false;
                     yield();
-                    Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                     break;
                 
                 }
@@ -333,7 +333,7 @@ public class Serie {
                         numCapitulo++;
 
             } catch(IndexOutOfBoundsException ex) {
-                Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
                 break;
             }
         }
