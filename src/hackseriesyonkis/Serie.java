@@ -27,9 +27,8 @@ public class Serie {
     private String codigoFuente;
     private int primerNodoTemporadas = 0;
     private int segundoNodoTemporadas = 0;
-    private int primerNodoCapitulos = 0;
+    private int primerNodoCapitulos;
     private int segundoNodoCapitulos = 0;
-    private URL currentUrl;        
     private String codigoFuenteTemporada;
     private ArrayList<String> codigosFuentesTemporadas = new ArrayList<>();
     private String urlSerie;
@@ -72,8 +71,9 @@ public class Serie {
 
     public int ObtenerNumTemporadas() {                       
         int numTemporadas = 0;
-        //codigosFuentesTemporadas.clear();
+
         codigosFuentesTemporadas.clear();
+        
         this.segundoNodoTemporadas = 0;
 
         do 
@@ -150,11 +150,13 @@ public class Serie {
             System.out.println(codigoFuenteTemporada);
                 do {
                 String capitulo;
+                String currentUrl;        
+
                 String codigoFuenteCap; 
                 String codigoDeHostigsStreamCloud;
                 String urlCapituloPaso1;
-                String urlCapituloPaso2 = "";
-                String codigoStream = "";
+                String urlCapituloPaso2;
+                String codigoStream;
                 String urlCaptcha;
                 String codigoCaptcha;
                 String urlImagenCaptcha;
@@ -164,6 +166,7 @@ public class Serie {
                 String urlDeStreamCloud;
                 String idVideo;
                 String nombreVideo;
+                
                 int nodoAnterior;
                 
                 try {
@@ -180,6 +183,7 @@ public class Serie {
                     urlCapituloPaso2 = ObtenerCadenaEntreTags(MetodosUtiles.ObtenerCodigoFuente("http://www.seriescoco.com" + urlCapituloPaso1)[1], "</a> </td> <td> <a href=\"", "target=\"_blank\"> <span class=\"server streamcloud\">", 0, 0, 25, 2, "");
                     System.out.println(urlCapituloPaso2);
                     codigoStream = MetodosUtiles.ObtenerCodigoFuente("http://www.seriescoco.com" + urlCapituloPaso2)[1];
+                    currentUrl = MetodosUtiles.ObtenerCodigoFuente("http://www.seriescoco.com" + urlCapituloPaso2)[0];
                
                 } catch(StringIndexOutOfBoundsException ex) {
                     error = true;
@@ -202,6 +206,7 @@ public class Serie {
                             }
 
                             codigoStream = MetodosUtiles.ObtenerCodigoFuente(validador.getCodigoStream())[1];
+                            currentUrl = MetodosUtiles.ObtenerCodigoFuente(validador.getCodigoStream())[0];
                             error = false;
                         } 
                         
@@ -214,7 +219,7 @@ public class Serie {
                         
                     }
                 
-                if (currentUrl.toString().indexOf("adbooth") > 0) {
+                if (currentUrl.indexOf("adbooth") > 0) {
                     sacarEnlaceStreamcloudAdbooth = String.valueOf(currentUrl) + "/FINURL";
                     System.out.println(currentUrl);
                     urlDeStreamCloud = ObtenerCadenaEntreTags(sacarEnlaceStreamcloudAdbooth, "&url=", "/FINURL", 0, 0, 5, 0, "");

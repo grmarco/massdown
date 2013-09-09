@@ -37,9 +37,10 @@ public class MassDown extends JFrame {
     
     public MassDown() {
         initComponents();
+       
     }
 
-    //Codigo generado por el diseÃ±ador de interfaces
+    //Codigo generado por el diseñador de interfaces
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -101,7 +102,7 @@ public class MassDown extends JFrame {
         });
 
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jButton2.setText("CatÃ¡logo de series");
+        jButton2.setText("Catálogo de series");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -229,7 +230,7 @@ public class MassDown extends JFrame {
         jLabel3.setText("Idioma");
 
         jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "EspaÃ±ol" }));
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Español" }));
 
         btnDescargar.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDescargar.setText("Descargar");
@@ -264,12 +265,12 @@ public class MassDown extends JFrame {
 
         lstCapitulos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         lstCapitulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        lstCapitulos.setToolTipText("Pulsa Ctrl + Click para sleccionar mÃ¡s de un capitulo");
+        lstCapitulos.setToolTipText("Pulsa Ctrl + Click para sleccionar más de un capitulo");
         jScrollPane1.setViewportView(lstCapitulos);
 
         lblDeTituloCapitulos.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         lblDeTituloCapitulos.setForeground(new java.awt.Color(255, 255, 255));
-        lblDeTituloCapitulos.setText("CapÃ­tulos");
+        lblDeTituloCapitulos.setText("Capítulos");
 
         pbarCargaCapitulos.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
@@ -409,7 +410,7 @@ public class MassDown extends JFrame {
             try {
                 //Instanciamos la serie introducida
                 serie = new Serie(String.valueOf("http://www.seriesyonkis.com/serie/" + txtSerie.getText().replaceAll(" ", "-")));
-                
+                 System.out.println(serie.obtenerMp4DelCapitulo("93mfgkfa1k2j", "Falling_Skies_1x05.avi"));
                 iconSerie = escalarImagen(ImageIO.read(serie.getUrlIconSerie()), 0.75);
                 lblIconSerie.setIcon(iconSerie);
                 lblTituloSerie.setText(serie.getTituloSerie());               
@@ -426,6 +427,8 @@ public class MassDown extends JFrame {
             }
             catch (IOException ex) {
                 JOptionPane.showMessageDialog(new JOptionPane(), "Error: " + ex.getMessage());
+            } catch (Exception ex) {
+                Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
             }                         
         }
     }
@@ -496,6 +499,8 @@ public class MassDown extends JFrame {
     
     public static void main(String[] args) throws Exception {
         final MassDown gui = new MassDown(); 
+        
+        
         
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -641,6 +646,7 @@ class agregarDescarga extends Thread {
         } catch (Exception ex) {
             Logger.getLogger(MassDown.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(new JOptionPane(), "Error en al agregar descarga, vuelve a intentarlo. \n Si el error persiste significa que no es compatible con MassDown :(");
+            
         }
     }
 }

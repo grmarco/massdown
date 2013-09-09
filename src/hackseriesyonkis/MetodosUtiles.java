@@ -43,9 +43,18 @@ public class MetodosUtiles {
         out.flush();
         out.close();
         
-        String codigoFuenteDepuesDelSubmit = MetodosUtiles.ObtenerCodigoFuente(String.valueOf(conn.getURL()))[1];       
+        
+        StringBuilder Fuente = new StringBuilder();
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-        return codigoFuenteDepuesDelSubmit;        
+        String line;
+
+        while((line = in.readLine())!=null) {
+            Fuente.append(line);
+        }
+        in.close();
+
+        return Fuente.toString();        
     }
     
     public static String[] ObtenerCodigoFuente(String url) throws MalformedURLException, IOException {
