@@ -57,7 +57,7 @@ public class ValidaCaptcha extends JFrame {
             }
         });
         
-        setSize(330, 130);
+        setSize(330, 150);
         setResizable(false);
         setType(Type.POPUP);
         setAlwaysOnTop(true);

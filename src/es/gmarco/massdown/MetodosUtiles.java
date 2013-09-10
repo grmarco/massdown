@@ -62,7 +62,7 @@ public class MetodosUtiles {
         HttpURLConnection conn = (HttpURLConnection) siteUrl.openConnection();
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         String line;
-        
+       
         StringBuilder Fuente = new StringBuilder();
         while((line = in.readLine())!=null) {
             Fuente.append(line);
