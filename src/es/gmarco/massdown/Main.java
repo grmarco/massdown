@@ -33,7 +33,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Main extends JFrame {
 
     private Serie serie;
-    private ArrayList capitulosAMostrar = new ArrayList();
+    
     
     public Main() {
         initComponents();
@@ -173,7 +173,7 @@ public class Main extends JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane4)
                     .addComponent(lblTituloSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -242,24 +242,9 @@ public class Main extends JFrame {
 
         cbmTemporadas.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         cbmTemporadas.setModel(new javax.swing.DefaultComboBoxModel(new String[] { " " }));
-        cbmTemporadas.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cbmTemporadasMouseClicked(evt);
-            }
-        });
-        cbmTemporadas.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cbmTemporadasItemStateChanged(evt);
-            }
-        });
         cbmTemporadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbmTemporadasActionPerformed(evt);
-            }
-        });
-        cbmTemporadas.addVetoableChangeListener(new java.beans.VetoableChangeListener() {
-            public void vetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {
-                cbmTemporadasVetoableChange(evt);
             }
         });
 
@@ -410,13 +395,13 @@ public class Main extends JFrame {
             try {
                 //Instanciamos la serie introducida
                 serie = new Serie(String.valueOf("http://www.seriesyonkis.com/serie/" + txtSerie.getText().replaceAll(" ", "-")));
-                 System.out.println(serie.obtenerMp4DelCapitulo("93mfgkfa1k2j", "Falling_Skies_1x05.avi"));
+
                 iconSerie = escalarImagen(ImageIO.read(serie.getUrlIconSerie()), 0.75);
                 lblIconSerie.setIcon(iconSerie);
                 lblTituloSerie.setText(serie.getTituloSerie());               
                 txtDescripcion.setText(serie.getDescripcionSerie());                
                 
-                for(int i = 0 ; i < serie.ObtenerNumTemporadas() ; i++) {
+                for(int i = 0 ; i < serie.getNumeroDeTemporadas() ; i++) {
                     cbmTemporadas.addItem("Temporada " + numTemporada);
                     numTemporada += 1;                            
                 }
@@ -448,34 +433,17 @@ public class Main extends JFrame {
         JOptionPane.showMessageDialog(new JOptionPane(), "Opcion no disponible aun :(");
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void cbmTemporadasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbmTemporadasItemStateChanged
-        
-     
-    }//GEN-LAST:event_cbmTemporadasItemStateChanged
-
-    private void cbmTemporadasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbmTemporadasMouseClicked
-        
-    }//GEN-LAST:event_cbmTemporadasMouseClicked
-
-    private void cbmTemporadasVetoableChange(java.beans.PropertyChangeEvent evt)throws java.beans.PropertyVetoException {//GEN-FIRST:event_cbmTemporadasVetoableChange
-        
-    }//GEN-LAST:event_cbmTemporadasVetoableChange
-
-
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
         agregarDescarga agregarDescarga = new agregarDescarga(lstCapitulos.getSelectedIndex());
         agregarDescarga.start();
     }//GEN-LAST:event_btnDescargarActionPerformed
 
     private void cbmTemporadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbmTemporadasActionPerformed
-        if(cbmTemporadas.getSelectedIndex() > 0) {
-            capitulosAMostrar.clear();
+        if(cbmTemporadas.getSelectedIndex() > 0) {                                                                      
             
-            
-            capitulosAMostrar = serie.getListaNombreCapitulos(cbmTemporadas.getSelectedIndex() - 1);
             serie.iniciarThreadListarCapitulos(cbmTemporadas.getSelectedIndex() - 1);
-            serie.setIntervaloDeCargaPBar(100 / capitulosAMostrar.size());
-            iniciarThreadCargaCapitulos();
+            serie.setIntervaloDeCargaPBar(100 / serie.getCapitulos().size());
+            new ComprobandoCargaCapitulos().start();
         
         }
     }//GEN-LAST:event_cbmTemporadasActionPerformed
@@ -484,7 +452,7 @@ public class Main extends JFrame {
         if(pbarCargaCapitulos.getValue() == 100) {
             cbmTemporadas.setEnabled(true);
         } else {
-          cbmTemporadas.setEnabled(false);  
+            cbmTemporadas.setEnabled(false);  
         }
             
     }//GEN-LAST:event_pbarCargaCapitulosStateChanged
@@ -492,83 +460,58 @@ public class Main extends JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         JOptionPane.showMessageDialog(new JOptionPane(), "Opcion no disponible aun :(");
     }//GEN-LAST:event_jButton1ActionPerformed
+         
+class ComprobandoCargaCapitulos extends Thread {
 
-
-
+    public ComprobandoCargaCapitulos() {
+        
+    }        
     
-    
-    public static void main(String[] args) throws Exception {
-        final Main gui = new Main(); 
-        
-        
-        
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (IllegalAccessException | UnsupportedLookAndFeelException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        
-        //gui.iniciarThreadCargaCapitulos();
-        
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                gui.setVisible(true);
-                
-            }
-        });
-                
-    }
-    
-public void iniciarThreadCargaCapitulos() {
-    new comprobandoCargaCapitulos().start();
-}
-class comprobandoCargaCapitulos extends Thread {
     @Override
     public void run() {
-
        
        System.out.println("---");
+       
        pbarCargaCapitulos.setValue(0);
        serie.setProgresoActualDeCargaPBar(0);
+       
        DefaultListModel listaCapitulo = new DefaultListModel();
        listaCapitulo.clear();
-
+       
+       ArrayList<Capitulo> capitulosAMostrar = serie.getCapitulos();
+       int numeroDeCapitulosAMostrar = capitulosAMostrar.size();
+       
+        System.out.println(numeroDeCapitulosAMostrar);
+       
+       
         while(!serie.isFinCargaCapitulos()) {    
            try {
                sleep(1000);
                pbarCargaCapitulos.setValue(serie.getProgresoActualDeCargaPBar()); 
                //lblCargaCaps.setText("(Cargando " + miMp4.getProgresoActualDeCargaPBar() + "%)");
                int capituloActual = serie.getProgresoActualDeCargaPBar() / serie.getIntervaloDeCargaPBar();
-               lblCargaCaps.setText("(Cargado " + capituloActual + " de " + capitulosAMostrar.size() + " caps)");
+               lblCargaCaps.setText("(Cargado " + capituloActual + " de " + numeroDeCapitulosAMostrar + " caps)");
                
                if(pbarCargaCapitulos.getValue() == 100) {
                    lstCapitulos.setModel(listaCapitulo);
-                  // lstCapitulos.setSelectionInterval(0, capitulosAMostrar.size());
-                    for(int i = 0 ; i <= capitulosAMostrar.size() - 1 ; i++ ) {
-                         listaCapitulo.addElement(capitulosAMostrar.get(i));
+                   
+                    for(int i = 0 ; i <= numeroDeCapitulosAMostrar - 1 ; i++ ) {
+                        listaCapitulo.addElement(capitulosAMostrar.get(i).getTitulo());
                     }
                     pbarCargaCapitulos.setValue(100);
                     cbmTemporadas.setEnabled(true);
-                    lblCargaCaps.setText("(Cargado " + capitulosAMostrar.size() + " de " + capitulosAMostrar.size() + " caps)");
+                    lblCargaCaps.setText("(Cargado " + numeroDeCapitulosAMostrar + " de " + numeroDeCapitulosAMostrar + " caps)");
                     serie.setProgresoActualDeCargaPBar(100);    
-                    serie.getInfoCapsStreamCloud().values();
                 }
-           }  catch (InterruptedException ex) {
-               
+           }  catch (InterruptedException ex) {               
                 System.out.println("error");
-            } 
-           
-            
+           }                        
             
         }
-        
-       
+               
+        }
     }
-}
-
+       
 class agregarDescarga extends Thread {
     
     private int time;
@@ -593,10 +536,11 @@ class agregarDescarga extends Thread {
             rutaDeDescarga.mkdirs();
         }
         
-        Object[] idsVideos = serie.getInfoCapsStreamCloud().keySet().toArray();
-        Object[] nombresVideos = serie.getInfoCapsStreamCloud().values().toArray();
+        Capitulo capituloADescargar = serie.getCapitulos().get(capituloSeleccionado);
+        
         try {
-            String urlADescargar = serie.obtenerMp4DelCapitulo(idsVideos[capituloSeleccionado].toString(), nombresVideos[capituloSeleccionado].toString());
+        
+        String urlADescargar = serie.obtenerMp4DelCapitulo(capituloADescargar.getIdStreamCloud(), capituloADescargar.getFicheroStreamCloud());
        
             
         download = new Download(rutaDeDescarga);
@@ -649,6 +593,28 @@ class agregarDescarga extends Thread {
             
         }
     }
+}
+
+    public static void main(String[] args) throws Exception {
+        final Main gui = new Main(); 
+        
+                
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (IllegalAccessException | UnsupportedLookAndFeelException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+                
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                gui.setVisible(true);
+                
+            }
+        });
+                
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
