@@ -81,7 +81,7 @@ public class Download {
                         
                         velocidadDeDescarga = (int) (completo - size);
                         
-                        lblVelocidadDescarga.setText(String.valueOf(velocidadDeDescarga));
+                        //lblVelocidadDescarga.setText(String.valueOf(velocidadDeDescarga));
                         
                         read = buffer.read(datos);
                         
