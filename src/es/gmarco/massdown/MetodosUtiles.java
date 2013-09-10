@@ -70,7 +70,7 @@ public class MetodosUtiles {
         in.close();
         
         //Devuelve dos valores, el codigo fuente y la url del codigo fuente.
-        String valoresADevolver[] = {String.valueOf(conn.getURL()), Fuente.toString()};
+        String valoresADevolver[] = {String.valueOf(conn.getURL().toString().getBytes("ISO-8859-1")), Fuente.toString()};
 
                 
         return valoresADevolver;
