@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.gmarco.massdown;
+package es.gmarco.massdown.superclases;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -30,6 +30,11 @@ import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import es.gmarco.massdown.clases_escalables.Download;
+import es.gmarco.massdown.clases_escalables.MetodosUtiles;
+import es.gmarco.massdown.forms.AjustesForm;
+import es.gmarco.massdown.forms.CatalogoForm;
+
 public class Main extends JFrame {
 
     private Serie serie;
@@ -48,7 +53,7 @@ public class Main extends JFrame {
         jSeparator3 = new javax.swing.JSeparator();
         jPanel3 = new javax.swing.JPanel();
         lblTitulo = new javax.swing.JLabel();
-        jSeparator2 = new javax.swing.JSeparator();
+        separadorGeneral = new javax.swing.JSeparator();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -81,6 +86,7 @@ public class Main extends JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MassDown por @gmarco_");
+        setIconImage(new ImageIcon(getClass().getResource("/es/gmarco/massdown/recursos/icon.png")).getImage());
         setMinimumSize(new java.awt.Dimension(800, 480));
 
         jPanel3.setBackground(new java.awt.Color(30, 30, 30));
@@ -90,8 +96,8 @@ public class Main extends JFrame {
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
         lblTitulo.setText("MassDown");
 
-        jSeparator2.setBackground(new java.awt.Color(239, 64, 54));
-        jSeparator2.setForeground(new java.awt.Color(239, 64, 54));
+        separadorGeneral.setBackground(new java.awt.Color(239, 64, 54));
+        separadorGeneral.setForeground(new java.awt.Color(239, 64, 54));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jButton1.setText("Ajustes");
@@ -116,10 +122,10 @@ public class Main extends JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jSeparator2)
+                    .addComponent(separadorGeneral)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(lblTitulo)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 689, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 605, Short.MAX_VALUE)
                         .addComponent(jButton2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1)))
@@ -135,7 +141,7 @@ public class Main extends JFrame {
                         .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lblTitulo, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, 0)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(separadorGeneral, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(14, 14, 14))
         );
 
@@ -166,14 +172,18 @@ public class Main extends JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblIconSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4)
-                    .addComponent(lblTituloSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(29, Short.MAX_VALUE))
+                        .addComponent(jScrollPane4)
+                        .addContainerGap())
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblIconSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(lblTituloSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -185,9 +195,9 @@ public class Main extends JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTituloSerie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblIconSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+                .addComponent(lblIconSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4)
                 .addContainerGap())
         );
 
@@ -215,7 +225,7 @@ public class Main extends JFrame {
 
         jPanel5.setBackground(new java.awt.Color(239, 64, 54));
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel5.setPreferredSize(new java.awt.Dimension(210, 270));
+        jPanel5.setPreferredSize(new java.awt.Dimension(290, 360));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -281,7 +291,7 @@ public class Main extends JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnDescargar))
-                    .addComponent(pbarCargaCapitulos, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                    .addComponent(pbarCargaCapitulos, javax.swing.GroupLayout.DEFAULT_SIZE, 170, Short.MAX_VALUE)
                     .addGroup(jPanel5Layout.createSequentialGroup()
                         .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
@@ -312,7 +322,7 @@ public class Main extends JFrame {
                 .addGap(0, 0, 0)
                 .addComponent(pbarCargaCapitulos, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 185, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addGap(12, 12, 12)
                 .addComponent(jLabel3)
                 .addGap(0, 0, 0)
@@ -328,11 +338,11 @@ public class Main extends JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtSerie, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
-                    .addComponent(scrollpane))
+                    .addComponent(scrollpane)
+                    .addComponent(txtSerie))
                 .addGap(22, 22, 22)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -348,8 +358,8 @@ public class Main extends JFrame {
                         .addComponent(scrollpane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE))
+                            .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
                         .addGap(28, 28, 28))))
         );
 
@@ -381,41 +391,58 @@ public class Main extends JFrame {
         
         //Obtenemos la tecla que se ha pulsado
         int key = evt.getKeyCode();
-        
         //Si es intro ejecutamos acciones si no, nada.
         if (key == KeyEvent.VK_ENTER) {
             
-            //
+            lblTituloSerie.setText("Cargando");
+            lblIconSerie.setIcon(new ImageIcon());
+            txtDescripcion.setText("");
             cbmTemporadas.removeAllItems();
+            
+            final Thread animacionDeCargando = MetodosUtiles.AnimacionDeCargando(lblTituloSerie, getSize());
+            animacionDeCargando.start();
+            
+            new Thread() {
+            @Override
+            public void run() {                
+            
+            
             cbmTemporadas.addItem("Escoge temporada");
             
             ImageIcon iconSerie;
             int numTemporada = 1;
             
             try {
-                //Instanciamos la serie introducida
+                
                 serie = new Serie(String.valueOf("http://www.seriesyonkis.com/serie/" + txtSerie.getText().replaceAll(" ", "-")));
-
+                
                 iconSerie = escalarImagen(ImageIO.read(serie.getUrlIconSerie()), 0.75);
                 lblIconSerie.setIcon(iconSerie);
-                lblTituloSerie.setText(serie.getTituloSerie());               
                 txtDescripcion.setText(serie.getDescripcionSerie());                
+                lblTituloSerie.setText(serie.getTituloSerie());   
+                
+                animacionDeCargando.interrupt();
                 
                 for(int i = 0 ; i < serie.getNumeroDeTemporadas() ; i++) {
                     cbmTemporadas.addItem("Temporada " + numTemporada);
                     numTemporada += 1;                            
                 }
-                
             }
+
             catch (FileNotFoundException ex) {
-                JOptionPane.showMessageDialog(new JOptionPane(), "Nombre de serie invalido. \n Prueba a poner el nombre completo con sus espacios. \n Ej: en vez 'BigBang' poner 'the big bang theory'.");
+                animacionDeCargando.interrupt();
+                lblTituloSerie.setText("-");
+                JOptionPane.showMessageDialog(new JOptionPane(), "Nombre de serie invalido. \n Prueba a poner el nombre completo con sus espacios. \n Ej: en vez 'BigBang' poner 'the big bang theory'.");                
+                
             }
             catch (IOException ex) {
                 JOptionPane.showMessageDialog(new JOptionPane(), "Error: " + ex.getMessage());
             } catch (Exception ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            }                         
-        }
+            }
+          }
+        }.start();
+      }
     }
     
     private ImageIcon escalarImagen(Image src, double scale) {
@@ -430,7 +457,8 @@ public class Main extends JFrame {
     }
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        JOptionPane.showMessageDialog(new JOptionPane(), "Opcion no disponible aun :(");
+        CatalogoForm catalogoForm = new CatalogoForm();
+        catalogoForm.setLocation(getLocation().x +40, getLocation().y + 40);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
@@ -458,7 +486,8 @@ public class Main extends JFrame {
     }//GEN-LAST:event_pbarCargaCapitulosStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        JOptionPane.showMessageDialog(new JOptionPane(), "Opcion no disponible aun :(");
+        AjustesForm ajustesForm = new AjustesForm();
+        ajustesForm.setLocation(getLocation().x +40, getLocation().y + 40);
     }//GEN-LAST:event_jButton1ActionPerformed
          
 class ComprobandoCargaCapitulos extends Thread {
@@ -482,8 +511,11 @@ class ComprobandoCargaCapitulos extends Thread {
        int numeroDeCapitulosAMostrar = capitulosAMostrar.size();
        
         System.out.println(numeroDeCapitulosAMostrar);
+        lstCapitulos.setModel(listaCapitulo);
+        final Thread animacionDeCargando = MetodosUtiles.AnimacionDeCargando(listaCapitulo, getSize());
+        animacionDeCargando.start();
        
-       
+        
         while(!serie.isFinCargaCapitulos()) {    
            try {
                sleep(1000);
@@ -491,17 +523,21 @@ class ComprobandoCargaCapitulos extends Thread {
                //lblCargaCaps.setText("(Cargando " + miMp4.getProgresoActualDeCargaPBar() + "%)");
                int capituloActual = serie.getProgresoActualDeCargaPBar() / serie.getIntervaloDeCargaPBar();
                lblCargaCaps.setText("(Cargado " + capituloActual + " de " + numeroDeCapitulosAMostrar + " caps)");
+                                                            
                
                if(pbarCargaCapitulos.getValue() == 100) {
-                   lstCapitulos.setModel(listaCapitulo);
                    
+                    animacionDeCargando.interrupt();
+                    listaCapitulo.clear();
+                    
                     for(int i = 0 ; i <= numeroDeCapitulosAMostrar - 1 ; i++ ) {
                         listaCapitulo.addElement(capitulosAMostrar.get(i).getTitulo());
                     }
                     pbarCargaCapitulos.setValue(100);
                     cbmTemporadas.setEnabled(true);
                     lblCargaCaps.setText("(Cargado " + numeroDeCapitulosAMostrar + " de " + numeroDeCapitulosAMostrar + " caps)");
-                    serie.setProgresoActualDeCargaPBar(100);    
+                    serie.setProgresoActualDeCargaPBar(100);  
+                    
                 }
            }  catch (InterruptedException ex) {               
                 System.out.println("error");
@@ -635,7 +671,6 @@ class agregarDescarga extends Thread {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator4;
     private javax.swing.JLabel lblCargaCaps;
@@ -646,6 +681,7 @@ class agregarDescarga extends Thread {
     private javax.swing.JList lstCapitulos;
     private javax.swing.JProgressBar pbarCargaCapitulos;
     private javax.swing.JScrollPane scrollpane;
+    private javax.swing.JSeparator separadorGeneral;
     private javax.swing.JEditorPane txtDescripcion;
     private javax.swing.JTextField txtSerie;
     // End of variables declaration//GEN-END:variables
