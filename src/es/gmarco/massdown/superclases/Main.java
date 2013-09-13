@@ -458,7 +458,7 @@ public class Main extends JFrame {
     
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         CatalogoForm catalogoForm = new CatalogoForm();
-        catalogoForm.setLocation(getLocation().x +40, getLocation().y + 40);
+        catalogoForm.setLocation(getLocation().x + 70, getLocation().y + 70);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
@@ -487,7 +487,7 @@ public class Main extends JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         AjustesForm ajustesForm = new AjustesForm();
-        ajustesForm.setLocation(getLocation().x +40, getLocation().y + 40);
+        ajustesForm.setLocation(getLocation().x +70, getLocation().y + 70);
     }//GEN-LAST:event_jButton1ActionPerformed
          
 class ComprobandoCargaCapitulos extends Thread {
