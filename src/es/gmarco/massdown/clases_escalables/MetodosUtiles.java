@@ -84,6 +84,19 @@ public class MetodosUtiles {
         return valoresADevolver;
     }
     
+    public static String ObtenerCadenaEntreTags(String codigoAAnalizar, String primerTag, String segundoTag, int ajustePrimerElemento, int ajusteSegundoElemento) {
+        
+        String elementoEntreTags;
+        int primerNodo ;
+        int segundoNodo;
+        
+        primerNodo = codigoAAnalizar.indexOf(primerTag);
+        segundoNodo = codigoAAnalizar.indexOf(segundoTag, primerNodo);
+
+        elementoEntreTags = codigoAAnalizar.substring(primerNodo + ajustePrimerElemento, segundoNodo - ajusteSegundoElemento);
+        return elementoEntreTags; 
+    }
+    
     public static Thread AnimacionDeCargando(final Object dondePonerAnimacion, final Dimension vtnDondeAnimar) {
                  
         System.out.println(dondePonerAnimacion.getClass().getName());

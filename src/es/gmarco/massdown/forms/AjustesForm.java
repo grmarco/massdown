@@ -5,6 +5,7 @@
 package es.gmarco.massdown.forms;
 
 import es.gmarco.massdown.recursos.Ajustes;
+import es.gmarco.massdown.recursos.Constantes;
 import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.font.TextAttribute;
@@ -30,7 +31,7 @@ public class AjustesForm extends javax.swing.JFrame {
     public AjustesForm() {
         initComponents();
         setVisible(true);
-        
+        lblVersion.setText("Version actual: " + Constantes.version);
     }
 
     /**
@@ -63,7 +64,7 @@ public class AjustesForm extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        lblVersion = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setTitle("Ajustes");
@@ -105,7 +106,6 @@ public class AjustesForm extends javax.swing.JFrame {
 
         btnGroupCargar.add(jRadioButton3);
         jRadioButton3.setText("Precargar todos");
-        jRadioButton3.setActionCommand("Precargar todos");
 
         btnGroupCargar.add(jRadioButton4);
         jRadioButton4.setText("Cargar cuando se añada");
@@ -249,7 +249,7 @@ public class AjustesForm extends javax.swing.JFrame {
             }
         });
 
-        jLabel2.setText("Versión actual: v0.3");
+        lblVersion.setText("Versión actual: v0.3");
 
         jButton1.setText("Comprobar actualizaciones");
 
@@ -267,7 +267,7 @@ public class AjustesForm extends javax.swing.JFrame {
                         .addGap(127, 127, 127)
                         .addComponent(jLabel6))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
+                        .addComponent(lblVersion)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
@@ -289,7 +289,7 @@ public class AjustesForm extends javax.swing.JFrame {
                 .addComponent(jLabel6)
                 .addGap(23, 23, 23)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
+                    .addComponent(lblVersion)
                     .addComponent(jButton1))
                 .addContainerGap())
         );
@@ -380,7 +380,6 @@ public class AjustesForm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -398,5 +397,6 @@ public class AjustesForm extends javax.swing.JFrame {
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lblNumDescargasALaVez;
+    private javax.swing.JLabel lblVersion;
     // End of variables declaration//GEN-END:variables
 }
