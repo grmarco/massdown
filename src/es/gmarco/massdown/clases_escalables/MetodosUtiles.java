@@ -72,7 +72,7 @@ public class MetodosUtiles {
         String line;
        
         StringBuilder Fuente = new StringBuilder();
-        while((line = in.readLine())!=null) {
+        while((line = in.readLine()) != null) {
             Fuente.append(line);
         }
         in.close();

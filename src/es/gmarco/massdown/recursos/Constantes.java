@@ -14,6 +14,6 @@ import javax.swing.ImageIcon;
 public class Constantes {
 
     public final Image iconDeMassDown = new ImageIcon(getClass().getResource("/src/es/gmarco/massdown/recursos/icon.png")).getImage();
-    public static final double version = 0.4;
+    public static final double version = 0.5;
     
 }
