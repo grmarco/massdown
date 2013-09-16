@@ -1,13 +1,9 @@
 
 package es.gmarco.massdown.clases_escalables;
 
-import es.gmarco.massdown.recursos.Constantes;
-import java.awt.FlowLayout;
+import es.gmarco.massdown.recursos.Configuracion;
 import java.awt.GridLayout;
 import java.awt.HeadlessException;
-import java.awt.Window;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.File;
@@ -16,8 +12,6 @@ import java.net.MalformedURLException;
 import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.BorderFactory;
-import javax.swing.Box;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -26,7 +20,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -40,9 +33,9 @@ public class Actualiza {
     public Actualiza(boolean comprobacionSilenciosa, JLabel lblComprobando) throws MalformedURLException, IOException {
 
         this.versionNueva = CompruebaVersion();
-        this.versionActual = Constantes.version;
+        this.versionActual = Configuracion.version;
         
-        if(this.versionActual != this.versionNueva) {
+        if(this.versionActual < this.versionNueva) {
             int siono = JOptionPane.showConfirmDialog(new JOptionPane(), "Nueva actualización de MassDown encontrada? ¿Deseas actualizar");
             if (siono == 0) {
                 DescargarActualizacion();
@@ -83,7 +76,7 @@ public class Actualiza {
         int timer = 0;
         
         btnAplicarActu.setEnabled(false);
-        
+                                
         vtnPrincipal.setVisible(true);
         vtnPrincipal.setSize(310,150);
         vtnPrincipal.setIconImage(new ImageIcon(getClass().getResource("/es/gmarco/massdown/recursos/icon.png")).getImage());        

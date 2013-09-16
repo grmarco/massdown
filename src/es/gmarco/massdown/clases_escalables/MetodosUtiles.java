@@ -1,10 +1,16 @@
 
 package es.gmarco.massdown.clases_escalables;
 
+import es.gmarco.massdown.recursos.Configuracion;
 import es.gmarco.massdown.superclases.Main;
 import java.awt.Dimension;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import static java.lang.Thread.sleep;
@@ -82,6 +88,54 @@ public class MetodosUtiles {
 
                 
         return valoresADevolver;
+    }
+    
+    public void CargarConfiguracion() {
+        File fl = new File(getClass().getResource("/es/gmarco/massdown/recursos/DatosConfiguracion.xml").getFile());
+        FileReader fr;
+        BufferedReader br;
+        try {
+            fr = new FileReader (fl);
+            br = new BufferedReader(fr);
+            
+            String linea;
+            while((linea=br.readLine()) != null) {
+                if (linea.contains("<DirectorioDeDescarga>")) {
+                    Configuracion.directorioDeDescarga = ObtenerCadenaEntreTags(linea, "<DirectorioDeDescarga>", "</DirectorioDeDescarga>", 22, 0);
+                } else if(linea.contains("<DescargaEnCola>")) {
+                    Configuracion.descargaEnCola = Boolean.parseBoolean(ObtenerCadenaEntreTags(linea, "<DescargaEnCola>", "</DescargaEnCola>", 16, 0));
+                } else if(linea.contains("<DescargasSimultaneas>")) {
+                    Configuracion.descargasSimultaneas = Integer.parseInt(ObtenerCadenaEntreTags(linea, "<DescargasSimultaneas>", "</DescargasSimultaneas>", 22, 0));
+                }
+            }
+            
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
+    
+    public void EscribirConfiguracion() {
+       //Borrando el xml de configuracion
+       new File(getClass().getResource("/es/gmarco/massdown/recursos/DatosConfiguracion.xml").getFile()).delete();
+        //Lo creamos de nuevo
+        File fichero = new File(getClass().getResource("/es/gmarco/massdown/recursos/DatosConfiguracion.xml").getFile());
+        BufferedWriter bw;
+        try {
+            bw = new BufferedWriter(new FileWriter(fichero));
+            bw.write("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
+                    + "<root>"
+                    + "<DirectorioDeDescarga>" + Configuracion.directorioDeDescarga + "</DirectorioDeDescarga>"
+                    + "<DescargaEnCola>" + Configuracion.descargaEnCola + "</DescargaEnCola>"
+                    + "<DescargasSimultaneas>" + Configuracion.descargasSimultaneas + "</DescargasSimultaneas>"
+                    + "</root>");
+
+        } catch (IOException ex) {
+            Logger.getLogger(MetodosUtiles.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
     
     public static String ObtenerCadenaEntreTags(String codigoAAnalizar, String primerTag, String segundoTag, int ajustePrimerElemento, int ajusteSegundoElemento) {

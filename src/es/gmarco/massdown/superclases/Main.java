@@ -34,6 +34,9 @@ import es.gmarco.massdown.clases_escalables.Download;
 import es.gmarco.massdown.clases_escalables.MetodosUtiles;
 import es.gmarco.massdown.forms.AjustesForm;
 import es.gmarco.massdown.forms.CatalogoForm;
+import es.gmarco.massdown.recursos.Configuracion;
+import java.io.BufferedReader;
+import java.io.FileReader;
 
 public class Main extends JFrame {
 
@@ -42,7 +45,7 @@ public class Main extends JFrame {
     
     public Main() {
         initComponents();
-       
+        new MetodosUtiles().CargarConfiguracion();               
     }
 
     //Codigo generado por el diseñador de interfaces
@@ -85,7 +88,7 @@ public class Main extends JFrame {
         jSeparator3.setForeground(new java.awt.Color(239, 64, 54));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("MassDown por @gmarco_");
+        setTitle("MassDown");
         setIconImage(new ImageIcon(getClass().getResource("/es/gmarco/massdown/recursos/icon.png")).getImage());
         setMinimumSize(new java.awt.Dimension(800, 480));
 
@@ -172,18 +175,14 @@ public class Main extends JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane4)
+                    .addComponent(lblIconSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane4)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblIconSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(lblTituloSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblTituloSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -566,7 +565,7 @@ class agregarDescarga extends Thread {
     }
     
     public void run() {
-        File rutaDeDescarga = new File(serie.getTituloSerie());
+        File rutaDeDescarga = new File(Configuracion.directorioDeDescarga + "/" +serie.getTituloSerie());
         
         if(!rutaDeDescarga.exists()) {            
             rutaDeDescarga.mkdirs();
@@ -633,7 +632,7 @@ class agregarDescarga extends Thread {
 
     public static void main(String[] args) throws Exception {
         final Main gui = new Main(); 
-        
+                                
         if(args.length > 0) {
             if(args[1].equals("aplicarActualizacion")) {
                 Actualiza.AplicarActualizacion(Double.parseDouble(args[0]));
