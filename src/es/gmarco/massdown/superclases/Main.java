@@ -618,7 +618,7 @@ class agregarDescarga extends Thread {
                 }
             });
             
-            download.descarga(pbDescarga, lblEstatus, timer, lstCapitulos.getSelectedValue().toString(), lblVelocidadDescarga);
+            download.descarga(pbDescarga, lblEstatus, timer, lstCapitulos.getSelectedValue().toString() + ".mp4", lblVelocidadDescarga);
         } catch (IOException ex) {
             new agregarDescarga(capituloSeleccionado);
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
@@ -633,7 +633,9 @@ class agregarDescarga extends Thread {
     public static void main(String[] args) throws Exception {
         final Main gui = new Main(); 
         
-                
+        if(args.length > 0)
+            System.out.println(args[0]);
+        
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IllegalAccessException | UnsupportedLookAndFeelException ex) {

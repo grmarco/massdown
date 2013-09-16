@@ -32,6 +32,7 @@ public class AjustesForm extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         lblVersion.setText("Version actual: " + Constantes.version);
+        
     }
 
     /**
@@ -278,7 +279,7 @@ public class AjustesForm extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel1)))
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -375,13 +376,21 @@ public class AjustesForm extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            new Actualiza(false);
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    new Actualiza(false, lblVersion);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+                                
+
+        }.start();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**

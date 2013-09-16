@@ -3,18 +3,33 @@ package es.gmarco.massdown.clases_escalables;
 
 import es.gmarco.massdown.recursos.Constantes;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.awt.HeadlessException;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 
 public class Actualiza {
@@ -22,7 +37,8 @@ public class Actualiza {
     private double versionActual;
     private double versionNueva;
     
-    public Actualiza(boolean comprobacionSilenciosa) throws MalformedURLException, IOException {
+    public Actualiza(boolean comprobacionSilenciosa, JLabel lblComprobando) throws MalformedURLException, IOException {
+
         this.versionNueva = CompruebaVersion();
         this.versionActual = Constantes.version;
         
@@ -51,45 +67,91 @@ public class Actualiza {
     }
     
     
-    public static void Actualizar() {        
+    public void Actualizar() {        
         try{
         String urlADescargar = "https://github.com/grmarco/massdown/blob/master/dist/massdown.jar?raw=true";
-        File rutaDeDescarga = new File("/");
+        File rutaDeDescarga = new File(".");
         if(!rutaDeDescarga.exists()) {            
             rutaDeDescarga.mkdirs();
         }
-        JFrame contenedorDescargas = new JFrame("Descargando actualización");
-        contenedorDescargas.setVisible(true);
-        contenedorDescargas.setSize(200,200);
-        contenedorDescargas.setLayout(new FlowLayout());
-        
-        Download download = new Download(rutaDeDescarga);
-        
-        JProgressBar pbDescarga = new JProgressBar();
-        JLabel lblTiempo = new JLabel();
-        JLabel lblTituloCap = new JLabel();
+        JFrame vtnPrincipal = new JFrame("Descargando actualización");                
+        Download download = new Download(rutaDeDescarga);        
+        JPanel contenedorConMargen = new JPanel(new GridLayout(3, 1, 8 , 8));                
+        final JProgressBar pbDescarga = new JProgressBar();      
         JLabel lblEstatus = new JLabel();
+        final JButton btnAplicarActu = new JButton("Aplicar actualización");
         int timer = 0;
         
-        contenedorDescargas.add(lblTituloCap);
-        contenedorDescargas.add(lblEstatus);
-        contenedorDescargas.add(lblTiempo); 
-        contenedorDescargas.add(pbDescarga);
-                                
+        btnAplicarActu.setEnabled(false);
+        
+        vtnPrincipal.setVisible(true);
+        vtnPrincipal.setSize(310,150);
+        vtnPrincipal.setIconImage(new ImageIcon(getClass().getResource("/es/gmarco/massdown/recursos/icon.png")).getImage());        
+        vtnPrincipal.add(contenedorConMargen);
+        vtnPrincipal.setResizable(false);
+        
+        contenedorConMargen.setBorder(new EmptyBorder(10, 10, 10, 10));        
+        contenedorConMargen.add(lblEstatus);
+        contenedorConMargen.add(pbDescarga);
+        contenedorConMargen.add(btnAplicarActu);
+        
         download.loadURL(urlADescargar);
         
         URLConnection con = download.openConexion();
         
         pbDescarga.setMaximum(con.getContentLength());                                                              
             
-        download.descarga(pbDescarga, lblEstatus, new Timer(timer, null), "massdown1.jar", new JLabel());
-            
-        while(download.isTerminate()) {
-            Runtime.getRuntime().exec("java -jar massdown.jar");
-            System.exit(0);
-        }
+        
+        
+        pbDescarga.addChangeListener(new ChangeListener() {
 
-        } catch(Exception ex) {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                
+                System.out.println(pbDescarga.getPercentComplete());
+                if (pbDescarga.getPercentComplete() >= 1.0) {
+                btnAplicarActu.setEnabled(true);
+                btnAplicarActu.addMouseListener(new MouseListener() {
+                    
+                    @Override
+                    public void mouseClicked(MouseEvent e) {
+                        
+                        try {
+                            Runtime.getRuntime().exec("java -jar massdown.jar -aplicarActualizacion");        
+                            System.exit(0);
+                        } catch (IOException ex) {
+                            Logger.getLogger(Actualiza.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+
+                    @Override
+                    public void mousePressed(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseReleased(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+
+                    }
+
+                    @Override
+                    public void mouseExited(MouseEvent e) {
+
+                    }
+
+                } );
+            }
+            }
+        });
+        
+        
+        download.descarga(pbDescarga, lblEstatus, new Timer(timer, null), "massdown.jar", new JLabel());
+        } catch(HeadlessException | IOException ex) {
             System.err.println(ex.getMessage());   
             System.err.println("ERROR EN LA ACTUALIZACION");
         } finally {

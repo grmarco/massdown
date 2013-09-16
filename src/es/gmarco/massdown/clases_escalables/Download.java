@@ -57,7 +57,7 @@ public class Download {
         final double completo = (double) ((double) (conexion.getContentLength() / 1000) / 1000);
 
         final BufferedInputStream buffer = new BufferedInputStream(conexion.getInputStream());
-        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file + "/" + tituloCap + ".mp4"));
+        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file + "/" + tituloCap));
         
        
         
