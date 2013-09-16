@@ -4,6 +4,7 @@
  */
 package es.gmarco.massdown.superclases;
 
+import es.gmarco.massdown.clases_escalables.Actualiza;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -633,8 +634,11 @@ class agregarDescarga extends Thread {
     public static void main(String[] args) throws Exception {
         final Main gui = new Main(); 
         
-        if(args.length > 0)
-            System.out.println(args[0]);
+        if(args.length > 0) {
+            if(args[1].equals("aplicarActualizacion")) {
+                Actualiza.AplicarActualizacion(Double.parseDouble(args[0]));
+            }
+        }
         
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());

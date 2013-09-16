@@ -45,7 +45,7 @@ public class Actualiza {
         if(this.versionActual != this.versionNueva) {
             int siono = JOptionPane.showConfirmDialog(new JOptionPane(), "Nueva actualización de MassDown encontrada? ¿Deseas actualizar");
             if (siono == 0) {
-                Actualizar();
+                DescargarActualizacion();
             }   
             
         } else {
@@ -67,7 +67,7 @@ public class Actualiza {
     }
     
     
-    public void Actualizar() {        
+    public void DescargarActualizacion() {        
         try{
         String urlADescargar = "https://github.com/grmarco/massdown/blob/master/dist/massdown.jar?raw=true";
         File rutaDeDescarga = new File(".");
@@ -117,7 +117,7 @@ public class Actualiza {
                     public void mouseClicked(MouseEvent e) {
                         
                         try {
-                            Runtime.getRuntime().exec("java -jar massdown.jar -aplicarActualizacion");        
+                            Runtime.getRuntime().exec("java -jar massdown" + versionNueva +  ".jar " + versionNueva + " aplicarActualizacion");        
                             System.exit(0);
                         } catch (IOException ex) {
                             Logger.getLogger(Actualiza.class.getName()).log(Level.SEVERE, null, ex);
@@ -150,14 +150,26 @@ public class Actualiza {
         });
         
         
-        download.descarga(pbDescarga, lblEstatus, new Timer(timer, null), "massdown.jar", new JLabel());
+        download.descarga(pbDescarga, lblEstatus, new Timer(timer, null), "massdown" + versionNueva + ".jar", new JLabel());
         } catch(HeadlessException | IOException ex) {
             System.err.println(ex.getMessage());   
             System.err.println("ERROR EN LA ACTUALIZACION");
-        } finally {
+        } finally {            
 
-            
-
+        }
+    }
+    
+    public static void AplicarActualizacion(double version) {
+        File f = new File(".");
+        String archivo[] = f.list();
+        //me devuelve una lista del directorio actual
+        for(int i=0;i<archivo.length;i++) {
+            if(archivo[i].endsWith(".jar")) {
+                if(!archivo[i].startsWith("massdown" + version)) {
+                    f = new File(archivo[i]);
+                    f.delete();
+                }
+            }
         }
     }
     
