@@ -51,7 +51,7 @@ public class Actualiza {
         String codigoFuente;        
         double version;
         
-        codigoFuente = MetodosUtiles.ObtenerCodigoFuente("https://github.com/grmarco/massdown/blob/master/src/es/gmarco/massdown/recursos/Constantes.java")[1];
+        codigoFuente = MetodosUtiles.ObtenerCodigoFuente("https://github.com/grmarco/massdown/blob/master/src/es/gmarco/massdown/recursos/Configuracion.java")[1];
         version = Double.parseDouble(MetodosUtiles.ObtenerCadenaEntreTags(codigoFuente, 
                 "n\">version</span> <span class=\"o\">=</span> <span class=\"mf\">", 
                 "<span class=\"o\">;</span>", 60, 7));        
