@@ -429,7 +429,7 @@ public class AjustesForm extends javax.swing.JFrame {
             @Override
             public void run() {
                 try {
-                    new Actualiza(false, lblVersion);
+                    new Actualiza(false);
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {

@@ -30,7 +30,7 @@ public class Actualiza {
     private double versionActual;
     private double versionNueva;
     
-    public Actualiza(boolean comprobacionSilenciosa, JLabel lblComprobando) throws MalformedURLException, IOException {
+    public Actualiza(boolean comprobacionSilenciosa) throws MalformedURLException, IOException {
 
         this.versionNueva = CompruebaVersion();
         this.versionActual = Configuracion.version;

@@ -37,6 +37,7 @@ import es.gmarco.massdown.forms.CatalogoForm;
 import es.gmarco.massdown.recursos.Configuracion;
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.net.MalformedURLException;
 
 public class Main extends JFrame {
 
@@ -45,7 +46,22 @@ public class Main extends JFrame {
     
     public Main() {
         initComponents();
-        new MetodosUtiles().CargarConfiguracion();               
+        new MetodosUtiles().CargarConfiguracion();        
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    new Actualiza(true);
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        
+        }.start();
     }
 
     //Codigo generado por el diseñador de interfaces
