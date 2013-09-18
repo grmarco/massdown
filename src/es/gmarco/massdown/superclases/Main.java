@@ -180,6 +180,8 @@ public class Main extends JFrame {
         lblTituloSerie.setText("-");
         lblTituloSerie.setMaximumSize(new java.awt.Dimension(6, 166));
 
+        jScrollPane4.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         txtDescripcion.setEditable(false);
         txtDescripcion.setMaximumSize(new java.awt.Dimension(6, 2147483647));
         txtDescripcion.setOpaque(false);
@@ -196,9 +198,10 @@ public class Main extends JFrame {
                     .addComponent(lblIconSerie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(lblTituloSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(lblTituloSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -440,7 +443,8 @@ public class Main extends JFrame {
                 iconSerie = escalarImagen(ImageIO.read(serie.getUrlIconSerie()), 0.75);
                 lblIconSerie.setIcon(iconSerie);
                 txtDescripcion.setText(serie.getDescripcionSerie());                
-                lblTituloSerie.setText(serie.getTituloSerie());   
+                lblTituloSerie.setText(serie.getTituloSerie());  
+                lblTituloSerie.setToolTipText(serie.getTituloSerie());
                 
                 animacionDeCargando.interrupt();
                 
@@ -659,7 +663,7 @@ class agregarDescarga extends Thread {
                 Actualiza.AplicarActualizacion(Double.parseDouble(args[0]));
             }
         }
-        
+                
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (IllegalAccessException | UnsupportedLookAndFeelException ex) {

@@ -317,16 +317,16 @@ public class Serie {
     } 
     
     public String getTituloSerie() {        
-        return ObtenerCadenaEntreTags(codigoFuente, "<h1 class=\"underline\" title=\"", "\">", 1, 1, 29, 0, "");    
+        return MetodosUtiles.ObtenerCadenaEntreTags(codigoFuente, "<h1 class=\"underline\" title=\"", "\">", 29, 0, 0)[0];    
     }
        
     public URL getUrlIconSerie() throws MalformedURLException {
-        URL urlDelIconSerie = new URL (ObtenerCadenaEntreTags(codigoFuente, "<img src=\"http://s.staticyonkis.com/img/series/", "\" alt=\"", 1, 1, 10, 0, ""));
+        URL urlDelIconSerie = new URL (MetodosUtiles.ObtenerCadenaEntreTags(codigoFuente, "<img src=\"http://s.staticyonkis.com/img/series/", "\" alt=\"", 10, 0, 0)[0]);
         return urlDelIconSerie;        
     }
     
     public String getDescripcionSerie() {
-        return ObtenerCadenaEntreTags(codigoFuente, "description\">  <p>", "a href=", 1, 1, 18, 1, "");        
+        return MetodosUtiles.ObtenerCadenaEntreTags(codigoFuente, "description\">  <p>", "a href=",18, 1, 0)[0];        
     }
            
     public String getUrlSerie() {

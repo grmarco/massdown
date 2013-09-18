@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -76,14 +77,15 @@ public class MetodosUtiles {
     }
     
     public static String[] ObtenerCodigoFuente(String url) throws MalformedURLException, IOException {
-        
         URL siteUrl = new URL(url);
         HttpURLConnection conn = (HttpURLConnection) siteUrl.openConnection();
-        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        conn.setRequestProperty("Accept-Charset", "ISO-8859-1");
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), Charset.forName("ISO-8859-1")));
         String line;
        
         StringBuilder Fuente = new StringBuilder();
         while((line = in.readLine()) != null) {
+            line = new String(line.getBytes(), "ISO-8859-1");
             Fuente.append(line);
         }
         in.close();
@@ -94,30 +96,6 @@ public class MetodosUtiles {
                 
         return valoresADevolver;
     }
-    
-//    public void CargarConfiguracion() {
-//        InputStreamReader fl = new InputStreamReader(getClass().getResourceAsStream("/es/gmarco/massdown/recursos/DatosConfiguracion.xml"));
-//        BufferedReader br;
-//        try {
-//            br = new BufferedReader(fl);
-//            
-//            String linea;
-//            while((linea=br.readLine()) != null) {
-//                if (linea.contains("<DirectorioDeDescarga>")) {
-//                    Configuracion.directorioDeDescarga = ObtenerCadenaEntreTags(linea, "<DirectorioDeDescarga>", "</DirectorioDeDescarga>", 22, 0);
-//                } else if(linea.contains("<DescargaEnCola>")) {
-//                    Configuracion.descargaEnCola = Boolean.parseBoolean(ObtenerCadenaEntreTags(linea, "<DescargaEnCola>", "</DescargaEnCola>", 16, 0));
-//                } else if(linea.contains("<DescargasSimultaneas>")) {
-//                    Configuracion.descargasSimultaneas = Integer.parseInt(ObtenerCadenaEntreTags(linea, "<DescargasSimultaneas>", "</DescargasSimultaneas>", 22, 0));
-//                }
-//            }
-//            
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } catch (IOException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        } 
-//    }
     
     public void CargarConfiguracion() {
         Preferences prefs = Preferences.userRoot().node(this.getClass().getName());
@@ -137,37 +115,21 @@ public class MetodosUtiles {
                         
     }
     
-//    public void EscribirConfiguracion()  {
-//        //Borrando el xml de configuracion
-//        new File(getClass().getResource("/es/gmarco/massdown/recursos/DatosConfiguracion.xml").getFile()).delete();
-//        //Lo creamos de nuevo
-//        
-//        try {
-//            OutputStream os = new BufferedOutputStream(new FileOutputStream(new File(getClass().getResource("/es/gmarco/massdown/recursos/DatosConfiguracion.xml").getFile())));
-//            os.write(Byte.parseByte("<?xml version=\"1.0\" encoding=\"ISO-8859-1\"?>"
-//                    + "<root>"
-//                    + "<DirectorioDeDescarga>" + Configuracion.directorioDeDescarga + "</DirectorioDeDescarga>"
-//                    + "<DescargaEnCola>" + Configuracion.descargaEnCola + "</DescargaEnCola>"
-//                    + "<DescargasSimultaneas>" + Configuracion.descargasSimultaneas + "</DescargasSimultaneas>"
-//                    + "</root>"));
-//                    System.out.println("exito");
-//        } catch (IOException ex) {
-//            Logger.getLogger(MetodosUtiles.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//        
-//        
-//    }
-    
-    public static String ObtenerCadenaEntreTags(String codigoAAnalizar, String primerTag, String segundoTag, int ajustePrimerElemento, int ajusteSegundoElemento) {
+    public static String[] ObtenerCadenaEntreTags(String codigoAAnalizar, String primerTag, String segundoTag, int ajustePrimerElemento, int ajusteSegundoElemento, int nodoInicio) {
         
-        String elementoEntreTags;
+        String elementoEntreTags[] = {"Inicializando", "Init"};
         int primerNodo ;
         int segundoNodo;
         
-        primerNodo = codigoAAnalizar.indexOf(primerTag);
+        primerNodo = codigoAAnalizar.indexOf(primerTag, nodoInicio);
         segundoNodo = codigoAAnalizar.indexOf(segundoTag, primerNodo);
 
-        elementoEntreTags = codigoAAnalizar.substring(primerNodo + ajustePrimerElemento, segundoNodo - ajusteSegundoElemento);
+        
+        elementoEntreTags[0] = codigoAAnalizar.substring(
+                primerNodo + ajustePrimerElemento, 
+                segundoNodo - ajusteSegundoElemento);
+        elementoEntreTags[1] = String.valueOf(segundoNodo);
+        
         return elementoEntreTags; 
     }
     

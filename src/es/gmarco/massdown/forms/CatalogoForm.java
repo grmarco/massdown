@@ -4,8 +4,14 @@
  */
 package es.gmarco.massdown.forms;
 
+import es.gmarco.massdown.clases_escalables.MetodosUtiles;
 import es.gmarco.massdown.superclases.Main;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 
 /**
@@ -21,6 +27,22 @@ public class CatalogoForm extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         pbar.setVisible(false);
+        
+        new Thread() {
+
+            @Override
+            public void run() {
+                try {
+                    ObtenerListaDeSeriesDestacadas();
+                } catch (MalformedURLException ex) {
+                    Logger.getLogger(CatalogoForm.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (IOException ex) {
+                    Logger.getLogger(CatalogoForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+        }.start();
+        
     }
 
     /**
@@ -49,7 +71,6 @@ public class CatalogoForm extends javax.swing.JFrame {
         jList4 = new javax.swing.JList();
         jScrollPane5 = new javax.swing.JScrollPane();
         jList5 = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
         pbar = new javax.swing.JProgressBar();
 
         setTitle("Catalogo de series");
@@ -70,6 +91,7 @@ public class CatalogoForm extends javax.swing.JFrame {
         lblCargaCaps.setForeground(new java.awt.Color(255, 255, 255));
         lblCargaCaps.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
+        lstDestacados.setFont(new java.awt.Font("Nirmala UI", 0, 12)); // NOI18N
         lstDestacados.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Breaking Bad" };
             public int getSize() { return strings.length; }
@@ -161,8 +183,6 @@ public class CatalogoForm extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("tab4", jScrollPane5);
 
-        jButton1.setText("jButton1");
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -170,22 +190,17 @@ public class CatalogoForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTabbedPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jComboBox1, 0, 250, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                    .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 329, Short.MAX_VALUE)
+                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(12, 12, 12)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -217,13 +232,42 @@ public class CatalogoForm extends javax.swing.JFrame {
         programaPrincipal.CargarSerie((String) lstDestacados.getSelectedValue());
     }//GEN-LAST:event_lstDestacadosMouseClicked
 
-    private ArrayList<String> ObtenerListaDeSeriesDestacadas() {
+    private ArrayList<String> ObtenerListaDeSeriesDestacadas() throws MalformedURLException, IOException {
+        
+        String codigoFuente = MetodosUtiles.ObtenerCodigoFuente("http://www.seriesyonkis.com/series-mas-vistas")[1];
+        int nodo = codigoFuente.indexOf("vistas ayer</h1>");
+        
+        DefaultListModel lst = new DefaultListModel();
+                
+        while(nodo >= 0) {
+            
+            String[] serie = MetodosUtiles.ObtenerCadenaEntreTags(codigoFuente, 
+                    "<img width=\"100\" height=\"144\" class=\"img-shadow\"", 
+                    "/> </a> <strong>  <a href=\"", 55, 0, nodo);
+            nodo = Integer.parseInt(serie[1]);
+            serie[0] = serie[0].replaceAll("-", " ")
+                    .substring(serie[0].indexOf("\" alt=\""))
+                    .replaceAll("\" alt=\"", "")
+                    .replaceAll("\" ", "");
+            
+            System.out.println(lst.toString());            
+            
+            
+            if(lst.contains(serie[0])) {
+                break;
+            }
+                
+            lst.addElement(serie[0]);
+                                                              
+        }
+        
+        lstDestacados.setModel(lst);
+        
         
         return null;        
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList2;
