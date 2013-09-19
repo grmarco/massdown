@@ -82,7 +82,7 @@ public class AjustesForm extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         lblVersion = new javax.swing.JLabel();
 
         setTitle("Ajustes");
@@ -284,10 +284,10 @@ public class AjustesForm extends javax.swing.JFrame {
 
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Actualizaciones"));
 
-        jButton1.setText("Comprobar actualizaciones");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Comprobar actualizaciones");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -300,7 +300,7 @@ public class AjustesForm extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(lblVersion)))
@@ -312,7 +312,7 @@ public class AjustesForm extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(lblVersion)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -423,13 +423,15 @@ public class AjustesForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnCambiarRutaActionPerformed
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        btnActualizar.setEnabled(false);
         new Thread() {
 
             @Override
             public void run() {
                 try {
                     new Actualiza(false);
+                    btnActualizar.setEnabled(true);
                 } catch (MalformedURLException ex) {
                     Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
                 } catch (IOException ex) {
@@ -439,7 +441,7 @@ public class AjustesForm extends javax.swing.JFrame {
                                 
 
         }.start();
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void rdoColaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_rdoColaMouseClicked
         Configuracion.descargaEnCola = true;
@@ -459,10 +461,10 @@ public class AjustesForm extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
     private javax.swing.JButton btnCambiarRuta;
     private javax.swing.ButtonGroup btnGroupCargar;
     private javax.swing.ButtonGroup btnGroupGestor;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;

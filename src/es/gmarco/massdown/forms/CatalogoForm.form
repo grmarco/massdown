@@ -41,7 +41,7 @@
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel1" alignment="1" max="32767" attributes="0"/>
-                  <Component id="jPanel5" pref="480" max="32767" attributes="0"/>
+                  <Component id="jPanel5" pref="402" max="32767" attributes="0"/>
               </Group>
           </Group>
       </Group>
@@ -89,11 +89,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="0" pref="388" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="311" max="32767" attributes="0"/>
                           <Component id="lblCargaCaps" min="-2" pref="17" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane1" pref="406" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="328" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -148,7 +148,6 @@
                 <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
                   <StringArray count="0"/>
                 </Property>
-                <Property name="selectionMode" type="int" value="0"/>
               </Properties>
               <Events>
                 <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="lstDestacadosMouseClicked"/>
@@ -172,7 +171,12 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jTabbedPane1" pref="367" max="32767" attributes="0"/>
-                      <Component id="jComboBox1" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Component id="jComboBox1" min="-2" pref="274" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -182,9 +186,12 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jComboBox1" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jComboBox1" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                      <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                  <Component id="jTabbedPane1" pref="414" max="32767" attributes="0"/>
+                  <Component id="jTabbedPane1" pref="336" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -243,6 +250,14 @@
             </Container>
           </SubComponents>
         </Container>
+        <Component class="javax.swing.JButton" name="jButton1">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="jButton1"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JProgressBar" name="pbar">

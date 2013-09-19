@@ -11,7 +11,7 @@ public class Capitulo {
     private int numTemporada;
     private String idStreamCloud;
     private String ficheroStreamCloud;
-    
+    private double progresoDeDescarga = 0.0;
     
     public Capitulo(String titulo) {
         this.titulo = titulo;
@@ -55,6 +55,14 @@ public class Capitulo {
 
     public void setNumTemporada(int numTemporada) {
         this.numTemporada = numTemporada;
+    }
+
+    public double getProgresoDeDescarga() {
+        return progresoDeDescarga;
+    }
+
+    public void setProgresoDeDescarga(double progresoDeDescarga) {
+        this.progresoDeDescarga = progresoDeDescarga;
     }
     
     

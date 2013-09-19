@@ -278,7 +278,6 @@ public class Main extends JFrame {
         });
 
         lstCapitulos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
-        lstCapitulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstCapitulos.setToolTipText("Pulsa Ctrl + Click para sleccionar más de un capitulo");
         jScrollPane1.setViewportView(lstCapitulos);
 
@@ -480,9 +479,17 @@ public class Main extends JFrame {
         return new ImageIcon(dst);
     }
     
+    private CatalogoForm catalogoForm = null;
     private void btnLanzarCatalogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanzarCatalogoActionPerformed
-        CatalogoForm catalogoForm = new CatalogoForm(this);
-        catalogoForm.setLocation(getLocation().x + 70, getLocation().y + 70);
+        
+        if(catalogoForm == null) {
+            catalogoForm = new CatalogoForm(this);
+            catalogoForm.setLocation(getLocation().x + 70, getLocation().y + 70);
+        } else {
+            catalogoForm.requestFocus();
+            catalogoForm.setVisible(true);
+        }
+        
     }//GEN-LAST:event_btnLanzarCatalogoActionPerformed
 
     private void btnDescargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarActionPerformed
@@ -509,9 +516,15 @@ public class Main extends JFrame {
             
     }//GEN-LAST:event_pbarCargaCapitulosStateChanged
 
+    private  AjustesForm ajustesForm = null;
     private void btnLanzarAjustesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLanzarAjustesActionPerformed
-        AjustesForm ajustesForm = new AjustesForm();
-        ajustesForm.setLocation(getLocation().x +70, getLocation().y + 70);
+        if(ajustesForm == null) {
+            ajustesForm = new AjustesForm();
+            ajustesForm.setLocation(getLocation().x +70, getLocation().y + 70);
+        } else {
+            ajustesForm.requestFocus();
+            ajustesForm.setVisible(true);
+        }
     }//GEN-LAST:event_btnLanzarAjustesActionPerformed
          
 class ComprobandoCargaCapitulos extends Thread {

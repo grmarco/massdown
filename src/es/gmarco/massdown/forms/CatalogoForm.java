@@ -66,6 +66,7 @@ public class CatalogoForm extends javax.swing.JFrame {
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jScrollPane5 = new javax.swing.JScrollPane();
         jList5 = new javax.swing.JList();
+        jButton1 = new javax.swing.JButton();
         pbar = new javax.swing.JProgressBar();
 
         setTitle("Catalogo de series");
@@ -87,7 +88,6 @@ public class CatalogoForm extends javax.swing.JFrame {
         lblCargaCaps.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
 
         lstDestacados.setFont(new java.awt.Font("Nirmala UI", 0, 12)); // NOI18N
-        lstDestacados.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstDestacados.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lstDestacadosMouseClicked(evt);
@@ -119,10 +119,10 @@ public class CatalogoForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addGap(0, 388, Short.MAX_VALUE)
+                        .addGap(0, 311, Short.MAX_VALUE)
                         .addComponent(lblCargaCaps, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 406, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 328, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -144,6 +144,13 @@ public class CatalogoForm extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Proximamente...", jScrollPane5);
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -152,16 +159,22 @@ public class CatalogoForm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
                 .addGap(12, 12, 12)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -182,7 +195,7 @@ public class CatalogoForm extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 402, Short.MAX_VALUE)))
         );
 
         pack();
@@ -191,7 +204,13 @@ public class CatalogoForm extends javax.swing.JFrame {
     private void lstDestacadosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstDestacadosMouseClicked
         programaPrincipal.setTextoTxtSerie((String) lstDestacados.getSelectedValue());
         programaPrincipal.CargarSerie((String) lstDestacados.getSelectedValue());
+        if(evt.getClickCount() >= 2)
+            programaPrincipal.requestFocus();
     }//GEN-LAST:event_lstDestacadosMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private ArrayList<String> ObtenerListaDeSeriesDestacadas() throws MalformedURLException, IOException {
         
@@ -247,6 +266,7 @@ public class CatalogoForm extends javax.swing.JFrame {
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JList jList5;

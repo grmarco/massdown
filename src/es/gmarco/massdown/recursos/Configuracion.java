@@ -14,7 +14,7 @@ import javax.swing.ImageIcon;
 public class Configuracion {
 
     public Image iconDeMassDown = new ImageIcon(getClass().getResource("/src/es/gmarco/massdown/recursos/icon.png")).getImage();
-    public static double version = 0.51;
+    public static double version = 0.52;
     public static String directorioDeDescarga;
     public static boolean descargaEnCola;
     public static int descargasSimultaneas;
