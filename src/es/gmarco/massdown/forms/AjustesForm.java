@@ -80,7 +80,7 @@ public class AjustesForm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        lblCreador = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         btnActualizar = new javax.swing.JButton();
         lblVersion = new javax.swing.JLabel();
@@ -266,19 +266,19 @@ public class AjustesForm extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel5.setText("Descarga series de forma masiva, rápida y sin públicidad.");
 
-        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel6.setText("por Guillermo Marco (@gmarco_)");
-        jLabel6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        lblCreador.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblCreador.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        lblCreador.setText("por Guillermo Marco (@gmarco_)");
+        lblCreador.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCreador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCreadorMouseEntered(evt);
+            }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel6MouseExited(evt);
+                lblCreadorMouseExited(evt);
             }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel6MouseEntered(evt);
+                lblCreadorMouseClicked(evt);
             }
         });
 
@@ -327,7 +327,7 @@ public class AjustesForm extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap(22, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
+                    .addComponent(lblCreador)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -347,7 +347,7 @@ public class AjustesForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addGap(12, 12, 12)
-                .addComponent(jLabel6)
+                .addComponent(lblCreador)
                 .addGap(15, 15, 15)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(13, Short.MAX_VALUE))
@@ -379,21 +379,17 @@ public class AjustesForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    
-    private Font original;
-    
-    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
-        original = evt.getComponent().getFont();
-        Map attributes = original.getAttributes();
-        attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        evt.getComponent().setFont(original.deriveFont(attributes));
-    }//GEN-LAST:event_jLabel6MouseEntered
 
-    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-        evt.getComponent().setFont(original); 
-    }//GEN-LAST:event_jLabel6MouseExited
+    
+    private void lblCreadorMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreadorMouseEntered
+       MetodosUtiles.DarCaracteristicasDeEnlaceAUnJLabel(lblCreador, evt);
+    }//GEN-LAST:event_lblCreadorMouseEntered
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+    private void lblCreadorMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreadorMouseExited
+        MetodosUtiles.DarCaracteristicasDeEnlaceAUnJLabel(lblCreador, evt);
+    }//GEN-LAST:event_lblCreadorMouseExited
+
+    private void lblCreadorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCreadorMouseClicked
         try {
             Desktop.getDesktop().browse(new URL("https://twitter.com/gmarco_").toURI());
         } catch (IOException ex) {
@@ -401,7 +397,7 @@ public class AjustesForm extends javax.swing.JFrame {
         } catch (URISyntaxException ex) {
             Logger.getLogger(AjustesForm.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_jLabel6MouseClicked
+    }//GEN-LAST:event_lblCreadorMouseClicked
 
     private void jPanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseEntered
         
@@ -469,7 +465,6 @@ public class AjustesForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -480,6 +475,7 @@ public class AjustesForm extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblCreador;
     private javax.swing.JLabel lblNumDescargasALaVez;
     private javax.swing.JLabel lblRuta;
     private javax.swing.JLabel lblVersion;

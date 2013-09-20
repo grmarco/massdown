@@ -692,7 +692,6 @@ class agregarDescarga extends Thread {
                 
             }
         });
-                
     }
 
     public void setTextoTxtSerie(String serie) {

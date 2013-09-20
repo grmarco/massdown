@@ -4,6 +4,10 @@ package es.gmarco.massdown.clases_escalables;
 import es.gmarco.massdown.recursos.Configuracion;
 import es.gmarco.massdown.superclases.Main;
 import java.awt.Dimension;
+import java.awt.Event;
+import java.awt.Font;
+import java.awt.event.MouseEvent;
+import java.awt.font.TextAttribute;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -131,6 +135,25 @@ public class MetodosUtiles {
         elementoEntreTags[1] = String.valueOf(segundoNodo);
         
         return elementoEntreTags; 
+    }
+    
+    public static void DarCaracteristicasDeEnlaceAUnJLabel(JLabel jl, MouseEvent evt) {
+        final Font original;
+        Map attributes;
+    
+        if (evt.paramString().indexOf("MOUSE_ENTERED") >= 0) {
+            original = evt.getComponent().getFont();
+            attributes = original.getAttributes();
+            attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+            evt.getComponent().setFont(original.deriveFont(attributes));
+            
+        } else if(evt.paramString().indexOf("MOUSE_EXITED") >= 0) {
+           original = evt.getComponent().getFont();
+            evt.getComponent().setFont(new Font(original.getFamily(), Font.BOLD, original.getSize())); 
+        }
+        
+        
+        
     }
     
     public static Thread AnimacionDeCargando(final Object dondePonerAnimacion, final Dimension vtnDondeAnimar) {
@@ -264,6 +287,15 @@ public class MetodosUtiles {
                
         };
        return animacionDeCargando; 
+    }
+    
+    public static char[] DevuelveAbecedario() {
+        int a = (int) 'a';
+        char[] abecedario = new char[26];
+        for(int i = 0; i < abecedario.length; i++) {
+            abecedario[i] = (char) (a + i);
+        }
+        return abecedario;
     }
 }
    
