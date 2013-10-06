@@ -78,7 +78,7 @@
                       <Component id="separadorGeneral" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
                           <Component id="lblTitulo" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="605" max="32767" attributes="0"/>
+                          <EmptySpace pref="614" max="32767" attributes="0"/>
                           <Component id="btnLanzarCatalogo" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnLanzarAjustes" min="-2" max="-2" attributes="0"/>
@@ -188,8 +188,8 @@
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel5" pref="428" max="32767" attributes="0"/>
-                              <Component id="jPanel2" pref="428" max="32767" attributes="0"/>
+                              <Component id="jPanel5" pref="446" max="32767" attributes="0"/>
+                              <Component id="jPanel2" pref="446" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="28" pref="28" max="-2" attributes="0"/>
                       </Group>
@@ -369,7 +369,7 @@
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               <Component id="btnDescargar" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="pbarCargaCapitulos" alignment="0" pref="170" max="32767" attributes="0"/>
+                          <Component id="pbarCargaCapitulos" alignment="0" pref="166" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jLabel9" alignment="0" min="-2" max="-2" attributes="0"/>
