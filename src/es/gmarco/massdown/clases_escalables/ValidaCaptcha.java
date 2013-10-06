@@ -25,9 +25,9 @@ import javax.swing.*;
  */
 public class ValidaCaptcha extends JFrame {
     
-    private JLabel lblImagenCaptcha;
-    private JButton btnValidarCaptcha;
-    private JTextField txtTextoDeLaImagen;
+    private final JLabel lblImagenCaptcha;
+    private final JButton btnValidarCaptcha;
+    private final JTextField txtTextoDeLaImagen;
     private String urlCaptcha, hashCaptcha, urlCapitulo, urlImagenCaptcha, codigoStream;    
     
     public ValidaCaptcha(String urlCaptcha, String hashCaptcha, String urlCapitulo, String urlImagenCaptcha) throws MalformedURLException, IOException {
@@ -59,9 +59,10 @@ public class ValidaCaptcha extends JFrame {
         });
         
         setSize(360, 130);
+        setLocation(100, 100);
         setIconImage(new ImageIcon(getClass().getResource("/es/gmarco/massdown/recursos/icon.png")).getImage());
         setResizable(false);
-        setType(Type.POPUP);
+        //setType(Type.POPUP);
         setAlwaysOnTop(true);
         setFocusCycleRoot(true);
         setTitle("Introduce el captcha para continuar");
