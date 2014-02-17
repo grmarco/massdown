@@ -12,12 +12,6 @@ import javax.swing.UIManager;
  */
 public class Main {
     public static void main(String args[])  {
-
-//        try { 
-//            new Serie("breaking bad");
-//        } catch (IOException ex) {
-//            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-//        }
  
        
         

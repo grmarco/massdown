@@ -16,16 +16,17 @@ import org.jsoup.select.Elements;
 public class Capitulo {
     public ArrayList<Servidor> servidoresConElCapitulo;
     public String tituloCapitulo;    
-    private final Document domPagCapitulo;
+    private Document domPagCapitulo;
+    private final String enlaceCapitulo;
     
-    public Capitulo(String tituloCapitulo, String enlaceCapitulo) throws IOException {
-        this.domPagCapitulo = Jsoup.connect(enlaceCapitulo).get();
-        this.tituloCapitulo = tituloCapitulo;
-        this.servidoresConElCapitulo = ObtenerServidoresCapitulo();
+    
+    public Capitulo(String tituloCapitulo, String enlaceCapitulo) throws IOException {       
+        this.enlaceCapitulo = enlaceCapitulo;
+        this.tituloCapitulo = tituloCapitulo;       
     }
     
-    private ArrayList<Servidor> ObtenerServidoresCapitulo() throws IOException {
-        
+    public ArrayList<Servidor> ObtenerServidoresCapitulo() throws IOException {
+        this.domPagCapitulo = Jsoup.connect(enlaceCapitulo).get();
         Elements listaServidoresEnDom = domPagCapitulo.select("h2.veronline + table tr");
         ArrayList<Servidor> arrayServidores = new ArrayList<>();
         
@@ -62,8 +63,8 @@ public class Capitulo {
             }
             
         }
-        
-        System.out.println(arrayServidores);
+                
+        this.servidoresConElCapitulo = arrayServidores;
         
         return arrayServidores;
         

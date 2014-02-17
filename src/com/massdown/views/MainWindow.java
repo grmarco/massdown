@@ -23,6 +23,7 @@ public class MainWindow extends javax.swing.JFrame {
      */
     public MainWindow() {
         initComponents();
+        MostarPBar(false);
     }
 
     /**
@@ -46,6 +47,8 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         pnlPrincipalScroll = new javax.swing.JScrollPane();
         pnlPrincipal = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        pbarPrincipal = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("massdown");
@@ -153,22 +156,34 @@ public class MainWindow extends javax.swing.JFrame {
         pnlPrincipalScroll.setBorder(null);
 
         pnlPrincipal.setBackground(new java.awt.Color(56, 56, 56));
-        pnlPrincipal.setLayout(new javax.swing.BoxLayout(pnlPrincipal, javax.swing.BoxLayout.LINE_AXIS));
+        pnlPrincipal.setLayout(new java.awt.CardLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("loading...");
+        pnlPrincipal.add(jLabel2, "card2");
+
         pnlPrincipalScroll.setViewportView(pnlPrincipal);
+
+        pbarPrincipal.setIndeterminate(true);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 753, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
             .addComponent(pnlPrincipalScroll)
+            .addComponent(pbarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE))
+                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addGap(0, 0, 0)
+                .addComponent(pbarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -197,6 +212,13 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
     
+    public void MostarPBar(boolean siono) {
+        if(siono) {
+            pbarPrincipal.setVisible(true);
+        } else {
+            pbarPrincipal.setVisible(false);
+        }
+    }
     
     private void IrATab(JToggleButton tabPulsado) {
         
@@ -206,12 +228,14 @@ public class MainWindow extends javax.swing.JFrame {
         switch(tabPulsado.getText()) {
             case "settings":
                 pnlPrincipal.add(new SettingsPanel());
+                
                 btnDescargas.setSelected(false);
                 btnFavoritos.setSelected(false);
                 btnSearch.setSelected(false);
                 break;
             case "downloads":
                 pnlPrincipal.add(new DownloadsPanel());
+                
                 btnAjustes.setSelected(false);
                 btnFavoritos.setSelected(false);
                 btnSearch.setSelected(false);
@@ -226,7 +250,9 @@ public class MainWindow extends javax.swing.JFrame {
                 btnDescargas.setSelected(false);
                 btnAjustes.setSelected(false);
                 btnFavoritos.setSelected(false);
-                pnlPrincipal.add(new SeriePanel());
+                
+                
+                pnlPrincipal.add(new SeriePanel(this, txtBusqueda.getText()));
                 break;
         }
         pnlPrincipal.revalidate();
@@ -239,9 +265,11 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnFavoritos;
     private javax.swing.JToggleButton btnSearch;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JProgressBar pbarPrincipal;
     private javax.swing.JToolBar pnlMenu;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JScrollPane pnlPrincipalScroll;
