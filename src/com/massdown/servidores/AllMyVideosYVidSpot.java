@@ -1,34 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 package com.massdown.servidores;
 
 import com.massdown.Servidor;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.jsoup.Connection.Method;
+import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
-/**
- *
- * @author Guillermo
- */
-public class StreamCloud extends Servidor {
+public class AllMyVideosYVidSpot extends Servidor {
 
-    public StreamCloud(Servidor servidor) throws MalformedURLException {
-        super(servidor);        
+    public AllMyVideosYVidSpot(Servidor servidor) {
+        super(servidor);
     }
-
+    
     @Override
-    public void ObtenerEnlaceDescarga() throws MalformedURLException {
-        String urlDelServidor = "";
+    public void ObtenerEnlaceDescarga() {
+         String urlDelServidor = "";
         
         try {
             urlDelServidor = ObtenerEnlaceServidor(this.enlaceServidor);
@@ -39,30 +31,27 @@ public class StreamCloud extends Servidor {
             String idCapitulo = domPagServidor.getElementsByAttributeValue("name", "id").attr("value");
             String nombreCapitulo = domPagServidor.getElementsByAttributeValue("name", "fname").attr("value");
 
-            
+            datosParaElSubmit.put("F1", "");
             datosParaElSubmit.put("op", "download1");
             datosParaElSubmit.put("usr_login", "");
             datosParaElSubmit.put("hash", "");
             datosParaElSubmit.put("referer", "");
-            datosParaElSubmit.put("imhuman", "Watch+video+now");
+            datosParaElSubmit.put("method_free", "1");
+             datosParaElSubmit.put("confirm", "Continue as Free User");
             datosParaElSubmit.put("id", idCapitulo);
             datosParaElSubmit.put("fname", nombreCapitulo);
                         
-            System.out.println(urlDelServidor);
             domPagServidor = 
             Jsoup.connect(urlDelServidor)
             .data(datosParaElSubmit)
-            .method(Method.POST)
+            .method(Connection.Method.POST)
             .execute().parse();
-            
-            System.out.println(domPagServidor);
-            
-            String htmlPagina = domPagServidor.html();
-            System.out.println("\n \n \n ---------------------------------------");
-            int inicio = htmlPagina.indexOf("file: \"http://stor5.streamcloud.eu:8080/");
+                        
+            String htmlPagina = domPagServidor.body().html();
+            int inicio = htmlPagina.indexOf("\"file\" : \"http://");
             int fin = htmlPagina.indexOf("\",", inicio + 1);
             
-            enlaceDeDescarga = htmlPagina.substring(inicio + 1, fin);
+            enlaceDeDescarga = htmlPagina.substring(inicio + 1, fin).replace("file\" : \"", "");
             
             
             System.out.println(enlaceDeDescarga);
@@ -70,7 +59,7 @@ public class StreamCloud extends Servidor {
             
         } catch (IOException ex) {
             Logger.getLogger(StreamCloud.class.getName()).log(Level.SEVERE, null, ex);
-        }       
+        }   
     }
     
 }

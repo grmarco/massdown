@@ -15,8 +15,8 @@ public class Servidor {
     public String idiomaCapitulo;
     public String tieneSubtitulos;
     public String enlaceServidor;
-    private Document domPagServidor;
-    public URL enlaceDeDescarga;
+    protected Document domPagServidor;
+    public String enlaceDeDescarga;
         
     public Servidor(String idioma, String subtitulos, String enlace) throws IOException {
         this.enlaceServidor = enlace;
@@ -30,7 +30,7 @@ public class Servidor {
         this.tieneSubtitulos = servidor.tieneSubtitulos;
     }
     
-    public String ObtenerEnlaceServidor(String url) throws IOException {
+    protected String ObtenerEnlaceServidor(String url) throws IOException {
         
         Document seriesCocoDOM = Jsoup.connect("http://www.seriescoco.com"+url).get();
         String enlaceRedireccionSeriescoco = "http://www.seriescoco.com"+seriesCocoDOM.select(".episodes tr.down>td a").attr("href");
@@ -40,6 +40,6 @@ public class Servidor {
         return  this.enlaceServidor;        
     }
     
-    public URL ObtenerEnlaceDescarga() throws MalformedURLException{ return new URL("");}        
+    public void ObtenerEnlaceDescarga() throws MalformedURLException{ }        
     
 }

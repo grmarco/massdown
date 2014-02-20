@@ -14,19 +14,21 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 
 
 
 public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private Serie serie;
+    private Capitulo capituloSeleccionado;
+    
     
     public SeriePanel(final MainWindow ventanaPrincipal, final String nombreSerie) {
         
@@ -40,18 +42,18 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                     ventanaPrincipal.MostarPBar(true);
                     
                     serie = new Serie(nombreSerie);                    
-                    lblDescripcion.setText(serie.descripcionSerie);
-                    lblTitulo.setText(serie.nombreSerie);
-                    iconSerie.setIcon(escalarImagen(ImageIO.read(new URL(serie.urlImagen)), 0.9));
+                    lblDescripcion.setText(serie.getDescripcionSerie());
+                    lblTitulo.setText(serie.getNombreSerie());
+                    iconSerie.setIcon(escalarImagen(ImageIO.read(new URL(serie.getUrlImagen())), 0.9));
                     
-                    serie.ObtenerCapitulos();
+                    serie.getCapitulos();
                    
                     DefaultListModel listModel = new DefaultListModel();
                     lstCapitulos.setModel(listModel);
                     
-                    for(int i = 0 ; i < serie.nombreCapitulos.size() ; i++) {
-                        String capitulo = serie.nombreCapitulos.get(i);
-                        listModel.addElement(capitulo);  
+                    for(int i = 0 ; i < serie.getCapitulos().size() ; i++) {
+                        String[] capitulo = serie.getCapitulos().get(i);
+                        listModel.addElement(capitulo[0]);  
                         
                     }   
                     lstCapitulos.setSelectedIndex(0);
@@ -130,6 +132,11 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
         lstServidores.setForeground(new java.awt.Color(204, 204, 204));
         lstServidores.setFixedCellHeight(30);
         lstServidores.setSelectionBackground(new java.awt.Color(230, 126, 34));
+        lstServidores.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lstServidoresMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(lstServidores);
 
         lblServerSeleccionado.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -144,9 +151,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(20, 20, 20))
+                    .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(iconSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -155,8 +160,8 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblServerSeleccionado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(20, 20, 20))))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))))
+                .addGap(20, 20, 20))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,24 +186,26 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private void lstCapitulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstCapitulosMouseClicked
 
-        new Thread(){
+        Thread cargaListaServidores = new Thread(){
 
             @Override
             public void run() {
                 
                 
                 try {
-                    Capitulo capitulo = serie.CrearObjetoCapitulo(lstCapitulos.getSelectedIndex());
-                    capitulo.ObtenerServidoresCapitulo();
+                    capituloSeleccionado = serie.CrearObjetoCapitulo(lstCapitulos.getSelectedIndex());
+                    capituloSeleccionado.ObtenerServidoresCapitulo();
                     DefaultListModel listModel = new DefaultListModel();
                     lblServerSeleccionado.setText((String) lstCapitulos.getSelectedValue());
                     lstServidores.setModel(listModel);
 
-                    for(int i = 0 ; i < capitulo.servidoresConElCapitulo.size() ; i++) {
-                        Servidor servidor = capitulo.servidoresConElCapitulo.get(i);
-                        listModel.addElement(" Option"+ 1 + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
-
+                    for(int i = 0 ; i < capituloSeleccionado.servidoresConElCapitulo.size() ; i++) {
+                        Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(i);
+                        listModel.addElement("Download option "+ i + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
                     }
+                    
+                    
+                    
                 } catch (IOException ex) {
                     Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -206,8 +213,20 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
   
             }
 
-        }.start();
+        };
+        cargaListaServidores.start();
     }//GEN-LAST:event_lstCapitulosMouseClicked
+
+    private void lstServidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstServidoresMouseClicked
+        if(evt.getClickCount() == 2) {
+            Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());
+            try {
+                servidor.ObtenerEnlaceDescarga();
+            } catch (MalformedURLException ex) {
+                Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }//GEN-LAST:event_lstServidoresMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
