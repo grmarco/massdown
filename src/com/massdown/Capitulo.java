@@ -35,7 +35,7 @@ public class Capitulo {
             
             
            // if("magnovideo".equals(servidorDelCapitulo) || "streamcloud".equals(servidorDelCapitulo) || "allmyvideos".equals(servidorDelCapitulo) || "vidspot".equals(servidorDelCapitulo)) {
-            if("vidspot".equals(servidorDelCapitulo)) {
+            if("vidspot".equals(servidorDelCapitulo) || "allmyvideos".equals(servidorDelCapitulo)) {
                 String idioma = servidorEnDOM.select(".episode-lang").text();
                 String subtitulos = servidorEnDOM.select(".episode-subtitle").text(); 
                 String enlaceAlServidor = servidorEnDOM.select(".episode-server a").attr("href");

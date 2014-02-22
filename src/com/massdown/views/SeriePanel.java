@@ -21,6 +21,7 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 
 
@@ -28,9 +29,12 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private Serie serie;
     private Capitulo capituloSeleccionado;
+    private MainWindow ventanaPrincipal;
     
     
     public SeriePanel(final MainWindow ventanaPrincipal, final String nombreSerie) {
+        
+        this.ventanaPrincipal = ventanaPrincipal;
         
         initComponents();
         
@@ -39,7 +43,6 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
             public void run() {
                 super.run();
                 try {
-                    ventanaPrincipal.MostarPBar(true);
                     
                     serie = new Serie(nombreSerie);                    
                     lblDescripcion.setText(serie.getDescripcionSerie());
@@ -201,7 +204,8 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
                     for(int i = 0 ; i < capituloSeleccionado.servidoresConElCapitulo.size() ; i++) {
                         Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(i);
-                        listModel.addElement("Download option "+ i + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
+                        listModel.addElement("Download option "+ (i + 1) + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
+                        
                     }
                     
                     
@@ -219,10 +223,15 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private void lstServidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstServidoresMouseClicked
         if(evt.getClickCount() == 2) {
-            Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());
+            final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());
+                        
             try {
                 servidor.ObtenerEnlaceDescarga();
+                this.ventanaPrincipal.gestorDescargas.addDescarga(servidor.enlaceDeDescarga, (String) lstCapitulos.getSelectedValue());                                 
+                
             } catch (MalformedURLException ex) {
+                Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (IOException ex) {
                 Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
             }
         }

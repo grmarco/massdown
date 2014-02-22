@@ -6,6 +6,7 @@
 
 package com.massdown.views;
 
+import com.massdown.GestorDescargas;
 import com.massdown.Serie;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
@@ -17,10 +18,9 @@ import javax.swing.UIManager;
  * @author Guillermo
  */
 public class MainWindow extends javax.swing.JFrame {
-
-    /**
-     * Creates new form MainView
-     */
+    
+    public GestorDescargas gestorDescargas = new GestorDescargas();
+    
     public MainWindow() {
         initComponents();
         MostarPBar(false);
@@ -159,7 +159,7 @@ public class MainWindow extends javax.swing.JFrame {
         pnlPrincipal.setLayout(new java.awt.CardLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("loading...");
         pnlPrincipal.add(jLabel2, "card2");
@@ -234,7 +234,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnSearch.setSelected(false);
                 break;
             case "downloads":
-                pnlPrincipal.add(new DownloadsPanel());
+                pnlPrincipal.add(new DownloadsPanel(this));
                 
                 btnAjustes.setSelected(false);
                 btnFavoritos.setSelected(false);
