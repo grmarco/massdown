@@ -26,6 +26,7 @@ public class UnaDescarga {
     private int velocidadDescarga;
     private double tamanoTotal;
     private final Timer timer;
+    private double tiempoRestante;
     public int time;
 
     public UnaDescarga(File file) {
@@ -43,6 +44,8 @@ public class UnaDescarga {
                 int horas = 0;
                 
                 velocidadDescarga = (int) ((tamanoDescargado - tamanoDescagadoHaceUnSegundo) * 1000);
+                
+                tiempoRestante = ((tamanoTotal - tamanoDescargado) / velocidadDescarga) * 60; 
                 
                 tamanoDescagadoHaceUnSegundo = tamanoDescargado;
                 time++;
@@ -151,6 +154,10 @@ public class UnaDescarga {
 
     public double getVelocidadDescarga() {
         return velocidadDescarga;
+    }
+
+    public double getTiempoRestante() {
+        return tiempoRestante;
     }
     
     

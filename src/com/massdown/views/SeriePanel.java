@@ -229,6 +229,8 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                 servidor.ObtenerEnlaceDescarga();
                 this.ventanaPrincipal.gestorDescargas.addDescarga(servidor.enlaceDeDescarga, (String) lstCapitulos.getSelectedValue());                                 
                 
+                ventanaPrincipal.getBtnDescargas().setText("downloads "+"("+ventanaPrincipal.gestorDescargas.getDescargasEnCurso().size()+")");
+                
             } catch (MalformedURLException ex) {
                 Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
             } catch (IOException ex) {

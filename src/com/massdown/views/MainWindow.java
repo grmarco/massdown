@@ -39,7 +39,7 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         btnDescargas = new javax.swing.JToggleButton();
         btnSearch = new javax.swing.JToggleButton();
-        btnFavoritos = new javax.swing.JToggleButton();
+        btnBiblioteca = new javax.swing.JToggleButton();
         jLabel1 = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -66,12 +66,12 @@ public class MainWindow extends javax.swing.JFrame {
 
         btnDescargas.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnDescargas.setForeground(new java.awt.Color(255, 255, 255));
-        btnDescargas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/descargas.png"))); // NOI18N
+        btnDescargas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/descargas3.png"))); // NOI18N
         btnDescargas.setText("downloads");
         btnDescargas.setFocusable(false);
         btnDescargas.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnDescargas.setMaximumSize(new java.awt.Dimension(85, 71));
-        btnDescargas.setPreferredSize(new java.awt.Dimension(85, 71));
+        btnDescargas.setMaximumSize(new java.awt.Dimension(105, 71));
+        btnDescargas.setPreferredSize(new java.awt.Dimension(105, 71));
         btnDescargas.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         btnDescargas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -96,21 +96,21 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlMenu.add(btnSearch);
 
-        btnFavoritos.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
-        btnFavoritos.setForeground(new java.awt.Color(255, 255, 255));
-        btnFavoritos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/favs.png"))); // NOI18N
-        btnFavoritos.setText("favorites");
-        btnFavoritos.setFocusable(false);
-        btnFavoritos.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        btnFavoritos.setMaximumSize(new java.awt.Dimension(85, 71));
-        btnFavoritos.setPreferredSize(new java.awt.Dimension(85, 71));
-        btnFavoritos.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        btnFavoritos.addActionListener(new java.awt.event.ActionListener() {
+        btnBiblioteca.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
+        btnBiblioteca.setForeground(new java.awt.Color(255, 255, 255));
+        btnBiblioteca.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/videos.png"))); // NOI18N
+        btnBiblioteca.setText("library");
+        btnBiblioteca.setFocusable(false);
+        btnBiblioteca.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnBiblioteca.setMaximumSize(new java.awt.Dimension(85, 71));
+        btnBiblioteca.setPreferredSize(new java.awt.Dimension(85, 71));
+        btnBiblioteca.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnBiblioteca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFavoritosActionPerformed(evt);
+                btnBibliotecaActionPerformed(evt);
             }
         });
-        pnlMenu.add(btnFavoritos);
+        pnlMenu.add(btnBiblioteca);
 
         jLabel1.setForeground(new java.awt.Color(53, 50, 48));
         jLabel1.setText("jLab");
@@ -159,7 +159,7 @@ public class MainWindow extends javax.swing.JFrame {
         pnlPrincipal.setLayout(new java.awt.CardLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("loading...");
         pnlPrincipal.add(jLabel2, "card2");
@@ -197,9 +197,9 @@ public class MainWindow extends javax.swing.JFrame {
         this.IrATab(btnDescargas);
     }//GEN-LAST:event_btnDescargasActionPerformed
 
-    private void btnFavoritosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFavoritosActionPerformed
-        this.IrATab(btnFavoritos);
-    }//GEN-LAST:event_btnFavoritosActionPerformed
+    private void btnBibliotecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBibliotecaActionPerformed
+        this.IrATab(btnBiblioteca);
+    }//GEN-LAST:event_btnBibliotecaActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
         this.IrATab(btnSearch);
@@ -225,44 +225,54 @@ public class MainWindow extends javax.swing.JFrame {
         
         pnlPrincipal.removeAll();
         
-        switch(tabPulsado.getText()) {
-            case "settings":
-                pnlPrincipal.add(new SettingsPanel());
-                
-                btnDescargas.setSelected(false);
-                btnFavoritos.setSelected(false);
-                btnSearch.setSelected(false);
-                break;
-            case "downloads":
+        switch(pnlMenu.getComponentIndex(tabPulsado)) {
+            //TAB DESCARGAS
+            case 1:
                 pnlPrincipal.add(new DownloadsPanel(this));
                 
                 btnAjustes.setSelected(false);
-                btnFavoritos.setSelected(false);
+                btnBiblioteca.setSelected(false);
                 btnSearch.setSelected(false);
                 break;
-            case "favorites":
-                btnDescargas.setSelected(false);
-                btnAjustes.setSelected(false);
-                btnSearch.setSelected(false);
-                break;
-            case "search":
+            //TAB BUSQUEDA
+            case 2:
                 btnSearch.setSelected(true);
                 btnDescargas.setSelected(false);
                 btnAjustes.setSelected(false);
-                btnFavoritos.setSelected(false);
+                btnBiblioteca.setSelected(false);
                 
                 
                 pnlPrincipal.add(new SeriePanel(this, txtBusqueda.getText()));
+                break;
+            //TAB BLIBLIOTECA    
+            case 3:
+                btnDescargas.setSelected(false);
+                btnAjustes.setSelected(false);
+                btnSearch.setSelected(false);
+                break;
+            //TAB SETTINGS
+            case 7:
+                pnlPrincipal.add(new SettingsPanel());
+                
+                btnDescargas.setSelected(false);
+                btnBiblioteca.setSelected(false);
+                btnSearch.setSelected(false);
                 break;
         }
         pnlPrincipal.revalidate();
         pnlPrincipal.repaint();
     }
 
+    public JToggleButton getBtnDescargas() {
+        return btnDescargas;
+    }
+
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAjustes;
+    private javax.swing.JToggleButton btnBiblioteca;
     private javax.swing.JToggleButton btnDescargas;
-    private javax.swing.JToggleButton btnFavoritos;
     private javax.swing.JToggleButton btnSearch;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

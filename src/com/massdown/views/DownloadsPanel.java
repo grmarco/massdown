@@ -8,9 +8,15 @@ package com.massdown.views;
 
 import com.massdown.GestorDescargas;
 import com.massdown.UnaDescarga;
+import java.awt.FlowLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -42,47 +48,100 @@ public class DownloadsPanel extends javax.swing.JPanel {
             int numeroDescargasEnCuso = descargasEnCurso.size();    
 
             for(int i = 0 ; i < numeroDescargasEnCuso ; i++) {
+                
                 final UnaDescarga descargaAAgregar = descargasEnCurso.get(i);
-
+                final int numeroVuelta = i;
+                
                 Thread agregadorDescarga = new Thread() {
 
                     JProgressBar pbDescarga;
-                    JLabel lblTiempo;
                     JLabel lblTituloCap;
                     JLabel lblEstatus;
-                    JLabel lblVelocidadDescarga;                                                
-
+                    JLabel lblVelocidadDescarga;      
+                    JButton btnPararDescarga;
+                    JLabel lblParaPonerEspacio;
+                    
+                    
                     public void CrearComponentesGraficos() {
                         
                         pbDescarga = new JProgressBar();
-                        lblTiempo = new JLabel();
                         lblTituloCap = new JLabel();
                         lblEstatus = new JLabel();
-                        lblVelocidadDescarga = new JLabel();
+                        btnPararDescarga = new JButton();
+                        lblParaPonerEspacio = new JLabel();
                         
                         pbDescarga.setMaximum((int) descargaAAgregar.getTamanoTotal());
                         
-                        AplicarEstiloALosComponentes();
+                        AplicarEstiloALosComponentes();                                                                   
                         
                         contenedorDescargas.add(lblTituloCap);
                         contenedorDescargas.add(lblEstatus);
-                        contenedorDescargas.add(lblTiempo);
+                        contenedorDescargas.add(btnPararDescarga);
+                        contenedorDescargas.add(lblParaPonerEspacio);
                         contenedorDescargas.add(pbDescarga);
+                        
+                        btnPararDescarga.addActionListener(new java.awt.event.ActionListener() {
+                            @Override
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {                                
+                                contenedorDescargas.remove(lblTituloCap);
+                                contenedorDescargas.remove(lblEstatus);
+                                contenedorDescargas.remove(btnPararDescarga);
+                                contenedorDescargas.remove(lblParaPonerEspacio);
+                                contenedorDescargas.remove(pbDescarga);
+                                contenedorDescargas.repaint();
+                                contenedorDescargas.revalidate();
+                                descargaAAgregar.setTerminate(true);
+                            }
+                        });
                     }
                     
                     public void AplicarEstiloALosComponentes() {
-                        lblTituloCap.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+                        lblTituloCap.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
                         lblTituloCap.setForeground(new java.awt.Color(255, 255, 255));
-                        lblEstatus.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-                        lblEstatus.setForeground(new java.awt.Color(153, 153, 153));
-                        lblTiempo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-                        lblTiempo.setForeground(new java.awt.Color(153, 153, 153));
+                        lblTituloCap.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 1));
+                        
+                        lblEstatus.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
+                        lblEstatus.setForeground(new java.awt.Color(180, 180, 180));
+                        lblEstatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 5, 1));
+                        
+                        lblParaPonerEspacio.setBackground(new java.awt.Color(56, 56, 56));
+                        lblParaPonerEspacio.setForeground(new java.awt.Color(56, 56, 56));
+                        lblParaPonerEspacio.setFont(new java.awt.Font("Segoe UI Semilight", 0, 5)); // NOI18N
+                        lblParaPonerEspacio.setText("pepe");
+                        
+                        
+                        btnPararDescarga.setBackground(new java.awt.Color(231, 76, 60));
+                        btnPararDescarga.setFont(new java.awt.Font("Segoe UI Semilight", 0, 11)); // NOI18N
+                        btnPararDescarga.setForeground(new java.awt.Color(51, 51, 51));
+                        btnPararDescarga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/cancelar.png"))); // NOI18N
+                        btnPararDescarga.setText("Stop");
+                        btnPararDescarga.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+                        btnPararDescarga.setFocusable(false);
+                        btnPararDescarga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                        btnPararDescarga.setMargin(new java.awt.Insets(10, 14, 2, 14));
+                        btnPararDescarga.setMaximumSize(new java.awt.Dimension(65, 21));
+                        btnPararDescarga.setPreferredSize(new java.awt.Dimension(300, 21));
+                        btnPararDescarga.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
                     }
                     
                     public void ResfrescarDatosComponentesGraficos() {
-                        lblTiempo.setText(String.valueOf(descargaAAgregar.getTime()));
                         lblTituloCap.setText(descargaAAgregar.getNombreArchivoDescargando());
-                        lblEstatus.setText(String.valueOf("Descargado "+descargaAAgregar.getTamanoDescargado()+" de "+descargaAAgregar.getTamanoTotal() + " a "+descargaAAgregar.getVelocidadDescarga()+"kbps"));
+                        
+                        String textoEstatus = "";
+                        
+                        if(descargaAAgregar.getTamanoDescargado() != descargaAAgregar.getTamanoTotal()) {
+                            textoEstatus = "Downloading "
+                                                            +descargaAAgregar.getTamanoDescargado()
+                                                            +"MB of "+descargaAAgregar.getTamanoTotal() 
+                                                            + "MB at "+descargaAAgregar.getVelocidadDescarga()+"kbps"
+                                                            + " - "+ (int) (descargaAAgregar.getTiempoRestante())+" minutes to end";
+                        } else {
+                            lblEstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/listo.png")));
+                            textoEstatus = "Done!";
+                            contenedorDescargas.remove(btnPararDescarga);
+                        }
+                        
+                        lblEstatus.setText(textoEstatus);
                         pbDescarga.setValue((int) descargaAAgregar.getTamanoDescargado());
                         
                     }
