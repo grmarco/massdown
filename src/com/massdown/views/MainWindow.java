@@ -6,12 +6,12 @@
 
 package com.massdown.views;
 
-import com.massdown.GestorDescargas;
-import com.massdown.Serie;
+import com.massdown.gestordescarga.GestorDescargas;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.JToggleButton;
-import javax.swing.UIManager;
 
 /**
  *
@@ -24,6 +24,8 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         MostarPBar(false);
+        this.IrATab(btnSearch);
+        pnlPrincipalScroll.getVerticalScrollBar().setUnitIncrement(20);
     }
 
     /**
@@ -47,7 +49,6 @@ public class MainWindow extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         pnlPrincipalScroll = new javax.swing.JScrollPane();
         pnlPrincipal = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         pbarPrincipal = new javax.swing.JProgressBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,7 +84,7 @@ public class MainWindow extends javax.swing.JFrame {
         btnSearch.setFont(new java.awt.Font("Segoe UI Semibold", 0, 12)); // NOI18N
         btnSearch.setForeground(new java.awt.Color(255, 255, 255));
         btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/search.png"))); // NOI18N
-        btnSearch.setText("search");
+        btnSearch.setText("explore");
         btnSearch.setFocusable(false);
         btnSearch.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnSearch.setMaximumSize(new java.awt.Dimension(85, 71));
@@ -118,7 +119,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         txtBusqueda.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         txtBusqueda.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        txtBusqueda.setText("enter a serie");
+        txtBusqueda.setText("search series");
         txtBusqueda.setMargin(new java.awt.Insets(2, 10, 2, 2));
         txtBusqueda.setMaximumSize(new java.awt.Dimension(2147483647, 38));
         txtBusqueda.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -157,13 +158,6 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlPrincipal.setBackground(new java.awt.Color(56, 56, 56));
         pnlPrincipal.setLayout(new java.awt.CardLayout());
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("loading...");
-        pnlPrincipal.add(jLabel2, "card2");
-
         pnlPrincipalScroll.setViewportView(pnlPrincipal);
 
         pbarPrincipal.setIndeterminate(true);
@@ -172,7 +166,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
             .addComponent(pnlPrincipalScroll)
             .addComponent(pbarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -181,7 +175,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(pbarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -220,7 +214,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    private void IrATab(JToggleButton tabPulsado) {
+    public void IrATab(JToggleButton tabPulsado) {
         
         
         pnlPrincipal.removeAll();
@@ -242,7 +236,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnBiblioteca.setSelected(false);
                 
                 
-                pnlPrincipal.add(new SeriePanel(this, txtBusqueda.getText()));
+                pnlPrincipal.add(new SearchView(this, txtBusqueda.getText()));
                 break;
             //TAB BLIBLIOTECA    
             case 3:
@@ -267,6 +261,26 @@ public class MainWindow extends javax.swing.JFrame {
         return btnDescargas;
     }
 
+    public JPanel getPnlPrincipal() {
+        return pnlPrincipal;
+    }
+
+    public JTextField getTxtBusqueda() {
+        return txtBusqueda;
+    }
+
+    public JToggleButton getBtnAjustes() {
+        return btnAjustes;
+    }
+
+    public JToggleButton getBtnBiblioteca() {
+        return btnBiblioteca;
+    }
+
+    public JToggleButton getBtnSearch() {
+        return btnSearch;
+    }
+
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -275,7 +289,6 @@ public class MainWindow extends javax.swing.JFrame {
     private javax.swing.JToggleButton btnDescargas;
     private javax.swing.JToggleButton btnSearch;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

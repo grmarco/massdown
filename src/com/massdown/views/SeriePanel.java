@@ -6,22 +6,20 @@
 
 package com.massdown.views;
 
-import com.massdown.Capitulo;
-import com.massdown.Serie;
-import com.massdown.Servidor;
-import com.massdown.Utilidades;
+import com.massdown.core.Capitulo;
+import com.massdown.core.Serie;
+import com.massdown.core.Servidor;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 
 
@@ -32,9 +30,9 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     private MainWindow ventanaPrincipal;
     
     
-    public SeriePanel(final MainWindow ventanaPrincipal, final String nombreSerie) {
+    public SeriePanel(final MainWindow mw, final String nombreSerie) {
         
-        this.ventanaPrincipal = ventanaPrincipal;
+        this.ventanaPrincipal = mw;
         
         initComponents();
         
@@ -60,12 +58,12 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         
                     }   
                     lstCapitulos.setSelectedIndex(0);
-                    ventanaPrincipal.MostarPBar(false);
+                    mw.MostarPBar(false);
                     
                     interrupt();
                 } catch (IOException ex) {
-                    ventanaPrincipal.MostarPBar(false);
-                    Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
+                    mw.MostarPBar(false);
+                    ex.getMessage();
                 }
             }
             
@@ -223,19 +221,9 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private void lstServidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstServidoresMouseClicked
         if(evt.getClickCount() == 2) {
-            final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());
-                        
-            try {
-                servidor.ObtenerEnlaceDescarga();
-                this.ventanaPrincipal.gestorDescargas.addDescarga(servidor.enlaceDeDescarga, (String) lstCapitulos.getSelectedValue());                                 
-                
-                ventanaPrincipal.getBtnDescargas().setText("downloads "+"("+ventanaPrincipal.gestorDescargas.getDescargasEnCurso().size()+")");
-                
-            } catch (MalformedURLException ex) {
-                Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());                                        
+            this.ventanaPrincipal.gestorDescargas.addDescarga(servidor, capituloSeleccionado);                                                 
+            ventanaPrincipal.getBtnDescargas().setText("downloads "+"("+ventanaPrincipal.gestorDescargas.getDescargasEnCurso().size()+")");
         }
     }//GEN-LAST:event_lstServidoresMouseClicked
 

@@ -1,4 +1,4 @@
-package com.massdown;
+package com.massdown.core;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

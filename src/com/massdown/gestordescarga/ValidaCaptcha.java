@@ -1,5 +1,8 @@
-package com.massdown;
+package com.massdown.gestordescarga;
 
+
+
+import com.massdown.core.Utilidades;
 import java.awt.FlowLayout;
 import java.io.IOException;
 import java.util.HashMap;

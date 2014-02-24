@@ -6,17 +6,10 @@
 
 package com.massdown.views;
 
-import com.massdown.GestorDescargas;
-import com.massdown.UnaDescarga;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.GridLayout;
+import com.massdown.gestordescarga.UnaDescarga;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -62,7 +55,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                     JLabel lblParaPonerEspacio;
                     
                     
-                    public void CrearComponentesGraficos() {
+                    public synchronized void CrearComponentesGraficos() {
                         
                         pbDescarga = new JProgressBar();
                         lblTituloCap = new JLabel();
@@ -95,7 +88,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         });
                     }
                     
-                    public void AplicarEstiloALosComponentes() {
+                    public synchronized void AplicarEstiloALosComponentes() {
                         lblTituloCap.setFont(new java.awt.Font("Segoe UI Semilight", 0, 18)); // NOI18N
                         lblTituloCap.setForeground(new java.awt.Color(255, 255, 255));
                         lblTituloCap.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 1));
@@ -114,7 +107,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         btnPararDescarga.setFont(new java.awt.Font("Segoe UI Semilight", 0, 11)); // NOI18N
                         btnPararDescarga.setForeground(new java.awt.Color(51, 51, 51));
                         btnPararDescarga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/cancelar.png"))); // NOI18N
-                        btnPararDescarga.setText("Stop");
+                        btnPararDescarga.setText("Remove");
                         btnPararDescarga.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
                         btnPararDescarga.setFocusable(false);
                         btnPararDescarga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
@@ -125,17 +118,23 @@ public class DownloadsPanel extends javax.swing.JPanel {
                     }
                     
                     public void ResfrescarDatosComponentesGraficos() {
-                        lblTituloCap.setText(descargaAAgregar.getNombreArchivoDescargando());
-                        
+                        lblTituloCap.setText(descargaAAgregar.getNombreArchivo());
+
                         String textoEstatus = "";
                         
-                        if(descargaAAgregar.getTamanoDescargado() != descargaAAgregar.getTamanoTotal()) {
+                        if(descargaAAgregar.getTamanoDescargado() != descargaAAgregar.getTamanoTotal() && descargaAAgregar.getPorcentajeDescargado() != -1) {
+                            lblEstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/loading.png")));
                             textoEstatus = "Downloading "
                                                             +descargaAAgregar.getTamanoDescargado()
                                                             +"MB of "+descargaAAgregar.getTamanoTotal() 
                                                             + "MB at "+descargaAAgregar.getVelocidadDescarga()+"kbps"
                                                             + " - "+ (int) (descargaAAgregar.getTiempoRestante())+" minutes to end";
-                        } else {
+                        }
+                        else if(descargaAAgregar.getPorcentajeDescargado() == -1) {
+                            lblEstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/espera.png")));
+                            textoEstatus = "Waiting...";
+                        }
+                        else {
                             lblEstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/listo.png")));
                             textoEstatus = "Done!";
                             contenedorDescargas.remove(btnPararDescarga);
@@ -152,9 +151,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         
                         int numDeVueltas = 0;
                         
-                        while(true) {
-                            
-                            
+                        while(true) {                                                        
                             if(numDeVueltas == 0) {
                                 numDeVueltas++;
                                 CrearComponentesGraficos();                                    

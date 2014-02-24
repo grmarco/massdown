@@ -3,19 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/Capitulo.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/Main.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/servidores/AllMyVideosYVidSpot.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/GestorDescargas.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/UnaDescarga.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/Serie.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/Utilidades.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/SettingsPanel.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/core/Serie.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/SearchView.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/busqueda/Busqueda.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/gestordescarga/GestorDescargas.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/libs/WrapLayout.java</file>
             <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/MainWindow.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/servidores/StreamCloud.java</file>
             <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/SeriePanel.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/Servidor.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/DownloadsPanel.java</file>
-            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/servidores/MagnoVideo.java</file>
         </group>
     </open-files>
 </project-private>

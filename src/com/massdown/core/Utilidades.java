@@ -1,5 +1,6 @@
-package com.massdown;
+package com.massdown.core;
 
+import com.massdown.main.Main;
 import java.awt.Dimension;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;

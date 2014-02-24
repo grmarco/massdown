@@ -6,7 +6,7 @@
 
 package com.massdown.servidores;
 
-import com.massdown.Servidor;
+import com.massdown.core.Servidor;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.HashMap;

@@ -1,5 +1,5 @@
 
-package com.massdown;
+package com.massdown.gestordescarga;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class UnaDescarga {
@@ -20,7 +21,6 @@ public class UnaDescarga {
     private File file;
     private boolean terminate = false;
     
-    private String nombreArchivoDescargando;
     private double porcentajeDescargado;
     private double tamanoDescargado;
     private int velocidadDescarga;
@@ -28,10 +28,17 @@ public class UnaDescarga {
     private final Timer timer;
     private double tiempoRestante;
     public int time;
-
+    private String nombreArchivo;
+    
+    
     public UnaDescarga(File file) {
-        this.file = file;
+        setFile(file);        
         
+        tamanoDescargado = 0;
+        tamanoTotal = 0;
+        tiempoRestante = 0;
+        velocidadDescarga = 0;
+        porcentajeDescargado = -1;
         
         timer = new Timer(1000, new ActionListener() {
             
@@ -55,7 +62,8 @@ public class UnaDescarga {
     }
     
     public void setFile(File file) {
-        this.file = file;
+        file.mkdir();
+        this.file = file.getAbsoluteFile();
     }
 
     public boolean isTerminate() {
@@ -73,20 +81,18 @@ public class UnaDescarga {
     public URLConnection openConexion() throws IOException {
         conexion = url.openConnection();
         conexion.connect();
+        tamanoTotal = (double) ((double) (conexion.getContentLength() / 1000) / 1000);
         return conexion;
     }
     
     
-    public void descarga(final String nombreArchivoFinal) throws IOException {
+    public void descargar() throws IOException {
         
         String array[] = url.toString().split("/");
         final String salida = array[array.length - 1].replaceAll("%20", " ");
-        
-        System.out.println(salida);
-        
-        tamanoTotal = (double) ((double) (conexion.getContentLength() / 1000) / 1000);
+                
         final BufferedInputStream buffer = new BufferedInputStream(conexion.getInputStream());
-        nombreArchivoDescargando = nombreArchivoFinal+".mp4";
+        String nombreArchivoDescargando = nombreArchivo+".mp4";
         final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file + "/" + nombreArchivoDescargando));
                        
         timer.start();
@@ -108,8 +114,7 @@ public class UnaDescarga {
                         out.write(datos, 0, read);
                         
                         tamanoDescargado = (double) ((double) (length / 1000) / 1000);
-                        porcentajeDescargado = tamanoDescargado/tamanoTotal  * 100;
-                                                
+                        porcentajeDescargado = (tamanoDescargado/tamanoTotal) * 100;
                         read = buffer.read(datos);
                         
                         if(terminate) {
@@ -126,14 +131,10 @@ public class UnaDescarga {
                     timer.stop();
                     
                 } catch (IOException ex) {
-                    System.out.println("ERROR --> " + ex);
+                   JOptionPane.showMessageDialog(new JOptionPane(), "the download "+nombreArchivo+" has stoped");
                 }
             }
         }.start();
-    }
-
-    public String getNombreArchivoDescargando() {
-        return nombreArchivoDescargando;
     }
 
     public double getPorcentajeDescargado() {
@@ -158,6 +159,18 @@ public class UnaDescarga {
 
     public double getTiempoRestante() {
         return tiempoRestante;
+    }
+
+    public String getNombreArchivo() {
+        return nombreArchivo;
+    }
+
+    public void setNombreArchivo(String nombreArchivo) {
+        this.nombreArchivo = nombreArchivo;
+    }
+
+    public void setPorcentajeDescargado(double porcentajeDescargado) {
+        this.porcentajeDescargado = porcentajeDescargado;
     }
     
     

@@ -1,6 +1,6 @@
 
 
-package com.massdown;
+package com.massdown.core;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -21,6 +21,7 @@ public final class Serie {
     
     public Serie(String nombre) throws IOException {
         this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie/" + nombre.replaceAll(" ", "-"))).get();
+        //this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie" + nombre)).get();
         this.nombreSerie = getNombreSerie();
         this.descripcionSerie = getDescripcionSerie();
         this.urlImagen = getUrlImagen();                     
@@ -28,7 +29,9 @@ public final class Serie {
 
     public Capitulo CrearObjetoCapitulo(int indiceCapitulo) throws IOException {        
         String[] datosCapituloSeleccionado = capitulos.get(indiceCapitulo);
-        return new Capitulo(datosCapituloSeleccionado[0], datosCapituloSeleccionado[1]);        
+        Capitulo capitulo = new Capitulo(datosCapituloSeleccionado[0], datosCapituloSeleccionado[1]);
+        capitulo.tituloSeriePerteneciente = this.nombreSerie;
+        return capitulo;        
     }
 
     public String getNombreSerie() {

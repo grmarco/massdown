@@ -1,6 +1,6 @@
 
 
-package com.massdown;
+package com.massdown.core;
 import com.massdown.servidores.AllMyVideosYVidSpot;
 import com.massdown.servidores.MagnoVideo;
 import com.massdown.servidores.StreamCloud;
@@ -15,6 +15,7 @@ public class Capitulo {
     
     public ArrayList<Servidor> servidoresConElCapitulo;
     public String tituloCapitulo;    
+    public String tituloSeriePerteneciente;
     private Document domPagCapitulo;
     private final String enlaceCapitulo;    
     

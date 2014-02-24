@@ -1,4 +1,4 @@
-package com.massdown;
+package com.massdown.main;
 
 import com.massdown.views.MainWindow;
 import java.io.IOException;
