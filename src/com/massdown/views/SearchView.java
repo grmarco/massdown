@@ -9,6 +9,8 @@ package com.massdown.views;
 import com.massdown.busqueda.Busqueda;
 import com.massdown.gestordescarga.UnaDescarga;
 import com.massdown.views.libs.WrapLayout;
+import com.sun.java.swing.plaf.motif.MotifScrollBarUI;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -25,6 +27,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.plaf.ScrollBarUI;
+import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.plaf.metal.MetalScrollBarUI;
+import javax.swing.plaf.synth.SynthScrollBarUI;
 
 /**
  *
@@ -38,6 +44,23 @@ public class SearchView extends javax.swing.JPanel {
     public SearchView(MainWindow mw, String consulta) {
         initComponents();
         this.mw = mw;
+        pnlDestacasScroll.getHorizontalScrollBar().setUnitIncrement(30);
+         ScrollBarUI scrollBarStyle = new MetalScrollBarUI(){
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                JButton button = super.createDecreaseButton(orientation);
+                button.setBackground(new Color(56,56,56));
+                return button;
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                JButton button = super.createIncreaseButton(orientation);
+                button.setBackground(new Color(56,56,56));
+                return button;
+            }
+        };
+        pnlDestacasScroll.getHorizontalScrollBar().setUI(scrollBarStyle);
         try {
             busqueda = new Busqueda((consulta.startsWith("search series")) ? "" : consulta);
         } catch (IOException ex) {
@@ -60,6 +83,7 @@ public class SearchView extends javax.swing.JPanel {
                 final String tituloSerie = datosSerie[0]; 
                 final String urlSerie = datosSerie[1];
                 final String urlImagenSerie = datosSerie[2];
+                 final String descripcion = datosSerie[3];
                 final int numeroVuelta = i;
                 
                 Thread agregadorResultados = new Thread() {
@@ -89,16 +113,18 @@ public class SearchView extends javax.swing.JPanel {
                             }
                         });
                         
-                        lblSerie.setText((tituloSerie.toCharArray().length < 20) ? tituloSerie : tituloSerie.substring(0, 10)+"...");
+                        lblSerie.setText((tituloSerie.toCharArray().length < 20) ? tituloSerie : tituloSerie.substring(0, 20)+"...");
                         lblSerie.setToolTipText(tituloSerie);
-                        lblSerie.setIcon(escalarImagen(ImageIO.read(new URL(urlImagenSerie)), 1));
+                        lblSerie.setIcon(escalarImagen(ImageIO.read(new URL(urlImagenSerie)), 0.7));
                         
                         AplicarEstiloALosComponentes();                                                                   
-                        pnlResultados.setLayout(new WrapLayout(WrapLayout.LEFT, 30, 30));
+                        //pnlResultados.setLayout(new WrapLayout(WrapLayout.LEFT, 30, 30));
                         
                         pnlResultados.add(lblSerie);                        
                         pnlResultados.revalidate();
                         pnlResultados.repaint();
+                        pnlDestacasScroll.repaint();
+                        pnlDestacasScroll.revalidate();
                         
                         
                         
@@ -142,60 +168,97 @@ public class SearchView extends javax.swing.JPanel {
         return new ImageIcon(dst);
     }
     
+    public static String convertToMultiline(String orig)
+    {
+        return "<html>" + orig.replaceAll("\n", "<br>");
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        pnlSearch = new javax.swing.JPanel();
+        lblTitulo = new javax.swing.JLabel();
+        lblTitulo1 = new javax.swing.JLabel();
+        pnlDestacasScroll = new javax.swing.JScrollPane();
         pnlResultados = new javax.swing.JPanel();
 
-        jPanel1.setBackground(new java.awt.Color(56, 56, 56));
+        pnlSearch.setBackground(new java.awt.Color(56, 56, 56));
+
+        lblTitulo.setFont(new java.awt.Font("Segoe UI Light", 0, 36)); // NOI18N
+        lblTitulo.setForeground(new java.awt.Color(231, 76, 60));
+        lblTitulo.setText("Featured");
+
+        lblTitulo1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 24)); // NOI18N
+        lblTitulo1.setForeground(new java.awt.Color(230, 126, 34));
+        lblTitulo1.setText("on the last day");
+
+        pnlDestacasScroll.setBackground(new java.awt.Color(56, 56, 56));
+        pnlDestacasScroll.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        pnlDestacasScroll.setMaximumSize(new java.awt.Dimension(810, 202));
+        pnlDestacasScroll.setPreferredSize(new java.awt.Dimension(810, 202));
 
         pnlResultados.setBackground(new java.awt.Color(56, 56, 56));
+        pnlResultados.setMaximumSize(new java.awt.Dimension(810, 202));
+        pnlResultados.addHierarchyBoundsListener(new java.awt.event.HierarchyBoundsListener() {
+            public void ancestorMoved(java.awt.event.HierarchyEvent evt) {
+                pnlResultadosAncestorMoved(evt);
+            }
+            public void ancestorResized(java.awt.event.HierarchyEvent evt) {
+            }
+        });
+        pnlResultados.setLayout(new java.awt.GridLayout(1, 0, 25, 25));
+        pnlDestacasScroll.setViewportView(pnlResultados);
 
-        javax.swing.GroupLayout pnlResultadosLayout = new javax.swing.GroupLayout(pnlResultados);
-        pnlResultados.setLayout(pnlResultadosLayout);
-        pnlResultadosLayout.setHorizontalGroup(
-            pnlResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 616, Short.MAX_VALUE)
-        );
-        pnlResultadosLayout.setVerticalGroup(
-            pnlResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 372, Short.MAX_VALUE)
-        );
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout pnlSearchLayout = new javax.swing.GroupLayout(pnlSearch);
+        pnlSearch.setLayout(pnlSearchLayout);
+        pnlSearchLayout.setHorizontalGroup(
+            pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlSearchLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addComponent(pnlResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlDestacasScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(pnlSearchLayout.createSequentialGroup()
+                        .addComponent(lblTitulo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblTitulo1)
+                        .addGap(0, 358, Short.MAX_VALUE)))
+                .addGap(22, 22, 22))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+        pnlSearchLayout.setVerticalGroup(
+            pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlSearchLayout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(pnlSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTitulo)
+                    .addComponent(lblTitulo1))
+                .addGap(15, 15, 15)
+                .addComponent(pnlDestacasScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(150, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void pnlResultadosAncestorMoved(java.awt.event.HierarchyEvent evt) {//GEN-FIRST:event_pnlResultadosAncestorMoved
+        
+    }//GEN-LAST:event_pnlResultadosAncestorMoved
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblTitulo;
+    private javax.swing.JLabel lblTitulo1;
+    private javax.swing.JScrollPane pnlDestacasScroll;
     private javax.swing.JPanel pnlResultados;
+    private javax.swing.JPanel pnlSearch;
     // End of variables declaration//GEN-END:variables
 }
