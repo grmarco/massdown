@@ -19,11 +19,9 @@ public class Busqueda {
     public Busqueda(String consulta) throws IOException {
         this.consulta = consulta;
         this.resultadosDeLaBusqueda = new ArrayList<>();
-        if(consulta.equals("")) {
-            this.ObtenerSerieMasVistas();
-        } else {
-            this.ObtenerResultadosBusqueda();
-        }
+        this.ObtenerSerieMasVistas();
+        if(!consulta.equals("")) 
+            this.ObtenerResultadosBusqueda();        
     }
     
     private void ObtenerResultadosBusqueda() throws IOException {
@@ -31,31 +29,30 @@ public class Busqueda {
         data.put("keyword", consulta);
         data.put("search_type", "serie");
         domPaginaBusqueda = Jsoup.connect("http://www.seriesyonkis.com/buscar/serie").data(data).post();
-        domSeriesBuscadas = domPaginaBusqueda.select(".results .nth-child1n");  
-        this.CargarDatosSeriesEnArray();
+        domSeriesBuscadas = domPaginaBusqueda.select("#series_results_wrapper .results .nth-child1n");  
+        this.CargarDatosSeriesEnArray(false);
     }
             
     private void ObtenerSerieMasVistas() throws IOException {
         domPaginaBusqueda = Jsoup.connect("http://www.seriesyonkis.com/series-mas-vistas").get();
         domSeriesBuscadas = domPaginaBusqueda.select("#tabs-1 .covers-list .thumb-episode"); 
-        this.CargarDatosSeriesEnArray();
+        this.CargarDatosSeriesEnArray(true);
     }
     
-    private void CargarDatosSeriesEnArray() {
+    private void CargarDatosSeriesEnArray(boolean serieDestacada) {
         for(int i = 0 ; i < domSeriesBuscadas.size() ; i++) {           
             Element capitulo = domSeriesBuscadas.get(i);            
             String titulo = capitulo.select("a").attr("title");
             String urlSerie = capitulo.select("a").attr("href");
             String urlImagenSerie = capitulo.select("img").attr("src");    
             String descripcionSerie = capitulo.select(".content").text(); 
-            System.out.println(descripcionSerie);
-            this.AgregarResultadoDeBusqueda(titulo, urlSerie, urlImagenSerie, descripcionSerie);
+            this.AgregarResultadoDeBusqueda(titulo, urlSerie, urlImagenSerie, descripcionSerie, (serieDestacada) ? "destacada" : "noDestacada" );
         }
         
     }
     
-    public void AgregarResultadoDeBusqueda(String titulo, String urlSerie, String urlImagenSerie, String descripcionSerie) {
-        String[] datosCapitulo = {titulo, urlSerie, urlImagenSerie, descripcionSerie};
+    public void AgregarResultadoDeBusqueda(String titulo, String urlSerie, String urlImagenSerie, String descripcionSerie, String tipoSerie) {
+        String[] datosCapitulo = {titulo, urlSerie, urlImagenSerie, descripcionSerie, tipoSerie};
         resultadosDeLaBusqueda.add(datosCapitulo);
     }
     

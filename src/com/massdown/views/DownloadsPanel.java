@@ -37,8 +37,18 @@ public class DownloadsPanel extends javax.swing.JPanel {
         @Override
         public void run() {  
 
-            ArrayList<UnaDescarga> descargasEnCurso = mw.gestorDescargas.getDescargasEnCurso();
-            int numeroDescargasEnCuso = descargasEnCurso.size();    
+            final ArrayList<UnaDescarga> descargasEnCurso = mw.gestorDescargas.getDescargasEnCurso();
+            int numeroDescargasEnCuso = descargasEnCurso.size(); 
+            
+            if(numeroDescargasEnCuso <= 0) {
+                JLabel labelAviso = new JLabel();
+                labelAviso.setFont(new java.awt.Font("Segoe UI Light", 0, 32)); // NOI18N
+                labelAviso.setForeground(new java.awt.Color(205, 205, 205));
+                labelAviso.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 1, 1, 1));
+                labelAviso.setText("no pending downloads");
+                contenedorDescargas.add(labelAviso);
+                
+            }
 
             for(int i = 0 ; i < numeroDescargasEnCuso ; i++) {
                 
@@ -83,6 +93,8 @@ public class DownloadsPanel extends javax.swing.JPanel {
                                 contenedorDescargas.remove(pbDescarga);
                                 contenedorDescargas.repaint();
                                 contenedorDescargas.revalidate();
+                                descargasEnCurso.remove(descargaAAgregar);
+                                mw.ActualizarLabelDescargas();
                                 descargaAAgregar.setTerminate(true);
                             }
                         });
@@ -137,7 +149,6 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         else {
                             lblEstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/listo.png")));
                             textoEstatus = "Done!";
-                            contenedorDescargas.remove(btnPararDescarga);
                         }
                         
                         lblEstatus.setText(textoEstatus);

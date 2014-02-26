@@ -12,6 +12,7 @@ import org.jsoup.select.Elements;
 public final class Serie {
     
     private String nombreSerie;
+    private String cadenaSerie;
     private String descripcionSerie;
     private String urlImagen;    
     private ArrayList<String[]> capitulos;    
@@ -20,7 +21,8 @@ public final class Serie {
 
     
     public Serie(String nombre) throws IOException {
-        this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie/" + nombre.replaceAll(" ", "-"))).get();
+        this.cadenaSerie = nombre.replaceAll("-", " ");
+        this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie/" + cadenaSerie.replaceAll(" ", "-"))).get();
         //this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie" + nombre)).get();
         this.nombreSerie = getNombreSerie();
         this.descripcionSerie = getDescripcionSerie();
@@ -74,5 +76,10 @@ public final class Serie {
         
         return capitulos;
     }   
+
+    public String getCadenaSerie() {
+        return cadenaSerie;
+    }
+    
     
 }

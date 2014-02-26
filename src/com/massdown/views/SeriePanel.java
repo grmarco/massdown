@@ -58,12 +58,13 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         
                     }   
                     lstCapitulos.setSelectedIndex(0);
+                    CargarListaServidores();
                     mw.MostarPBar(false);
                     
                     interrupt();
                 } catch (IOException ex) {
                     mw.MostarPBar(false);
-                    ex.getMessage();
+                    mw.IrATab(mw.getBtnSearch());
                 }
             }
             
@@ -93,6 +94,8 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
         lstServidores = new javax.swing.JList();
         lblServerSeleccionado = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(56, 56, 56));
 
@@ -110,7 +113,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
         lblTitulo.setText(" ");
 
         jScrollPane2.setBackground(new java.awt.Color(56, 56, 56));
-        jScrollPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
 
         lstCapitulos.setBackground(new java.awt.Color(56, 56, 56));
         lstCapitulos.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -154,6 +157,14 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI Semilight", 2, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setText("(double click to download)");
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Semilight", 2, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel4.setText("(one click to show the downloads)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,12 +182,21 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(iconSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
-                        .addGap(15, 15, 15)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblServerSeleccionado, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING))))
-                .addGap(20, 20, 20))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(20, 20, 20)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
+                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(lblServerSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,16 +213,19 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addGap(9, 9, 9)
                         .addComponent(lblServerSeleccionado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                        .addGap(23, 23, 23))))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addGap(22, 22, 22))))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void lstCapitulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstCapitulosMouseClicked
-
+    
+    private void CargarListaServidores() {
         Thread cargaListaServidores = new Thread(){
 
             @Override
@@ -215,14 +238,16 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                     DefaultListModel listModel = new DefaultListModel();
                     lblServerSeleccionado.setText((String) lstCapitulos.getSelectedValue());
                     lstServidores.setModel(listModel);
-
+                    
+                    if(capituloSeleccionado.servidoresConElCapitulo.size() <= 0) {
+                        listModel.addElement("there were no downloads option");
+                    }
+                    
                     for(int i = 0 ; i < capituloSeleccionado.servidoresConElCapitulo.size() ; i++) {
                         Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(i);
                         listModel.addElement("Download option "+ (i + 1) + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
                         
-                    }
-                    
-                    
+                    }                                        
                     
                 } catch (IOException ex) {
                     Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
@@ -233,24 +258,32 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
         };
         cargaListaServidores.start();
+    }
+    
+    private void lstCapitulosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstCapitulosMouseClicked
+        CargarListaServidores();        
     }//GEN-LAST:event_lstCapitulosMouseClicked
 
     private void lstServidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstServidoresMouseClicked
         if(evt.getClickCount() == 2) {
             final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());                                        
             this.mw.gestorDescargas.addDescarga(servidor, capituloSeleccionado);                                                 
-            mw.getBtnDescargas().setText("downloads "+"("+mw.gestorDescargas.getDescargasEnCurso().size()+")");
+            mw.ActualizarLabelDescargas();
         }
     }//GEN-LAST:event_lstServidoresMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        mw.IrATab(mw.getBtnSearch());
+        mw.getTxtBusqueda().setText(serie.getCadenaSerie());
+        mw.IrATab(mw.getBtnSearch()); 
+        
     }//GEN-LAST:event_jLabel1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel iconSerie;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

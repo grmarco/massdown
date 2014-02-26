@@ -9,6 +9,7 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 public class GestorDescargas {
     private ArrayList<UnaDescarga> descargasEnCurso; 
@@ -33,7 +34,10 @@ public class GestorDescargas {
         } catch (MalformedURLException ex) {
             Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JOptionPane(),
+            "Error adding the download",
+            "There has been an error while adding the download",
+            JOptionPane.ERROR_MESSAGE);
         }          
     }
     
@@ -59,17 +63,15 @@ public class GestorDescargas {
                                 UnaDescarga estaDescarga = descargasEnCurso.get(i);
                                 
                                 if(descargaPreviaAEsta.getPorcentajeDescargado() == 100 && estaDescarga.getPorcentajeDescargado() == -1 && estaDescarga.time == 0) {
-                                    System.out.println(estaDescarga.getPorcentajeDescargado());
                                     estaDescarga.setPorcentajeDescargado(0);
                                     estaDescarga.descargar();
                                 }
                                 
                             }
-                        }
-                        
+                        }                        
    
                     } catch (IOException ex) {
-                        Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
+                        
                     } catch (InterruptedException ex) {
                     Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
                     }       

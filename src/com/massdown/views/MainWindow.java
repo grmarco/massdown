@@ -6,12 +6,19 @@
 
 package com.massdown.views;
 
+import com.massdown.core.Serie;
 import com.massdown.gestordescarga.GestorDescargas;
+import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.plaf.ScrollBarUI;
+import javax.swing.plaf.metal.MetalScrollBarUI;
 
 /**
  *
@@ -25,7 +32,26 @@ public class MainWindow extends javax.swing.JFrame {
         initComponents();
         MostarPBar(false);
         this.IrATab(btnSearch);
-        pnlPrincipalScroll.getVerticalScrollBar().setUnitIncrement(20);
+        
+        
+         pnlPrincipalScroll.getVerticalScrollBar().setUnitIncrement(30);
+         ScrollBarUI scrollBarStyle = new MetalScrollBarUI(){
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                JButton button = super.createDecreaseButton(orientation);
+                button.setBackground(new Color(56,56,56));
+                return button;
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                JButton button = super.createIncreaseButton(orientation);
+                button.setBackground(new Color(56,56,56));
+                return button;
+            }
+        };
+        pnlPrincipalScroll.getVerticalScrollBar().setUI(scrollBarStyle);
+        
     }
 
     /**
@@ -42,7 +68,7 @@ public class MainWindow extends javax.swing.JFrame {
         btnDescargas = new javax.swing.JToggleButton();
         btnSearch = new javax.swing.JToggleButton();
         btnBiblioteca = new javax.swing.JToggleButton();
-        jLabel1 = new javax.swing.JLabel();
+        lblParaIrAlTabSerie = new javax.swing.JLabel();
         txtBusqueda = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnAjustes = new javax.swing.JToggleButton();
@@ -113,9 +139,9 @@ public class MainWindow extends javax.swing.JFrame {
         });
         pnlMenu.add(btnBiblioteca);
 
-        jLabel1.setForeground(new java.awt.Color(53, 50, 48));
-        jLabel1.setText("jLab");
-        pnlMenu.add(jLabel1);
+        lblParaIrAlTabSerie.setForeground(new java.awt.Color(53, 50, 48));
+        lblParaIrAlTabSerie.setText("jLab");
+        pnlMenu.add(lblParaIrAlTabSerie);
 
         txtBusqueda.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         txtBusqueda.setHorizontalAlignment(javax.swing.JTextField.LEFT);
@@ -155,6 +181,7 @@ public class MainWindow extends javax.swing.JFrame {
 
         pnlPrincipalScroll.setBackground(new java.awt.Color(56, 56, 56));
         pnlPrincipalScroll.setBorder(null);
+        pnlPrincipalScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         pnlPrincipal.setBackground(new java.awt.Color(56, 56, 56));
         pnlPrincipal.setLayout(new java.awt.CardLayout());
@@ -202,7 +229,7 @@ public class MainWindow extends javax.swing.JFrame {
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed
         //Si es intro ejecutamos acciones si no, nada.
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {           
-            IrATab(btnSearch);
+            IrATab(lblParaIrAlTabSerie);
         }
     }//GEN-LAST:event_txtBusquedaKeyPressed
     
@@ -214,7 +241,7 @@ public class MainWindow extends javax.swing.JFrame {
         }
     }
     
-    public void IrATab(JToggleButton tabPulsado) {
+    public void IrATab(Component tabPulsado) {
         
         
         pnlPrincipal.removeAll();
@@ -237,6 +264,15 @@ public class MainWindow extends javax.swing.JFrame {
                 
                 
                 pnlPrincipal.add(new SearchView(this, txtBusqueda.getText()));
+                break;
+            case 4:
+                btnSearch.setSelected(true);
+                btnDescargas.setSelected(false);
+                btnAjustes.setSelected(false);
+                btnBiblioteca.setSelected(false);
+                
+                
+                pnlPrincipal.add(new SeriePanel(this, txtBusqueda.getText()));
                 break;
             //TAB BLIBLIOTECA    
             case 3:
@@ -273,6 +309,12 @@ public class MainWindow extends javax.swing.JFrame {
         return btnAjustes;
     }
 
+    public JLabel getLblParaIrAlTabSerie() {
+        return lblParaIrAlTabSerie;
+    }
+    
+    
+    
     public JToggleButton getBtnBiblioteca() {
         return btnBiblioteca;
     }
@@ -281,17 +323,19 @@ public class MainWindow extends javax.swing.JFrame {
         return btnSearch;
     }
 
-    
+    public void ActualizarLabelDescargas() {
+        btnDescargas.setText("downloads "+"("+gestorDescargas.getDescargasEnCurso().size()+")");
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAjustes;
     private javax.swing.JToggleButton btnBiblioteca;
     private javax.swing.JToggleButton btnDescargas;
     private javax.swing.JToggleButton btnSearch;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel lblParaIrAlTabSerie;
     private javax.swing.JProgressBar pbarPrincipal;
     private javax.swing.JToolBar pnlMenu;
     private javax.swing.JPanel pnlPrincipal;
