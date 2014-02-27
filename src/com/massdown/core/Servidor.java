@@ -1,5 +1,6 @@
 package com.massdown.core;
 
+import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -35,7 +36,7 @@ public class Servidor {
         Document seriesCocoDOM = Jsoup.connect("http://www.seriescoco.com"+url).get();
         String enlaceRedireccionSeriescoco = "http://www.seriescoco.com"+seriesCocoDOM.select(".episodes tr.down>td a").attr("href");
         
-        this.enlaceServidor = Utilidades.getFinalRedirectedUrl(enlaceRedireccionSeriescoco);
+        this.enlaceServidor = MetodosUtiles.getFinalRedirectedUrl(enlaceRedireccionSeriescoco);
         
         return  this.enlaceServidor;        
     }

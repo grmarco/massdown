@@ -2,7 +2,7 @@ package com.massdown.gestordescarga;
 
 
 
-import com.massdown.core.Utilidades;
+import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.FlowLayout;
 import java.io.IOException;
 import java.util.HashMap;
@@ -75,7 +75,7 @@ public class ValidaCaptcha extends JFrame {
                 datosForm.put("recaptcha_challenge_field", id);
                 datosForm.put("recaptcha_response_field", textoDeLaImagen);
         try {
-            codigoFuente = Utilidades.doSubmit(url, datosForm);
+            codigoFuente = MetodosUtiles.doSubmit(url, datosForm);
         
                 int primerNodo = codigoFuente.indexOf("<textarea rows=\"5\" cols=\"100\"");
                 int segundoNodo = codigoFuente.indexOf("</textarea>");
@@ -86,7 +86,7 @@ public class ValidaCaptcha extends JFrame {
                 Map<String, String> OtrosDatosForm = new HashMap<>();
                 OtrosDatosForm.put("recaptcha_challenge_field", hashEnviar);
                 OtrosDatosForm.put("recaptcha_response_field", "manual_challenge");
-                Utilidades.doSubmit("http://www.seriescoco.com" + urlCapitulo, OtrosDatosForm);
+                MetodosUtiles.doSubmit("http://www.seriescoco.com" + urlCapitulo, OtrosDatosForm);
                 this.codigoStream = "http://www.seriescoco.com" + urlCapitulo;
                 
         } catch (Exception ex) {

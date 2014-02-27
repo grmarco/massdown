@@ -28,16 +28,19 @@ public class SettingsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        btngrpModoDescarga = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
+        btnSeleccionarRutaDescarga = new javax.swing.JButton();
+        lblMostrarRutaDescarga = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rbDescargarCola = new javax.swing.JRadioButton();
+        rbDescargarALaVez = new javax.swing.JRadioButton();
+        jLabel10 = new javax.swing.JLabel();
+        btnComprobarActualizaciones = new javax.swing.JButton();
+        lblVersionActual = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(56, 56, 56));
 
@@ -55,26 +58,39 @@ public class SettingsPanel extends javax.swing.JPanel {
         jLabel6.setForeground(new java.awt.Color(231, 76, 60));
         jLabel6.setText("massdown");
 
-        jButton1.setText("Select download path");
+        btnSeleccionarRutaDescarga.setText("Select download path");
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("settings");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        lblMostrarRutaDescarga.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        lblMostrarRutaDescarga.setForeground(new java.awt.Color(255, 255, 255));
+        lblMostrarRutaDescarga.setText("settings");
+        lblMostrarRutaDescarga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(204, 204, 204));
         jLabel9.setText("download mode");
 
-        jRadioButton1.setBackground(new java.awt.Color(56, 56, 56));
-        jRadioButton1.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jRadioButton1.setForeground(new java.awt.Color(153, 153, 153));
-        jRadioButton1.setText("download queued");
+        rbDescargarCola.setBackground(new java.awt.Color(56, 56, 56));
+        btngrpModoDescarga.add(rbDescargarCola);
+        rbDescargarCola.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        rbDescargarCola.setForeground(new java.awt.Color(153, 153, 153));
+        rbDescargarCola.setText("download queued");
 
-        jRadioButton3.setBackground(new java.awt.Color(56, 56, 56));
-        jRadioButton3.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
-        jRadioButton3.setForeground(new java.awt.Color(153, 153, 153));
-        jRadioButton3.setText("download all at once");
+        rbDescargarALaVez.setBackground(new java.awt.Color(56, 56, 56));
+        btngrpModoDescarga.add(rbDescargarALaVez);
+        rbDescargarALaVez.setFont(new java.awt.Font("Segoe UI Semilight", 0, 14)); // NOI18N
+        rbDescargarALaVez.setForeground(new java.awt.Color(153, 153, 153));
+        rbDescargarALaVez.setText("download all at once");
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Light", 0, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel10.setText("check for updates");
+
+        btnComprobarActualizaciones.setText("Check updates");
+
+        lblVersionActual.setFont(new java.awt.Font("Segoe UI Light", 0, 14)); // NOI18N
+        lblVersionActual.setForeground(new java.awt.Color(153, 153, 153));
+        lblVersionActual.setText("Current version 1.0");
+        lblVersionActual.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -88,25 +104,29 @@ public class SettingsPanel extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addGap(12, 12, 12))
+                        .addComponent(jLabel3))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 541, Short.MAX_VALUE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 589, Short.MAX_VALUE)
                             .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(btnComprobarActualizaciones)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(lblVersionActual))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jRadioButton1)
+                                        .addComponent(btnSeleccionarRutaDescarga, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(lblMostrarRutaDescarga, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(rbDescargarCola)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jRadioButton3)))
+                                        .addComponent(rbDescargarALaVez)))
                                 .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
+                .addGap(22, 22, 22))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -115,15 +135,21 @@ public class SettingsPanel extends javax.swing.JPanel {
                 .addComponent(jLabel5)
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel7))
+                    .addComponent(btnSeleccionarRutaDescarga)
+                    .addComponent(lblMostrarRutaDescarga))
                 .addGap(30, 30, 30)
                 .addComponent(jLabel9)
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                    .addComponent(rbDescargarCola)
+                    .addComponent(rbDescargarALaVez))
+                .addGap(30, 30, 30)
+                .addComponent(jLabel10)
+                .addGap(16, 16, 16)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnComprobarActualizaciones)
+                    .addComponent(lblVersionActual))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -135,15 +161,18 @@ public class SettingsPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnComprobarActualizaciones;
+    private javax.swing.JButton btnSeleccionarRutaDescarga;
+    private javax.swing.ButtonGroup btngrpModoDescarga;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton3;
+    private javax.swing.JLabel lblMostrarRutaDescarga;
+    private javax.swing.JLabel lblVersionActual;
+    private javax.swing.JRadioButton rbDescargarALaVez;
+    private javax.swing.JRadioButton rbDescargarCola;
     // End of variables declaration//GEN-END:variables
 }

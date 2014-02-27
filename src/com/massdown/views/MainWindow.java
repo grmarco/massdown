@@ -193,7 +193,7 @@ public class MainWindow extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 856, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
             .addComponent(pnlPrincipalScroll)
             .addComponent(pbarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -202,7 +202,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 510, Short.MAX_VALUE)
+                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(pbarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -263,7 +263,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnBiblioteca.setSelected(false);
                 
                 
-                pnlPrincipal.add(new SearchView(this, txtBusqueda.getText()));
+                pnlPrincipal.add(new SearchPanel(this, txtBusqueda.getText()));
                 break;
             case 4:
                 btnSearch.setSelected(true);
@@ -279,6 +279,7 @@ public class MainWindow extends javax.swing.JFrame {
                 btnDescargas.setSelected(false);
                 btnAjustes.setSelected(false);
                 btnSearch.setSelected(false);
+                pnlPrincipal.add(new LibraryPanel());
                 break;
             //TAB SETTINGS
             case 7:

@@ -36,12 +36,12 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
  *
  * @author Guillermo
  */
-public class SearchView extends javax.swing.JPanel {
+public class SearchPanel extends javax.swing.JPanel {
 
     private MainWindow mw;
     private Busqueda busqueda;
     
-    public SearchView(MainWindow mw, String consulta) {
+    public SearchPanel(MainWindow mw, String consulta) {
         initComponents();
         this.mw = mw;
         pnlDestacasScroll.getHorizontalScrollBar().setUnitIncrement(30);
@@ -64,7 +64,7 @@ public class SearchView extends javax.swing.JPanel {
         try {
             busqueda = new Busqueda((consulta.startsWith("search series")) ? "" : consulta);
         } catch (IOException ex) {
-            Logger.getLogger(SearchView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SearchPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
         new MuestraResultados().start();
     }
@@ -153,7 +153,7 @@ public class SearchView extends javax.swing.JPanel {
                         try {
                             CrearComponentesGraficos();
                         } catch (IOException ex) {
-                            Logger.getLogger(SearchView.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(SearchPanel.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     }
                     

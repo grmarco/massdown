@@ -1,4 +1,4 @@
-package com.massdown.core;
+package es.gmarco.massdown.recursos;
 
 import com.massdown.main.Main;
 import java.awt.Dimension;
@@ -23,7 +23,7 @@ import javax.swing.JSeparator;
 
 
 
-public class Utilidades {
+public class MetodosUtiles {
     
     public static String[] ObtenerCodigoFuente(String url) throws MalformedURLException, IOException {
         URL siteUrl = new URL(url);
