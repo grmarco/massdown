@@ -38,10 +38,10 @@ import javax.swing.plaf.synth.SynthScrollBarUI;
  */
 public class SearchPanel extends javax.swing.JPanel {
 
-    private MainWindow mw;
+    private final MainWindow mw;
     private Busqueda busqueda;
     
-    public SearchPanel(MainWindow mw, String consulta) {
+    public SearchPanel(final MainWindow mw,final String consulta) {
         initComponents();
         this.mw = mw;
         pnlDestacasScroll.getHorizontalScrollBar().setUnitIncrement(30);
@@ -61,12 +61,24 @@ public class SearchPanel extends javax.swing.JPanel {
             }
         };
         pnlDestacasScroll.getHorizontalScrollBar().setUI(scrollBarStyle);
-        try {
-            busqueda = new Busqueda((consulta.startsWith("search series")) ? "" : consulta);
-        } catch (IOException ex) {
-            Logger.getLogger(SearchPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        new MuestraResultados().start();
+        
+        new Thread() {
+
+            @Override
+            public void run() {
+                super.run(); 
+                mw.MostarPBar(true);
+                try {
+                    busqueda = new Busqueda((consulta.startsWith("search series")) ? "" : consulta);
+                } catch (IOException ex) {
+                    Logger.getLogger(SearchPanel.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                new MuestraResultados().start();
+            }
+                        
+        }.start();
+        
     }
     
     class MuestraResultados extends Thread {        
@@ -98,7 +110,7 @@ public class SearchPanel extends javax.swing.JPanel {
                         lblSerie.addMouseListener(new java.awt.event.MouseAdapter() {
                             @Override
                             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                                mw.getTxtBusqueda().setText(urlSerie.replaceAll("-", " ").replaceAll("/serie/", ""));
+                                mw.getTxtBusqueda().setText(urlSerie.replaceAll("-", " ").replaceAll(".seriespepito.com", "").replaceAll("http://", "").replaceAll("/", ""));
                                 mw.IrATab(mw.getLblParaIrAlTabSerie());
                                
                             }
@@ -161,7 +173,8 @@ public class SearchPanel extends javax.swing.JPanel {
                     
                 };
                 agregadorResultados.start();
-            }            
+            }
+            mw.MostarPBar(false);
         }        
     }
     
@@ -277,7 +290,7 @@ public class SearchPanel extends javax.swing.JPanel {
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(30, 30, 30))
+                .addGap(44, 44, 44))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

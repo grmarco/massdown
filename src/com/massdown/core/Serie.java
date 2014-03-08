@@ -22,7 +22,7 @@ public final class Serie {
     
     public Serie(String nombre) throws IOException {
         this.cadenaSerie = nombre.replaceAll("-", " ");
-        this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie/" + cadenaSerie.replaceAll(" ", "-"))).get();
+        this.domPagSerie = Jsoup.connect(String.valueOf("http://"+ cadenaSerie.replaceAll(" ", "-")+".seriespepito.com")).get();
         //this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie" + nombre)).get();
         this.nombreSerie = getNombreSerie();
         this.descripcionSerie = getDescripcionSerie();
@@ -38,7 +38,7 @@ public final class Serie {
 
     public String getNombreSerie() {
         if(nombreSerie == null) { 
-            String nombre = domPagSerie.select("#section-header .underline").attr("title");    
+            String nombre = domPagSerie.select(".dtitulo h1").text();    
             this.nombreSerie = nombre;
         }
         return nombreSerie;
@@ -46,7 +46,7 @@ public final class Serie {
 
     public String getDescripcionSerie() {
         if(descripcionSerie == null) { 
-            String descripcion = domPagSerie.select("#section-header #description").text();    
+            String descripcion = domPagSerie.select(".dcuerpo").text();    
             this.descripcionSerie = descripcion;
         }
         return descripcionSerie;
@@ -54,7 +54,7 @@ public final class Serie {
 
     public String getUrlImagen() {
         if(urlImagen == null) {
-            String imagen = domPagSerie.select(".profile-img").attr("src");    
+            String imagen = domPagSerie.select(".imgcolserie").attr("src");    
             this.urlImagen = imagen;
         }
         return urlImagen;
@@ -64,12 +64,13 @@ public final class Serie {
         
         if(capitulos == null) {                    
             capitulos = new ArrayList<>();
-            Elements todosLosCapitulosEnDOM = domPagSerie.select("td.episode-title a[href]").select("[href]");        
+            Elements todosLosCapitulosEnDOM = domPagSerie.select(".accordion tr td");        
 
             for(int i = 0 ; i < todosLosCapitulosEnDOM.size() ; i++) {
                 Element unCapituloEnDOM = todosLosCapitulosEnDOM.get(i);    
                 // Los datos del capitulo se almacenan en un array donde 0 es el nombre y 1 el enlace
-                String[] datosCapitulo = {unCapituloEnDOM.text(), unCapituloEnDOM.attr("href")};
+
+                String[] datosCapitulo = {unCapituloEnDOM.text(), unCapituloEnDOM.select("a").attr("href")};
                 capitulos.add(datosCapitulo);
             }            
         }

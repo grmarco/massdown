@@ -23,7 +23,9 @@ public class AllMyVideosYVidSpot extends Servidor {
          String urlDelServidor = "";
         
         try {
+            System.out.println(urlDelServidor);
             urlDelServidor = ObtenerEnlaceServidor(this.enlaceServidor);
+            
             domPagServidor = Jsoup.connect(urlDelServidor).get();
             
             Map<String, String> datosParaElSubmit = new HashMap<>();

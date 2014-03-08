@@ -24,28 +24,26 @@ public class Busqueda {
             this.ObtenerResultadosBusqueda();        
     }
     
-    private void ObtenerResultadosBusqueda() throws IOException {
-        Map<String, String> data = new HashMap();
-        data.put("keyword", consulta);
-        data.put("search_type", "serie");
-        domPaginaBusqueda = Jsoup.connect("http://www.seriesyonkis.com/buscar/serie").data(data).post();
-        domSeriesBuscadas = domPaginaBusqueda.select("#series_results_wrapper .results .nth-child1n");  
+    private void ObtenerResultadosBusqueda() throws IOException {        
+        domPaginaBusqueda = Jsoup.connect("http://www.seriespepito.com/buscador/"+consulta.replaceAll(" ", "-")).get();
+        domSeriesBuscadas = domPaginaBusqueda.select(".lista_series li");  
         this.CargarDatosSeriesEnArray(false);
     }
             
     private void ObtenerSerieMasVistas() throws IOException {
-        domPaginaBusqueda = Jsoup.connect("http://www.seriesyonkis.com/series-mas-vistas").get();
-        domSeriesBuscadas = domPaginaBusqueda.select("#tabs-1 .covers-list .thumb-episode"); 
+        domPaginaBusqueda = Jsoup.connect("http://www.seriespepito.com/").get();
+        domSeriesBuscadas = domPaginaBusqueda.select("#ulfblista li");
         this.CargarDatosSeriesEnArray(true);
     }
     
     private void CargarDatosSeriesEnArray(boolean serieDestacada) {
         for(int i = 0 ; i < domSeriesBuscadas.size() ; i++) {           
-            Element capitulo = domSeriesBuscadas.get(i);            
+            Element capitulo = domSeriesBuscadas.get(i);     
             String titulo = capitulo.select("a").attr("title");
             String urlSerie = capitulo.select("a").attr("href");
             String urlImagenSerie = capitulo.select("img").attr("src");    
-            String descripcionSerie = capitulo.select(".content").text(); 
+            String descripcionSerie = "";
+            //capitulo.select(".content").text(); 
             this.AgregarResultadoDeBusqueda(titulo, urlSerie, urlImagenSerie, descripcionSerie, (serieDestacada) ? "destacada" : "noDestacada" );
         }
         

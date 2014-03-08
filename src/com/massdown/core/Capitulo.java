@@ -26,31 +26,31 @@ public class Capitulo {
     
     public ArrayList<Servidor> ObtenerServidoresCapitulo() throws IOException {
         this.domPagCapitulo = Jsoup.connect(enlaceCapitulo).get();
-        Elements listaServidoresEnDom = domPagCapitulo.select("h2.veronline + table tr");
+        Elements listaServidoresEnDom = domPagCapitulo.select(".tenlaces tr");
+        
         ArrayList<Servidor> arrayServidores = new ArrayList<>();
         
         for(int u = 1 ; u < listaServidoresEnDom.size() ; u++) {
             
             Element servidorEnDOM = listaServidoresEnDom.get(u);                       
-            String servidorDelCapitulo = servidorEnDOM.select("span.server").attr("class").replace("server ", "");
-            
+            String servidorDelCapitulo = servidorEnDOM.select(".tdservidor").text().replaceAll(" ", "");
             
            // if("magnovideo".equals(servidorDelCapitulo) || "streamcloud".equals(servidorDelCapitulo) || "allmyvideos".equals(servidorDelCapitulo) || "vidspot".equals(servidorDelCapitulo)) {
-            if("vidspot".equals(servidorDelCapitulo) || "allmyvideos".equals(servidorDelCapitulo)) {
-                String idioma = servidorEnDOM.select(".episode-lang").text();
-                String subtitulos = servidorEnDOM.select(".episode-subtitle").text(); 
-                String enlaceAlServidor = servidorEnDOM.select(".episode-server a").attr("href");
-                
+            if("vidspot".equalsIgnoreCase(servidorDelCapitulo) || "Allmyvideos".equalsIgnoreCase(servidorDelCapitulo)) {
+                String idioma = servidorEnDOM.select(".tdidioma").text();
+                String subtitulos = ""; 
+                String enlaceAlServidor = servidorEnDOM.select(".enlace_link").attr("href");
+
                 Servidor servidor = new Servidor(idioma, subtitulos, enlaceAlServidor);
 
                 switch(servidorDelCapitulo) {
-                    case "magnovideo":
+                    case "Magnovideo":
                         servidor = new MagnoVideo(servidor);
                         break;
                     case "streamcloud":
                         servidor = new StreamCloud(servidor);
                         break;
-                    case "allmyvideos":
+                    case "Allmyvideos":
                         servidor = new AllMyVideosYVidSpot(servidor);
                         break;
                     case "vidspot":

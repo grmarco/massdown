@@ -8,6 +8,7 @@ package com.massdown.views;
 
 import com.massdown.core.Serie;
 import com.massdown.gestordescarga.GestorDescargas;
+import com.sun.java.swing.plaf.motif.MotifProgressBarUI;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JToggleButton;
+import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
 
@@ -31,6 +33,7 @@ public class MainWindow extends javax.swing.JFrame {
     public MainWindow() {
         initComponents();
         MostarPBar(false);
+        pbarPrincipal.setUI(new MotifProgressBarUI());
         this.IrATab(btnSearch);
         
         
@@ -187,13 +190,18 @@ public class MainWindow extends javax.swing.JFrame {
         pnlPrincipal.setLayout(new java.awt.CardLayout());
         pnlPrincipalScroll.setViewportView(pnlPrincipal);
 
+        pbarPrincipal.setToolTipText("Loading");
+        pbarPrincipal.setBorderPainted(false);
         pbarPrincipal.setIndeterminate(true);
+        pbarPrincipal.setMaximumSize(new java.awt.Dimension(32767, 3));
+        pbarPrincipal.setMinimumSize(new java.awt.Dimension(10, 3));
+        pbarPrincipal.setPreferredSize(new java.awt.Dimension(146, 3));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 824, Short.MAX_VALUE)
+            .addComponent(pnlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
             .addComponent(pnlPrincipalScroll)
             .addComponent(pbarPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -202,7 +210,7 @@ public class MainWindow extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 530, Short.MAX_VALUE)
+                .addComponent(pnlPrincipalScroll, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(pbarPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE))
         );

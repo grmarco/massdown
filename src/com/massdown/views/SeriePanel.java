@@ -9,6 +9,7 @@ package com.massdown.views;
 import com.massdown.core.Capitulo;
 import com.massdown.core.Serie;
 import com.massdown.core.Servidor;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
@@ -19,7 +20,10 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.ScrollBarUI;
+import javax.swing.plaf.metal.MetalScrollBarUI;
 
 
 
@@ -33,19 +37,23 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     public SeriePanel(final MainWindow mw, final String nombreSerie) {
         
         this.mw = mw;
-        
         initComponents();
+        
+        
+        
+        
+        
         
         Thread cargadorCapitulosEnInterfaz = new Thread() {
             @Override
             public void run() {
                 super.run();
                 try {
-                    
+                    mw.MostarPBar(true);
                     serie = new Serie(nombreSerie);                    
                     lblDescripcion.setText(serie.getDescripcionSerie());
                     lblTitulo.setText(serie.getNombreSerie());
-                    iconSerie.setIcon(escalarImagen(ImageIO.read(new URL(serie.getUrlImagen())), 0.9));
+                    iconSerie.setIcon(escalarImagen(ImageIO.read(new URL(serie.getUrlImagen())), 0.5));
                     
                     serie.getCapitulos();
                    
@@ -54,7 +62,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                     
                     for(int i = 0 ; i < serie.getCapitulos().size() ; i++) {
                         String[] capitulo = serie.getCapitulos().get(i);
-                        listModel.addElement(capitulo[0]);  
+                        listModel.addElement(capitulo[0].replaceAll("¿Quieres escribir comentarios? Necesitas ser usuario registrado en SeriesPepito para poder escribir comentarios, si ya lo eres puedes entrar con tu usuario aquí y si no... ¡a que esperas! ¡regístrate aquí!. Entrar en SeriesPepito", ""));  
                         
                     }   
                     lstCapitulos.setSelectedIndex(0);
@@ -71,7 +79,24 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
         };
         
         cargadorCapitulosEnInterfaz.start();
-       
+        
+        
+        ScrollBarUI scrollBarStyle = new MetalScrollBarUI(){
+            @Override
+            protected JButton createDecreaseButton(int orientation) {
+                JButton button = super.createDecreaseButton(orientation);
+                button.setBackground(new Color(56,56,56));
+                return button;
+            }
+
+            @Override
+            protected JButton createIncreaseButton(int orientation) {
+                JButton button = super.createIncreaseButton(orientation);
+                button.setBackground(new Color(56,56,56));
+                return button;
+            }
+        };
+        scrollDescripcion.getVerticalScrollBar().setUI(scrollBarStyle);
         
     }
 
@@ -84,8 +109,6 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lblDescripcion = new javax.swing.JTextPane();
         iconSerie = new javax.swing.JLabel();
         lblTitulo = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -96,17 +119,10 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        scrollDescripcion = new javax.swing.JScrollPane();
+        lblDescripcion = new javax.swing.JTextPane();
 
         setBackground(new java.awt.Color(56, 56, 56));
-
-        jScrollPane1.setBorder(null);
-
-        lblDescripcion.setBackground(new java.awt.Color(56, 56, 56));
-        lblDescripcion.setBorder(null);
-        lblDescripcion.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        lblDescripcion.setForeground(new java.awt.Color(204, 204, 204));
-        lblDescripcion.setText("  ");
-        jScrollPane1.setViewportView(lblDescripcion);
 
         lblTitulo.setFont(new java.awt.Font("Segoe UI Semilight", 0, 24)); // NOI18N
         lblTitulo.setForeground(new java.awt.Color(255, 255, 255));
@@ -114,11 +130,13 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
         jScrollPane2.setBackground(new java.awt.Color(56, 56, 56));
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED));
+        jScrollPane2.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         lstCapitulos.setBackground(new java.awt.Color(56, 56, 56));
         lstCapitulos.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
         lstCapitulos.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         lstCapitulos.setForeground(new java.awt.Color(255, 255, 255));
+        lstCapitulos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         lstCapitulos.setFixedCellHeight(30);
         lstCapitulos.setSelectionBackground(new java.awt.Color(231, 76, 60));
         lstCapitulos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -130,6 +148,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
         jScrollPane3.setBackground(new java.awt.Color(56, 56, 56));
         jScrollPane3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jScrollPane3.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         lstServidores.setBackground(new java.awt.Color(56, 56, 56));
         lstServidores.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
@@ -165,6 +184,19 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
         jLabel4.setForeground(new java.awt.Color(204, 204, 204));
         jLabel4.setText("(one click to show the downloads)");
 
+        scrollDescripcion.setBorder(null);
+        scrollDescripcion.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollDescripcion.setMaximumSize(new java.awt.Dimension(21, 22));
+        scrollDescripcion.setPreferredSize(new java.awt.Dimension(21, 22));
+
+        lblDescripcion.setBackground(new java.awt.Color(56, 56, 56));
+        lblDescripcion.setFont(new java.awt.Font("Segoe UI Semilight", 0, 12)); // NOI18N
+        lblDescripcion.setForeground(new java.awt.Color(204, 204, 204));
+        lblDescripcion.setMaximumSize(new java.awt.Dimension(21, 22));
+        lblDescripcion.setMinimumSize(new java.awt.Dimension(21, 22));
+        lblDescripcion.setPreferredSize(new java.awt.Dimension(21, 22));
+        scrollDescripcion.setViewportView(lblDescripcion);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -172,45 +204,37 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addGap(22, 22, 22)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(9, 9, 9)
                         .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(12, 12, 12))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(22, 22, 22)
+                        .addGap(30, 30, 30)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(iconSerie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(scrollDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, 169, Short.MAX_VALUE))
+                        .addGap(25, 25, 25)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 343, Short.MAX_VALUE)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(lblServerSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addGap(22, 22, 22))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
+                            .addComponent(jScrollPane3)
+                            .addComponent(lblServerSeleccionado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(lblTitulo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(iconSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -218,10 +242,15 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         .addGap(9, 9, 9)
                         .addComponent(lblServerSeleccionado)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel2)
-                        .addGap(22, 22, 22))))
+                        .addGap(45, 45, 45))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(iconSerie, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15)
+                        .addComponent(scrollDescripcion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(45, 45, 45))))
         );
     }// </editor-fold>//GEN-END:initComponents
     
@@ -231,7 +260,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
             @Override
             public void run() {
                 
-                
+                mw.MostarPBar(true);
                 try {
                     capituloSeleccionado = serie.CrearObjetoCapitulo(lstCapitulos.getSelectedIndex());
                     capituloSeleccionado.ObtenerServidoresCapitulo();
@@ -248,8 +277,9 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                         listModel.addElement("Download option "+ (i + 1) + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
                         
                     }                                        
-                    
+                    mw.MostarPBar(false);
                 } catch (IOException ex) {
+                    mw.MostarPBar(false);
                     Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
@@ -266,9 +296,11 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private void lstServidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstServidoresMouseClicked
         if(evt.getClickCount() == 2) {
+            mw.MostarPBar(true);
             final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());                                        
             this.mw.gestorDescargas.addDescarga(servidor, capituloSeleccionado);                                                 
             mw.ActualizarLabelDescargas();
+            mw.MostarPBar(false);
         }
     }//GEN-LAST:event_lstServidoresMouseClicked
 
@@ -284,7 +316,6 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextPane lblDescripcion;
@@ -292,6 +323,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JList lstCapitulos;
     private javax.swing.JList lstServidores;
+    private javax.swing.JScrollPane scrollDescripcion;
     // End of variables declaration//GEN-END:variables
     
     private ImageIcon escalarImagen(Image src, double scale) {

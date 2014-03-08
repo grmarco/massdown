@@ -31,13 +31,12 @@ public class GestorDescargas {
             
             new GestionarCola().start();
                           
-        } catch (MalformedURLException ex) {
-            Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(new JOptionPane(),
             "Error adding the download",
-            "There has been an error while adding the download",
+            "There has been an error while adding the download, please try again",
             JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
         }          
     }
     

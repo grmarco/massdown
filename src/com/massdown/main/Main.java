@@ -2,6 +2,7 @@ package com.massdown.main;
 
 import com.massdown.views.MainWindow;
 import es.gmarco.massdown.recursos.Actualiza;
+import java.awt.Color;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.logging.Level;
@@ -42,6 +43,8 @@ public class Main {
         UIManager.put("ScrollBar.thumbHighlight", new javax.swing.plaf.ColorUIResource(50,50,50));
         UIManager.put("ScrollBar.thumbShadow", new javax.swing.plaf.ColorUIResource(50,50,50));
         UIManager.put("ScrollBar.background", new javax.swing.plaf.ColorUIResource(56,56,56));
+        UIManager.put("ProgressBar.background",new javax.swing.plaf.ColorUIResource(56,56,56));  
+        UIManager.put("ProgressBar.foreground",new javax.swing.plaf.ColorUIResource(241, 196, 15));  
         
        // Look and feel del sistema 
        try {

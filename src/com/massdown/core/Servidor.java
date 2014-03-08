@@ -32,13 +32,13 @@ public class Servidor {
     }
     
     protected String ObtenerEnlaceServidor(String url) throws IOException {
+        System.out.println(url);
+        Document seriesCocoDOM = Jsoup.connect(enlaceServidor).get();
+        String enlaceRedireccionSeriescoco = seriesCocoDOM.select(".enlace_link").attr("href");
+        this.enlaceServidor = enlaceRedireccionSeriescoco;
+        //this.enlaceServidor = MetodosUtiles.getFinalRedirectedUrl(enlaceRedireccionSeriescoco);
         
-        Document seriesCocoDOM = Jsoup.connect("http://www.seriescoco.com"+url).get();
-        String enlaceRedireccionSeriescoco = "http://www.seriescoco.com"+seriesCocoDOM.select(".episodes tr.down>td a").attr("href");
-        
-        this.enlaceServidor = MetodosUtiles.getFinalRedirectedUrl(enlaceRedireccionSeriescoco);
-        
-        return  this.enlaceServidor;        
+        return this.enlaceServidor;        
     }
     
     public void ObtenerEnlaceDescarga() throws MalformedURLException{ }        
