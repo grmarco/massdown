@@ -5,7 +5,7 @@ import java.util.prefs.Preferences;
 public class Configuracion {
 
     private final Preferences prefs;
-    public static double version = 1.0;
+    public static double version = 1.1;
     private static String directorioDeDescarga;
     private static boolean descargaEnCola;
 

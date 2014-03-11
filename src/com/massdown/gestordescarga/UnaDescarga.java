@@ -149,7 +149,7 @@ public class UnaDescarga {
                     JOptionPane.showMessageDialog(new JOptionPane(),
                     "Massdown message", 
                     "the download "+nombreArchivo+" has stoped",
-                    JOptionPane.OK_OPTION);
+                    JOptionPane.INFORMATION_MESSAGE);
                    Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }

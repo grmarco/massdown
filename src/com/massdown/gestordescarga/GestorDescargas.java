@@ -5,6 +5,7 @@ import com.massdown.core.Servidor;
 import es.gmarco.massdown.recursos.Configuracion;
 import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.Button;
+import java.awt.HeadlessException;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -47,13 +48,13 @@ public class GestorDescargas {
             
             descargasEnCurso.add(descarga);
                           
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(new JOptionPane(),
-            
-            "There has been an error while adding the download, please try again. \n ERROR->"+ex.getLocalizedMessage(),
+        } catch (IllegalArgumentException | HeadlessException | IOException ex) {
+            Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(new JOptionPane(),            
+            "There has been an error while adding the download, please try again. \n ERROR->"+ex.getMessage().substring(0, 10),
             "Massdown message",
             JOptionPane.INFORMATION_MESSAGE);
-            Logger.getLogger(GestorDescargas.class.getName()).log(Level.SEVERE, null, ex);
+            
         }          
     }
     
