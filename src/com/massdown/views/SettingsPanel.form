@@ -48,11 +48,6 @@
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="lblVersionActual" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnSeleccionarRutaDescarga" min="-2" pref="152" max="-2" attributes="0"/>
-                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="lblMostrarRutaDescarga" min="-2" pref="53" max="-2" attributes="0"/>
-                                  </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Component id="rbDescargarCola" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -60,6 +55,11 @@
                                   </Group>
                               </Group>
                               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <Component id="btnSeleccionarRutaDescarga" min="-2" pref="152" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="lblRuta" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -76,7 +76,7 @@
               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnSeleccionarRutaDescarga" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblMostrarRutaDescarga" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblRuta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
@@ -87,10 +87,10 @@
               </Group>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="btnComprobarActualizaciones" min="-2" max="-2" attributes="0"/>
-                  <Component id="lblVersionActual" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnComprobarActualizaciones" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="lblVersionActual" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="130" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
@@ -121,7 +121,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="22" green="7e" red="e6" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="by Guillermo Marco"/>
+        <Property name="text" type="java.lang.String" value="by grmarco"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
@@ -150,8 +150,11 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Select download path"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSeleccionarRutaDescargaActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JLabel" name="lblMostrarRutaDescarga">
+    <Component class="javax.swing.JLabel" name="lblRuta">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Segoe UI Light" size="14" style="0"/>
@@ -159,7 +162,7 @@
         <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="settings"/>
+        <Property name="text" type="java.lang.String" value="./"/>
         <Property name="horizontalTextPosition" type="int" value="4"/>
       </Properties>
     </Component>
@@ -190,6 +193,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="download queued"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbDescargarColaActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="rbDescargarALaVez">
       <Properties>
@@ -207,6 +213,9 @@
         </Property>
         <Property name="text" type="java.lang.String" value="download all at once"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="rbDescargarALaVezActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>
@@ -223,6 +232,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Check updates"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprobarActualizacionesActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblVersionActual">
       <Properties>

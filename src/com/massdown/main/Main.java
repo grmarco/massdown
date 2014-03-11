@@ -2,6 +2,7 @@ package com.massdown.main;
 
 import com.massdown.views.MainWindow;
 import es.gmarco.massdown.recursos.Actualiza;
+import es.gmarco.massdown.recursos.Configuracion;
 import java.awt.Color;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,6 +17,8 @@ import javax.swing.UIManager;
 public class Main {
     public static void main(String args[])   {
         
+        // Cargamos la configuracion
+        new Configuracion();
         
         new Thread() {
             @Override

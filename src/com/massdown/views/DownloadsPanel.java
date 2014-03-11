@@ -7,6 +7,8 @@
 package com.massdown.views;
 
 import com.massdown.gestordescarga.UnaDescarga;
+import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -26,8 +28,8 @@ public class DownloadsPanel extends javax.swing.JPanel {
         initComponents();
         this.mw = mw;
             
-       new MuestraDescargas().start();
-        
+        new MuestraDescargas().start();
+
         
     }
 
@@ -38,7 +40,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
         public void run() {  
 
             final ArrayList<UnaDescarga> descargasEnCurso = mw.gestorDescargas.getDescargasEnCurso();
-            int numeroDescargasEnCuso = descargasEnCurso.size(); 
+            final int numeroDescargasEnCuso = descargasEnCurso.size(); 
             
             if(numeroDescargasEnCuso <= 0) {
                 JLabel labelAviso = new JLabel();
@@ -62,8 +64,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                     JLabel lblEstatus;
                     JLabel lblVelocidadDescarga;      
                     JButton btnPararDescarga;
-                    JLabel lblParaPonerEspacio;
-                    
+                    JLabel lblThumbNail;
                     
                     public synchronized void CrearComponentesGraficos() {
                         
@@ -71,17 +72,46 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         lblTituloCap = new JLabel();
                         lblEstatus = new JLabel();
                         btnPararDescarga = new JButton();
-                        lblParaPonerEspacio = new JLabel();
+                        lblThumbNail = new JLabel();                                                
                         
-                        pbDescarga.setMaximum((int) descargaAAgregar.getTamanoTotal());
+                        pbDescarga.setMaximum(100);
                         
                         AplicarEstiloALosComponentes();                                                                   
                         
-                        contenedorDescargas.add(lblTituloCap);
-                        contenedorDescargas.add(lblEstatus);
-                        contenedorDescargas.add(btnPararDescarga);
-                        contenedorDescargas.add(lblParaPonerEspacio);
-                        contenedorDescargas.add(pbDescarga);
+                        
+                        GridBagConstraints c = new GridBagConstraints();
+                        int lugarDePartida = (numeroVuelta != 1) ? numeroVuelta * 100 : 100;
+
+                        c.gridy = lugarDePartida;
+                        c.anchor = GridBagConstraints.NORTHWEST;
+                        
+                        
+                        
+                        // Ponemos la imagen de la serie en el capitulo que se
+                        // está descargando
+                        lblThumbNail.setIcon(descargaAAgregar.getThumbNail());
+                        c.gridx = 0;
+                        c.gridheight = 100;
+                        c.insets = new Insets(20, 0, 0, 15);
+                        contenedorDescargas.add(lblThumbNail, c);
+                       
+                        c.weightx = mw.getWidth();
+                        c.insets = new Insets(8, 0, 0, 0);
+                        c.gridheight = 1;
+                        c.gridx = 1;
+                        
+
+                        contenedorDescargas.add(lblTituloCap, c);
+                        
+                        c.gridy = numeroVuelta+lugarDePartida+1;
+                        contenedorDescargas.add(lblEstatus, c);
+                        
+                        c.gridy = numeroVuelta+lugarDePartida+2;                        
+                        contenedorDescargas.add(btnPararDescarga, c);
+                        
+                        c.gridy = numeroVuelta+lugarDePartida+3;
+                        c.fill = GridBagConstraints.HORIZONTAL;
+                        contenedorDescargas.add(pbDescarga, c);
                         
                         btnPararDescarga.addActionListener(new java.awt.event.ActionListener() {
                             @Override
@@ -89,8 +119,8 @@ public class DownloadsPanel extends javax.swing.JPanel {
                                 contenedorDescargas.remove(lblTituloCap);
                                 contenedorDescargas.remove(lblEstatus);
                                 contenedorDescargas.remove(btnPararDescarga);
-                                contenedorDescargas.remove(lblParaPonerEspacio);
                                 contenedorDescargas.remove(pbDescarga);
+                                contenedorDescargas.remove(lblThumbNail);
                                 contenedorDescargas.repaint();
                                 contenedorDescargas.revalidate();
                                 descargasEnCurso.remove(descargaAAgregar);
@@ -108,11 +138,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         lblEstatus.setFont(new java.awt.Font("Segoe UI Semilight", 0, 16)); // NOI18N
                         lblEstatus.setForeground(new java.awt.Color(180, 180, 180));
                         lblEstatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 5, 1));
-                        
-                        lblParaPonerEspacio.setBackground(new java.awt.Color(56, 56, 56));
-                        lblParaPonerEspacio.setForeground(new java.awt.Color(56, 56, 56));
-                        lblParaPonerEspacio.setFont(new java.awt.Font("Segoe UI Semilight", 0, 5)); // NOI18N
-                        lblParaPonerEspacio.setText("pepe");
+
                         
                         
                         btnPararDescarga.setBackground(new java.awt.Color(231, 76, 60));
@@ -124,21 +150,19 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         btnPararDescarga.setFocusable(false);
                         btnPararDescarga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
                         btnPararDescarga.setMargin(new java.awt.Insets(10, 14, 2, 14));
-                        btnPararDescarga.setMaximumSize(new java.awt.Dimension(65, 21));
-                        btnPararDescarga.setPreferredSize(new java.awt.Dimension(300, 21));
                         btnPararDescarga.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
                     }
                     
                     public void ResfrescarDatosComponentesGraficos() {
-                        lblTituloCap.setText(descargaAAgregar.getNombreArchivo());
-
+                        lblTituloCap.setText(descargaAAgregar.getNombreArchivo());                        
                         String textoEstatus = "";
+                          
                         
                         if(descargaAAgregar.getTamanoDescargado() != descargaAAgregar.getTamanoTotal() && descargaAAgregar.getPorcentajeDescargado() != -1) {
                             lblEstatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/loading.png")));
                             textoEstatus = "Downloading "
-                                                            +descargaAAgregar.getTamanoDescargado()
-                                                            +"MB of "+descargaAAgregar.getTamanoTotal() 
+                                                            +(Math.rint(descargaAAgregar.getTamanoDescargado()*10)/10)
+                                                            +"MB of "+(Math.rint(descargaAAgregar.getTamanoTotal()*10)/10) 
                                                             + "MB at "+descargaAAgregar.getVelocidadDescarga()+"kbps"
                                                             + " - "+ (int) (descargaAAgregar.getTiempoRestante())+" minutes to end";
                         }
@@ -152,7 +176,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         }
                         
                         lblEstatus.setText(textoEstatus);
-                        pbDescarga.setValue((int) descargaAAgregar.getTamanoDescargado());
+                        pbDescarga.setValue((int) descargaAAgregar.getPorcentajeDescargado());
                         
                     }
 
@@ -169,7 +193,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                             } else {                                
                                 ResfrescarDatosComponentesGraficos();
                                 try {
-                                    sleep(300);
+                                    sleep(400);
                                 } catch (InterruptedException ex) {
                                     Logger.getLogger(DownloadsPanel.class.getName()).log(Level.SEVERE, null, ex);
                                 }
@@ -189,37 +213,33 @@ public class DownloadsPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        contenedorDescargas = new javax.swing.JToolBar();
+        contenedorDescargas = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(56, 56, 56));
 
         contenedorDescargas.setBackground(new java.awt.Color(56, 56, 56));
-        contenedorDescargas.setBorder(null);
-        contenedorDescargas.setFloatable(false);
-        contenedorDescargas.setForeground(new java.awt.Color(255, 255, 255));
-        contenedorDescargas.setOrientation(javax.swing.SwingConstants.VERTICAL);
-        contenedorDescargas.setRollover(true);
+        contenedorDescargas.setLayout(new java.awt.GridBagLayout());
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(contenedorDescargas, javax.swing.GroupLayout.DEFAULT_SIZE, 631, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(30, 30, 30)
+                .addComponent(contenedorDescargas, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(contenedorDescargas, javax.swing.GroupLayout.DEFAULT_SIZE, 427, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(15, 15, 15)
+                .addComponent(contenedorDescargas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToolBar contenedorDescargas;
+    private javax.swing.JPanel contenedorDescargas;
     // End of variables declaration//GEN-END:variables
 }

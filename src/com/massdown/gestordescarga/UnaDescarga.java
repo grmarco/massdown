@@ -1,6 +1,7 @@
 
 package com.massdown.gestordescarga;
 
+import com.massdown.views.SeriePanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -11,6 +12,9 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
@@ -29,7 +33,7 @@ public class UnaDescarga {
     private double tiempoRestante;
     public int time;
     private String nombreArchivo;
-    
+    private ImageIcon thumbNail;
     
     public UnaDescarga(File file) {
         setFile(file);        
@@ -78,10 +82,20 @@ public class UnaDescarga {
         this.url = new URL(sURL);
     }
 
+    public ImageIcon getThumbNail() {
+        return thumbNail;
+    }
+
+    public void setThumbNail(ImageIcon thumbNail) {
+        this.thumbNail = thumbNail;
+    }
+    
+    
+    
     public URLConnection openConexion() throws IOException {
         conexion = url.openConnection();
         conexion.connect();
-        tamanoTotal = (double) ((double) (conexion.getContentLength() / 1000) / 1000);
+        
         return conexion;
     }
     
@@ -93,6 +107,7 @@ public class UnaDescarga {
                 
         final BufferedInputStream buffer = new BufferedInputStream(conexion.getInputStream());
         String nombreArchivoDescargando = nombreArchivo+".mp4";
+        tamanoTotal = (double) ((double) (conexion.getContentLength() / 1000) / 1000);
         final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file + "/" + nombreArchivoDescargando));
                        
         timer.start();
@@ -131,7 +146,11 @@ public class UnaDescarga {
                     timer.stop();
                     
                 } catch (IOException ex) {
-                   JOptionPane.showMessageDialog(new JOptionPane(), "the download "+nombreArchivo+" has stoped");
+                    JOptionPane.showMessageDialog(new JOptionPane(),
+                    "Massdown message", 
+                    "the download "+nombreArchivo+" has stoped",
+                    JOptionPane.OK_OPTION);
+                   Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }.start();

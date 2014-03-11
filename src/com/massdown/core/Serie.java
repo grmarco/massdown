@@ -31,7 +31,7 @@ public final class Serie {
 
     public Capitulo CrearObjetoCapitulo(int indiceCapitulo) throws IOException {        
         String[] datosCapituloSeleccionado = capitulos.get(indiceCapitulo);
-        Capitulo capitulo = new Capitulo(datosCapituloSeleccionado[0], datosCapituloSeleccionado[1]);
+        Capitulo capitulo = new Capitulo(datosCapituloSeleccionado[0], datosCapituloSeleccionado[1], this);
         capitulo.tituloSeriePerteneciente = this.nombreSerie;
         return capitulo;        
     }

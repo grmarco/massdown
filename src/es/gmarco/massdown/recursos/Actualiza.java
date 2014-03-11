@@ -35,14 +35,14 @@ public class Actualiza {
         this.versionActual = Configuracion.version;
         
         if(this.versionActual < this.versionNueva) {
-            int siono = JOptionPane.showConfirmDialog(new JOptionPane(), "Nueva actualización de MassDown encontrada? ¿Deseas actualizar");
+            int siono = JOptionPane.showConfirmDialog(new JOptionPane(), "New massdown update was found. Shall you like update?");
             if (siono == 0) {
                 DescargarActualizacion();
             }
             
         } else {
             if(!comprobacionSilenciosa)
-                JOptionPane.showMessageDialog(new JOptionPane(), "MassDown está actualizado");
+                JOptionPane.showMessageDialog(new JOptionPane(), "MassDown is updated");
         }
     }
     
@@ -71,14 +71,14 @@ public class Actualiza {
         JPanel contenedorConMargen = new JPanel(new GridLayout(3, 1, 8 , 8));
         final JProgressBar pbDescarga = new JProgressBar();
         JLabel lblEstatus = new JLabel();
-        final JButton btnAplicarActu = new JButton("Aplicar actualización");
+        final JButton btnAplicarActu = new JButton("Apply update");
         int timer = 0;
         
         btnAplicarActu.setEnabled(false);
                                 
         vtnPrincipal.setVisible(true);
         vtnPrincipal.setSize(310,150);
-        vtnPrincipal.setIconImage(new ImageIcon(getClass().getResource("/es/gmarco/massdown/recursos/icon.png")).getImage());
+        vtnPrincipal.setIconImage(new ImageIcon(getClass().getResource("/com/massdown/img/icon.png")).getImage());
         vtnPrincipal.add(contenedorConMargen);
         vtnPrincipal.setResizable(false);
         

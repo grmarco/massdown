@@ -7,30 +7,20 @@
 package com.massdown.views;
 
 import com.massdown.busqueda.Busqueda;
-import com.massdown.gestordescarga.UnaDescarga;
 import com.massdown.views.libs.WrapLayout;
-import com.sun.java.swing.plaf.motif.MotifScrollBarUI;
+import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import static java.lang.Thread.sleep;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JProgressBar;
 import javax.swing.plaf.ScrollBarUI;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
-import javax.swing.plaf.synth.SynthScrollBarUI;
 
 /**
  *
@@ -126,7 +116,7 @@ public class SearchPanel extends javax.swing.JPanel {
                         
                         lblSerie.setText((tituloSerie.toCharArray().length < 20) ? tituloSerie : tituloSerie.substring(0, 20)+"...");
                         lblSerie.setToolTipText(tituloSerie);
-                        lblSerie.setIcon(escalarImagen(ImageIO.read(new URL(urlImagenSerie)), 0.7));
+                        lblSerie.setIcon(MetodosUtiles.escalarImagen(ImageIO.read(new URL(urlImagenSerie)), 0.7, mw));
                         
                         AplicarEstiloALosComponentes();                                                                   
                         //pnlResultados.setLayout(new WrapLayout(WrapLayout.LEFT, 30, 30));
@@ -176,22 +166,6 @@ public class SearchPanel extends javax.swing.JPanel {
             }
             mw.MostarPBar(false);
         }        
-    }
-    
-    private ImageIcon escalarImagen(Image src, double scale) {
-        int w = (int)(scale*src.getWidth(this));
-        int h = (int)(scale*src.getHeight(this));
-        int type = BufferedImage.TYPE_INT_RGB;
-        BufferedImage dst = new BufferedImage(w, h, type);
-        Graphics2D g2 = dst.createGraphics();
-        g2.drawImage(src, 0, 0, w, h, this);
-        g2.dispose();
-        return new ImageIcon(dst);
-    }
-    
-    public static String convertToMultiline(String orig)
-    {
-        return "<html>" + orig.replaceAll("\n", "<br>");
     }
     
     @SuppressWarnings("unchecked")

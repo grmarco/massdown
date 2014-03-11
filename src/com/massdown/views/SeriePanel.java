@@ -9,25 +9,21 @@ package com.massdown.views;
 import com.massdown.core.Capitulo;
 import com.massdown.core.Serie;
 import com.massdown.core.Servidor;
+import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.Color;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
 
 
 
-public class SeriePanel extends javax.swing.JPanel implements Runnable {
+public class SeriePanel extends javax.swing.JPanel {
 
     private Serie serie;
     private Capitulo capituloSeleccionado;
@@ -37,12 +33,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     public SeriePanel(final MainWindow mw, final String nombreSerie) {
         
         this.mw = mw;
-        initComponents();
-        
-        
-        
-        
-        
+        initComponents();                                      
         
         Thread cargadorCapitulosEnInterfaz = new Thread() {
             @Override
@@ -53,14 +44,14 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                     serie = new Serie(nombreSerie);                    
                     lblDescripcion.setText(serie.getDescripcionSerie());
                     lblTitulo.setText(serie.getNombreSerie());
-                    iconSerie.setIcon(escalarImagen(ImageIO.read(new URL(serie.getUrlImagen())), 0.5));
+                    iconSerie.setIcon(MetodosUtiles.escalarImagen(ImageIO.read(new URL(serie.getUrlImagen())), 0.5, mw));
                     
                     serie.getCapitulos();
                    
                     DefaultListModel listModel = new DefaultListModel();
                     lstCapitulos.setModel(listModel);
                     
-                    for(int i = 0 ; i < serie.getCapitulos().size() ; i++) {
+                    for(int i = serie.getCapitulos().size()-1 ; i > 0 ; i--) {
                         String[] capitulo = serie.getCapitulos().get(i);
                         listModel.addElement(capitulo[0].replaceAll("¿Quieres escribir comentarios? Necesitas ser usuario registrado en SeriesPepito para poder escribir comentarios, si ya lo eres puedes entrar con tu usuario aquí y si no... ¡a que esperas! ¡regístrate aquí!. Entrar en SeriesPepito", ""));  
                         
@@ -262,7 +253,7 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
                 
                 mw.MostarPBar(true);
                 try {
-                    capituloSeleccionado = serie.CrearObjetoCapitulo(lstCapitulos.getSelectedIndex());
+                    capituloSeleccionado = serie.CrearObjetoCapitulo(serie.getCapitulos().size() -1- lstCapitulos.getSelectedIndex());
                     capituloSeleccionado.ObtenerServidoresCapitulo();
                     DefaultListModel listModel = new DefaultListModel();
                     lblServerSeleccionado.setText((String) lstCapitulos.getSelectedValue());
@@ -296,11 +287,20 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
 
     private void lstServidoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lstServidoresMouseClicked
         if(evt.getClickCount() == 2) {
-            mw.MostarPBar(true);
-            final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());                                        
-            this.mw.gestorDescargas.addDescarga(servidor, capituloSeleccionado);                                                 
-            mw.ActualizarLabelDescargas();
-            mw.MostarPBar(false);
+            new Thread() {
+
+                @Override
+                public void run() {
+                    super.run(); 
+                    mw.MostarPBar(true);
+                    final Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(lstServidores.getSelectedIndex());                                        
+                    mw.gestorDescargas.addDescarga(servidor, capituloSeleccionado);                                                 
+                    mw.ActualizarLabelDescargas();
+                    mw.MostarPBar(false);
+                }
+                
+            }.start();
+            
         }
     }//GEN-LAST:event_lstServidoresMouseClicked
 
@@ -325,20 +325,5 @@ public class SeriePanel extends javax.swing.JPanel implements Runnable {
     private javax.swing.JList lstServidores;
     private javax.swing.JScrollPane scrollDescripcion;
     // End of variables declaration//GEN-END:variables
-    
-    private ImageIcon escalarImagen(Image src, double scale) {
-        int w = (int)(scale*src.getWidth(this));
-        int h = (int)(scale*src.getHeight(this));
-        int type = BufferedImage.TYPE_INT_RGB;
-        BufferedImage dst = new BufferedImage(w, h, type);
-        Graphics2D g2 = dst.createGraphics();
-        g2.drawImage(src, 0, 0, w, h, this);
-        g2.dispose();
-        return new ImageIcon(dst);
-    }
-    
-    @Override
-    public void run() {
-        
-    }
+ 
 }

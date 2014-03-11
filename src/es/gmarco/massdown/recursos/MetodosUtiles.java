@@ -1,7 +1,11 @@
 package es.gmarco.massdown.recursos;
 
 import com.massdown.main.Main;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -18,12 +22,24 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
 
 
 
 public class MetodosUtiles {
+    
+    public static ImageIcon escalarImagen(Image src, double scale, Component sitioDondeSeColocaraImagen) {
+        int w = (int)(scale*src.getWidth(sitioDondeSeColocaraImagen));
+        int h = (int)(scale*src.getHeight(sitioDondeSeColocaraImagen));
+        int type = BufferedImage.TYPE_INT_RGB;
+        BufferedImage dst = new BufferedImage(w, h, type);
+        Graphics2D g2 = dst.createGraphics();
+        g2.drawImage(src, 0, 0, w, h, sitioDondeSeColocaraImagen);
+        g2.dispose();
+        return new ImageIcon(dst);
+    }
     
     public static String[] ObtenerCodigoFuente(String url) throws MalformedURLException, IOException {
         URL siteUrl = new URL(url);

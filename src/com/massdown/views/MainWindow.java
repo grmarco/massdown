@@ -291,7 +291,7 @@ public class MainWindow extends javax.swing.JFrame {
                 break;
             //TAB SETTINGS
             case 7:
-                pnlPrincipal.add(new SettingsPanel());
+                pnlPrincipal.add(new SettingsPanel(this));
                 
                 btnDescargas.setSelected(false);
                 btnBiblioteca.setSelected(false);

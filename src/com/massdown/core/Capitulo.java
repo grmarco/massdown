@@ -18,10 +18,12 @@ public class Capitulo {
     public String tituloSeriePerteneciente;
     private Document domPagCapitulo;
     private final String enlaceCapitulo;    
+    final private Serie seriePerteneciente;
     
-    public Capitulo(String tituloCapitulo, String enlaceCapitulo) throws IOException {       
+    public Capitulo(String tituloCapitulo, String enlaceCapitulo, Serie seriePerteneciente) throws IOException {       
         this.enlaceCapitulo = enlaceCapitulo;
-        this.tituloCapitulo = tituloCapitulo;       
+        this.tituloCapitulo = tituloCapitulo;  
+        this.seriePerteneciente = seriePerteneciente;
     }
     
     public ArrayList<Servidor> ObtenerServidoresCapitulo() throws IOException {
@@ -68,7 +70,11 @@ public class Capitulo {
         return arrayServidores;
         
     }
-    
 
+    public Serie getSeriePerteneciente() {
+        return seriePerteneciente;
+    }
+    
+    
     
 }

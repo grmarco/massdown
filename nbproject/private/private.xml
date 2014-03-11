@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/gestordescarga/UnaDescarga.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/core/Serie.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/gestordescarga/GestorDescargas.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/SeriePanel.java</file>
+            <file>file:/C:/Users/Guillermo/Documents/GitHub/massdown/src/com/massdown/views/DownloadsPanel.java</file>
+        </group>
     </open-files>
 </project-private>
