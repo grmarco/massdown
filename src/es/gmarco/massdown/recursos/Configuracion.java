@@ -12,7 +12,7 @@ public class Configuracion {
     public Configuracion() {
         prefs = Preferences.userRoot().node(this.getClass().getName());
         directorioDeDescarga = prefs.get("DirectorioDeDescarga", ".");
-        descargaEnCola = prefs.getBoolean("DescargaEnCola", false);
+        descargaEnCola = prefs.getBoolean("DescargaEnCola", true);
     }
 
     public static double getVersion() {
