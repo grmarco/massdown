@@ -231,7 +231,7 @@ public class MainWindow extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBibliotecaActionPerformed
 
     private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
-        this.IrATab(btnSearch);
+        this.IrATab(lblParaIrAlTabSerie);
     }//GEN-LAST:event_btnSearchActionPerformed
 
     private void txtBusquedaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBusquedaKeyPressed

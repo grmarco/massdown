@@ -129,7 +129,7 @@ public class SearchPanel extends javax.swing.JPanel {
                                 break;
                             case "noDestacada":
                                 pnlResultados.setLayout(new WrapLayout(WrapLayout.LEFT, 30, 30));
-                                pnlResultados.add(lblSerie);                        
+                                pnlResultados.add(lblSerie);  
                                 pnlResultados.revalidate();
                                 pnlResultados.repaint(); 
                                 break;
@@ -215,7 +215,7 @@ public class SearchPanel extends javax.swing.JPanel {
         pnlResultados.setLayout(pnlResultadosLayout);
         pnlResultadosLayout.setHorizontalGroup(
             pnlResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 472, Short.MAX_VALUE)
         );
         pnlResultadosLayout.setVerticalGroup(
             pnlResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
