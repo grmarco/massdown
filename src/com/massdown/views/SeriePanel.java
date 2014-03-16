@@ -265,7 +265,7 @@ public class SeriePanel extends javax.swing.JPanel {
                     
                     for(int i = 0 ; i < capituloSeleccionado.servidoresConElCapitulo.size() ; i++) {
                         Servidor servidor = capituloSeleccionado.servidoresConElCapitulo.get(i);
-                        listModel.addElement("Download option "+ (i + 1) + " " + servidor.idiomaCapitulo + " " + servidor.tieneSubtitulos);
+                        listModel.addElement("Download option "+ (i + 1) + " - " + servidor.idiomaCapitulo + "  " + servidor.tieneSubtitulos);
                         
                     }                                        
                     mw.MostarPBar(false);

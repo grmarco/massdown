@@ -39,7 +39,7 @@ public class Capitulo {
             
            // if("magnovideo".equals(servidorDelCapitulo) || "streamcloud".equals(servidorDelCapitulo) || "allmyvideos".equals(servidorDelCapitulo) || "vidspot".equals(servidorDelCapitulo)) {
             if("vidspot".equalsIgnoreCase(servidorDelCapitulo) || "Allmyvideos".equalsIgnoreCase(servidorDelCapitulo)) {
-                String idioma = servidorEnDOM.select(".tdidioma").text();
+                String idioma = ObtenerIdiomaDelCapitulo(Integer.parseInt(servidorEnDOM.select(".tdidioma").text()));
                 String subtitulos = ""; 
                 String enlaceAlServidor = servidorEnDOM.select(".enlace_link").attr("href");
 
@@ -75,6 +75,27 @@ public class Capitulo {
         return seriePerteneciente;
     }
     
-    
+    private String ObtenerIdiomaDelCapitulo(int numeroIdioma) {
+        
+        String idioma = "";
+        
+        switch(numeroIdioma) {
+            case 0:
+                idioma = "Spanish";
+                break;
+            case 1:
+                idioma = "Latin Spanish";
+                break;
+                
+            case 2:
+                idioma = "English";
+                break;
+            case 3:
+                idioma = "English with spanish subtitles";
+                break;                
+        }
+        
+        return idioma;
+    }
     
 }
