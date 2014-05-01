@@ -7,11 +7,15 @@
 package com.massdown.views;
 
 import com.massdown.gestordescarga.UnaDescarga;
+import com.massdown.views.libs.ReproductorDeVideo;
+import es.gmarco.massdown.recursos.Configuracion;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.application.Application;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -64,6 +68,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                     JLabel lblEstatus;
                     JLabel lblVelocidadDescarga;      
                     JButton btnPararDescarga;
+                    JButton btnReproducirDescarga;
                     JLabel lblThumbNail;
                     
                     public synchronized void CrearComponentesGraficos() {
@@ -73,6 +78,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         lblEstatus = new JLabel();
                         btnPararDescarga = new JButton();
                         lblThumbNail = new JLabel();                                                
+                        btnReproducirDescarga = new JButton();
                         
                         pbDescarga.setMaximum(100);
                         
@@ -92,9 +98,11 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         lblThumbNail.setIcon(descargaAAgregar.getThumbNail());
                         c.gridx = 0;
                         c.gridheight = 100;
+                        c.gridwidth = 1;
                         c.insets = new Insets(20, 0, 0, 15);
                         contenedorDescargas.add(lblThumbNail, c);
                        
+                        c.gridwidth = 2;
                         c.weightx = mw.getWidth();
                         c.insets = new Insets(8, 0, 0, 0);
                         c.gridheight = 1;
@@ -106,9 +114,18 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         c.gridy = numeroVuelta+lugarDePartida+1;
                         contenedorDescargas.add(lblEstatus, c);
                         
-                        c.gridy = numeroVuelta+lugarDePartida+2;                        
-                        contenedorDescargas.add(btnPararDescarga, c);
+                        c.gridwidth = 1;
+                        c.weightx = 70;
+                        c.gridy = numeroVuelta+lugarDePartida+2; 
+                        c.gridx = 2;
+                        contenedorDescargas.add(btnPararDescarga, c);                        
+                        c.gridx = 1;   
+                        c.weightx = 80;
+                        c.anchor = c.WEST;
+                        //contenedorDescargas.add(btnReproducirDescarga, c);
                         
+                        c.gridwidth = 2;
+                        c.gridx = 1;
                         c.gridy = numeroVuelta+lugarDePartida+3;
                         c.fill = GridBagConstraints.HORIZONTAL;
                         contenedorDescargas.add(pbDescarga, c);
@@ -121,6 +138,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                                 contenedorDescargas.remove(btnPararDescarga);
                                 contenedorDescargas.remove(pbDescarga);
                                 contenedorDescargas.remove(lblThumbNail);
+                                //contenedorDescargas.remove(btnReproducirDescarga);
                                 contenedorDescargas.repaint();
                                 contenedorDescargas.revalidate();
                                 descargasEnCurso.remove(descargaAAgregar);
@@ -128,6 +146,18 @@ public class DownloadsPanel extends javax.swing.JPanel {
                                 descargaAAgregar.setTerminate(true);
                             }
                         });
+                        
+                        
+                        btnReproducirDescarga.addActionListener(new java.awt.event.ActionListener() {
+                            @Override
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {                                
+                                ReproductorDeVideo rpv = new ReproductorDeVideo();
+                                System.out.println("URL: " +descargaAAgregar.getUrl().toString());
+                                ReproductorDeVideo.urlDelArchivo = descargaAAgregar.getUrl().toString();
+                                rpv.Iniciar();
+                            }
+                        });
+                        
                     }
                     
                     public synchronized void AplicarEstiloALosComponentes() {
@@ -139,6 +169,18 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         lblEstatus.setForeground(new java.awt.Color(180, 180, 180));
                         lblEstatus.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 5, 1));
 
+                        //0, 153, 51
+                        btnReproducirDescarga.setBackground(new java.awt.Color(0, 153, 51));
+                        btnReproducirDescarga.setFont(new java.awt.Font("Segoe UI Semilight", 0, 11)); // NOI18N
+                        btnReproducirDescarga.setForeground(new java.awt.Color(51, 51, 51));
+                        btnReproducirDescarga.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/massdown/img/play.png"))); // NOI18N
+                        btnReproducirDescarga.setText("Play");
+                        btnReproducirDescarga.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+                        btnReproducirDescarga.setFocusable(false);
+                        btnReproducirDescarga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+                        btnReproducirDescarga.setMargin(new java.awt.Insets(10, 14, 2, 14));
+                        btnReproducirDescarga.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                        btnReproducirDescarga.setPreferredSize(new Dimension(80, 20));
                         
                         
                         btnPararDescarga.setBackground(new java.awt.Color(231, 76, 60));
@@ -151,6 +193,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
                         btnPararDescarga.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
                         btnPararDescarga.setMargin(new java.awt.Insets(10, 14, 2, 14));
                         btnPararDescarga.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+                        btnPararDescarga.setPreferredSize(new Dimension(70, 20));
                     }
                     
                     public void ResfrescarDatosComponentesGraficos() {
@@ -226,7 +269,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addComponent(contenedorDescargas, javax.swing.GroupLayout.DEFAULT_SIZE, 482, Short.MAX_VALUE)
+                .addComponent(contenedorDescargas, javax.swing.GroupLayout.DEFAULT_SIZE, 527, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -234,7 +277,7 @@ public class DownloadsPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(15, 15, 15)
                 .addComponent(contenedorDescargas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(47, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

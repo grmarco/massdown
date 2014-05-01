@@ -35,6 +35,10 @@ public class Servidor {
         System.out.println(url);
         Document seriesCocoDOM = Jsoup.connect(enlaceServidor).get();
         String enlaceRedireccionSeriescoco = seriesCocoDOM.select(".enlace_link").attr("href");
+        
+        System.out.println(enlaceRedireccionSeriescoco);
+        System.out.println("---------------");
+        
         this.enlaceServidor = enlaceRedireccionSeriescoco;
         //this.enlaceServidor = MetodosUtiles.getFinalRedirectedUrl(enlaceRedireccionSeriescoco);
         

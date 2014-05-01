@@ -2,6 +2,7 @@
 package com.massdown.gestordescarga;
 
 import com.massdown.views.SeriePanel;
+import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -82,6 +83,12 @@ public class UnaDescarga {
         this.url = new URL(sURL);
     }
 
+    public URL getUrl() {
+        return url;
+    }
+    
+    
+    
     public ImageIcon getThumbNail() {
         return thumbNail;
     }
@@ -108,8 +115,9 @@ public class UnaDescarga {
         final BufferedInputStream buffer = new BufferedInputStream(conexion.getInputStream());
         String nombreArchivoDescargando = nombreArchivo+".mp4";
         tamanoTotal = (double) ((double) (conexion.getContentLength() / 1000) / 1000);
-        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(file + "/" + nombreArchivoDescargando));
-                       
+        final BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(String.valueOf(file + "/" + nombreArchivoDescargando).trim()));
+                               
+        
         timer.start();
         final byte datos[] = new byte[1000];
         

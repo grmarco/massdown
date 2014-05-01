@@ -3,8 +3,6 @@ package com.massdown.servidores;
 
 import com.massdown.core.Servidor;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -25,7 +23,7 @@ public class AllMyVideosYVidSpot extends Servidor {
         try {
             System.out.println(urlDelServidor);
             urlDelServidor = ObtenerEnlaceServidor(this.enlaceServidor);
-            
+            System.out.println("------------\n"+enlaceServidor);
             domPagServidor = Jsoup.connect(urlDelServidor).get();
             
             Map<String, String> datosParaElSubmit = new HashMap<>();

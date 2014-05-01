@@ -30,7 +30,7 @@ public class Busqueda {
             
     private void ObtenerSerieMasVistas() throws IOException {
         domPaginaBusqueda = Jsoup.connect("http://www.seriespepito.com/").get();
-        domSeriesBuscadas = domPaginaBusqueda.select("#ulfblista li");
+        domSeriesBuscadas = domPaginaBusqueda.select(".lista_series_portada li");
         this.CargarDatosSeriesEnArray(true);
     }
     

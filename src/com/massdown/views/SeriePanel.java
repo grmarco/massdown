@@ -11,6 +11,8 @@ import com.massdown.core.Serie;
 import com.massdown.core.Servidor;
 import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.Color;
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.logging.Level;
