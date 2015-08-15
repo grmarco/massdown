@@ -18,18 +18,18 @@ public class Main {
         // Cargamos la configuracion
         new Configuracion();
         
-        new Thread() {
-            @Override
-            public void run() {
-                try {
-                    new Actualiza(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            
-        
-        }.start();        
+//        new Thread() {
+//            @Override
+//            public void run() {
+//                try {
+//                    new Actualiza(true);
+//                } catch (IOException ex) {
+//                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//            
+//        
+//        }.start();        
         
         // Gestiona las actualizaciones de Massdown
         if(args.length > 0) {

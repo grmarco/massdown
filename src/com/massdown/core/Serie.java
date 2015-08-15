@@ -20,10 +20,11 @@ public final class Serie {
     private final Document domPagSerie;
 
     
-    public Serie(String nombre) throws IOException {
-        this.cadenaSerie = nombre.replaceAll("-", " ");
-        this.domPagSerie = Jsoup.connect(String.valueOf("http://"+ cadenaSerie.replaceAll(" ", "-")+".seriespepito.com")).get();
-        //this.domPagSerie = Jsoup.connect(String.valueOf("http://www.seriesyonkis.com/serie" + nombre)).get();
+    public Serie(String urlSerie) throws IOException {
+        this.cadenaSerie = urlSerie;
+        this.domPagSerie = Jsoup.connect("http://seriesblanco.com"+urlSerie)
+                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/39.0")
+                .get();
         this.nombreSerie = getNombreSerie();
         this.descripcionSerie = getDescripcionSerie();
         this.urlImagen = getUrlImagen();                     
@@ -38,7 +39,7 @@ public final class Serie {
 
     public String getNombreSerie() {
         if(nombreSerie == null) { 
-            String nombre = domPagSerie.select(".dtitulo h1").text();    
+            String nombre = domPagSerie.select(".post-title").text();    
             this.nombreSerie = nombre;
         }
         return nombreSerie;
@@ -46,7 +47,7 @@ public final class Serie {
 
     public String getDescripcionSerie() {
         if(descripcionSerie == null) { 
-            String descripcion = domPagSerie.select(".dcuerpo").text();    
+            String descripcion = domPagSerie.select(".selected").text();    
             this.descripcionSerie = descripcion;
         }
         return descripcionSerie;
@@ -54,23 +55,21 @@ public final class Serie {
 
     public String getUrlImagen() {
         if(urlImagen == null) {
-            String imagen = domPagSerie.select(".imgcolserie").attr("src");    
+            String imagen = domPagSerie.select("#port_serie").attr("src");    
             this.urlImagen = imagen;
         }
         return urlImagen;
     }
 
-    public ArrayList<String[]> getCapitulos() {
-        
+    public ArrayList<String[]> getCapitulos() {        
         if(capitulos == null) {                    
             capitulos = new ArrayList<>();
-            Elements todosLosCapitulosEnDOM = domPagSerie.select(".accordion tr td");        
+            Elements todosLosCapitulosEnDOM = domPagSerie.select(".zebra tr");        
 
             for(int i = 0 ; i < todosLosCapitulosEnDOM.size() ; i++) {
                 Element unCapituloEnDOM = todosLosCapitulosEnDOM.get(i);    
                 // Los datos del capitulo se almacenan en un array donde 0 es el nombre y 1 el enlace
-
-                String[] datosCapitulo = {unCapituloEnDOM.text(), unCapituloEnDOM.select("a").attr("href")};
+                String[] datosCapitulo = {unCapituloEnDOM.text(), "http://seriesblanco.com/"+unCapituloEnDOM.select("a").attr("href")};
                 capitulos.add(datosCapitulo);
             }            
         }

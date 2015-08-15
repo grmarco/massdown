@@ -11,14 +11,14 @@ import com.massdown.core.Serie;
 import com.massdown.core.Servidor;
 import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.Color;
-import java.awt.Desktop;
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.plaf.ScrollBarUI;
 import javax.swing.plaf.metal.MetalScrollBarUI;
@@ -32,7 +32,7 @@ public class SeriePanel extends javax.swing.JPanel {
     private MainWindow mw;
     
     
-    public SeriePanel(final MainWindow mw, final String nombreSerie) {
+    public SeriePanel(final MainWindow mw, final String urlSerie) {
         
         this.mw = mw;
         initComponents();                                      
@@ -43,12 +43,36 @@ public class SeriePanel extends javax.swing.JPanel {
                 super.run();
                 try {
                     mw.MostarPBar(true);
-                    serie = new Serie(nombreSerie);                    
-                    lblDescripcion.setText(serie.getDescripcionSerie());
-                    lblTitulo.setText(serie.getNombreSerie());
-                    iconSerie.setIcon(MetodosUtiles.escalarImagen(ImageIO.read(new URL(serie.getUrlImagen())), 0.5, mw));
+                    //Como se pasa la informacion de la url una panel a otro
+                    // por medio de txtbusqueda se cambia a blanco la fuente 
+                    // para que no se vea la url que queda muy feo,
+                    // luego lo volvemos a cambiar
+                    mw.getTxtBusqueda().setForeground(new java.awt.Color(255, 255, 255));
+                    
+                    serie = new Serie(urlSerie);      
+                    String descripcion = serie.getDescripcionSerie();
+                    String tituloSerie = serie.getNombreSerie();
+                    
+                    // Como seriesblanco tiene un sistema ´básico antibots hay que establcer el useragent para que nos deje obtener la conexión
+                    URL url = new URL(serie.getUrlImagen());
+                    URLConnection conn = url.openConnection();
+                    conn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 5.1; rv:19.0) Gecko/20100101 Firefox/19.0");                                                                        
+                    Icon imagenSerie = MetodosUtiles.escalarImagen(ImageIO.read(conn.getInputStream()), 0.4, mw);
                     
                     serie.getCapitulos();
+                    
+                    /* Setteamos la información obtenida de los servidores 
+                    por la clase Serie en los distintos elementos gráficos
+                    y volvemos a poner bien el color de la fuente de la 
+                    caja de texto
+                    */
+                    mw.getTxtBusqueda().setText(tituloSerie);
+                    mw.getTxtBusqueda().setForeground(new java.awt.Color(0, 0, 0));
+                    lblTitulo.setText(tituloSerie);
+                    lblDescripcion.setText(descripcion);
+                    iconSerie.setIcon(imagenSerie);
+                    
+                    
                    
                     DefaultListModel listModel = new DefaultListModel();
                     lstCapitulos.setModel(listModel);
@@ -66,6 +90,7 @@ public class SeriePanel extends javax.swing.JPanel {
                 } catch (IOException ex) {
                     mw.MostarPBar(false);
                     mw.IrATab(mw.getBtnSearch());
+                    Logger.getLogger(SeriePanel.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
             
@@ -307,7 +332,6 @@ public class SeriePanel extends javax.swing.JPanel {
     }//GEN-LAST:event_lstServidoresMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        mw.getTxtBusqueda().setText(serie.getCadenaSerie());
         mw.IrATab(mw.getBtnSearch()); 
         
     }//GEN-LAST:event_jLabel1MouseClicked

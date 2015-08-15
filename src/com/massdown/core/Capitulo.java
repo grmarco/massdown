@@ -27,7 +27,9 @@ public class Capitulo {
     }
     
     public ArrayList<Servidor> ObtenerServidoresCapitulo() throws IOException {
-        this.domPagCapitulo = Jsoup.connect(enlaceCapitulo).get();
+        this.domPagCapitulo = Jsoup.connect(enlaceCapitulo)
+                .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/39.0")
+                .get();
         Elements listaServidoresEnDom = domPagCapitulo.select(".tenlaces tr");
         
         ArrayList<Servidor> arrayServidores = new ArrayList<>();

@@ -31,8 +31,10 @@ import javax.swing.JSeparator;
 public class MetodosUtiles {
     
     public static ImageIcon escalarImagen(Image src, double scale, Component sitioDondeSeColocaraImagen) {
-        int w = (int)(scale*src.getWidth(sitioDondeSeColocaraImagen));
-        int h = (int)(scale*src.getHeight(sitioDondeSeColocaraImagen));
+//        int w = (int)(scale*src.getWidth(sitioDondeSeColocaraImagen));
+//        int h = (int)(scale*src.getHeight(sitioDondeSeColocaraImagen));
+        int w = (int)(100);
+        int h = (int)(164);
         int type = BufferedImage.TYPE_INT_RGB;
         BufferedImage dst = new BufferedImage(w, h, type);
         Graphics2D g2 = dst.createGraphics();

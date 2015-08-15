@@ -1,14 +1,9 @@
 package com.massdown.core;
 
-import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.io.IOException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 
 public class Servidor {

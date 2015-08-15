@@ -11,12 +11,16 @@ import com.massdown.views.libs.WrapLayout;
 import es.gmarco.massdown.recursos.MetodosUtiles;
 import java.awt.Color;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageInputStream;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.plaf.ScrollBarUI;
@@ -100,7 +104,8 @@ public class SearchPanel extends javax.swing.JPanel {
                         lblSerie.addMouseListener(new java.awt.event.MouseAdapter() {
                             @Override
                             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                                mw.getTxtBusqueda().setText(urlSerie.replaceAll("-", " ").replaceAll(".seriespepito.com", "").replaceAll("http://", "").replaceAll("/", ""));
+                                // Limpiamos la url que tiene la forma de /serie/1051/arrow.html                                
+                                mw.getTxtBusqueda().setText(urlSerie);
                                 mw.IrATab(mw.getLblParaIrAlTabSerie());
                                
                             }
@@ -116,7 +121,12 @@ public class SearchPanel extends javax.swing.JPanel {
                         
                         lblSerie.setText((tituloSerie.toCharArray().length < 20) ? tituloSerie : tituloSerie.substring(0, 20)+"...");
                         lblSerie.setToolTipText(tituloSerie);
-                        lblSerie.setIcon(MetodosUtiles.escalarImagen(ImageIO.read(new URL(urlImagenSerie)), 0.7, mw));
+                        
+                        // Como seriesblanco tiene un sistema ´básico antibots hay que establcer el useragent para que nos deje obtener la conexión
+                        URL url = new URL(urlImagenSerie);
+                        URLConnection conn = url.openConnection();
+                        conn.setRequestProperty("User-Agent","Mozilla/5.0 (Windows NT 5.1; rv:19.0) Gecko/20100101 Firefox/19.0");                                                
+                        lblSerie.setIcon(MetodosUtiles.escalarImagen(ImageIO.read(conn.getInputStream()), 0.4, mw));
                         
                         AplicarEstiloALosComponentes();                                                                   
                         //pnlResultados.setLayout(new WrapLayout(WrapLayout.LEFT, 30, 30));
@@ -215,11 +225,11 @@ public class SearchPanel extends javax.swing.JPanel {
         pnlResultados.setLayout(pnlResultadosLayout);
         pnlResultadosLayout.setHorizontalGroup(
             pnlResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 472, Short.MAX_VALUE)
+            .addGap(0, 618, Short.MAX_VALUE)
         );
         pnlResultadosLayout.setVerticalGroup(
             pnlResultadosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 79, Short.MAX_VALUE)
+            .addGap(0, 129, Short.MAX_VALUE)
         );
 
         lblTitulo2.setFont(new java.awt.Font("Segoe UI Light", 0, 36)); // NOI18N
@@ -241,7 +251,7 @@ public class SearchPanel extends javax.swing.JPanel {
                         .addComponent(lblTitulo2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTitulo1)
-                        .addGap(0, 245, Short.MAX_VALUE))
+                        .addGap(0, 391, Short.MAX_VALUE))
                     .addGroup(pnlSearchLayout.createSequentialGroup()
                         .addComponent(lblTitulo)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -259,8 +269,8 @@ public class SearchPanel extends javax.swing.JPanel {
                     .addComponent(lblTitulo1)
                     .addComponent(lblTitulo2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlDestacasScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addComponent(pnlDestacasScroll, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitulo)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlResultados, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
