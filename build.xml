@@ -73,7 +73,12 @@
     <target name="-post-jar">
         <jar jarfile="dist/massdown.jar">
             <zipfileset src="${dist.jar}" excludes="META-INF/*" />
+<<<<<<< HEAD
+
+		<zipfileset src="libs/jsoup-1.8.3.jar" excludes="META-INF/*" />
+=======
             <zipfileset src="libs/jsoup-1.7.3.jar" excludes="META-INF/*" />
+>>>>>>> parent of 6a646cf... Ya funciona con StreamCloud
             <manifest>
                 <attribute name="Main-Class" value="com.massdown.main.Main"/>
             </manifest>

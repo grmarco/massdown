@@ -56,6 +56,9 @@ public class SearchPanel extends javax.swing.JPanel {
         };
         pnlDestacasScroll.getHorizontalScrollBar().setUI(scrollBarStyle);
         
+        // Ponemos de buen color la barra de texto
+        mw.getTxtBusqueda().setForeground(new java.awt.Color(0, 0, 0));
+        
         new Thread() {
 
             @Override

@@ -3,9 +3,6 @@ package com.massdown.main;
 import com.massdown.views.MainWindow;
 import es.gmarco.massdown.recursos.Actualiza;
 import es.gmarco.massdown.recursos.Configuracion;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.UIManager;
 
 /**
@@ -17,6 +14,7 @@ public class Main {
         
         // Cargamos la configuracion
         new Configuracion();
+
         
 //        new Thread() {
 //            @Override

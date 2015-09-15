@@ -2,24 +2,28 @@
 package com.massdown.gestordescarga;
 
 import com.massdown.views.SeriePanel;
-import java.awt.Desktop;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
-public class UnaDescarga {
+public final class UnaDescarga {
 
     private URL url;
     private URLConnection conexion;
@@ -37,6 +41,7 @@ public class UnaDescarga {
     private ImageIcon thumbNail;
     
     public UnaDescarga(File file) {
+
         setFile(file);        
         
         tamanoDescargado = 0;
@@ -153,6 +158,8 @@ public class UnaDescarga {
                     out.close();
                     timer.stop();
                     
+                    
+                    
                 } catch (IOException ex) {
                     JOptionPane.showMessageDialog(new JOptionPane(),
                     "Massdown message", 
@@ -164,6 +171,42 @@ public class UnaDescarga {
         }.start();
     }
 
+    public static void descargarDeOtraForma () throws IOException {
+//        String fileName = "video.mp4"; //The file that will be saved on your computer
+//        URL link = new URL("http://cdn1.streamcloud.eu:8080/2pv75zrzpwoax3ptxzkifdh2vb65cmiq442kyuejryyo7rdykwq4ctuami/video.mp4"); //The file that you want to download
+//
+//        //Code to download
+//        InputStream in = new BufferedInputStream(link.openStream());
+//        
+//        ByteArrayOutputStream out = new ByteArrayOutputStream();
+//        byte[] buf = new byte[1024];
+//        int n = 0;
+//        
+//        System.out.println(link.openConnection().getContentLength());
+//        
+//        while (-1!=(n=in.read(buf)))
+//        {
+//            out.write(buf, 0, n);
+//            
+//        }
+//        out.close();
+//        in.close();
+//        byte[] response = out.toByteArray();
+//
+//        FileOutputStream fos = new FileOutputStream(fileName);
+//        fos.write(response);
+//        fos.close();
+//        //End download code
+//
+//        System.out.println("Finished");
+        
+        URL website = new URL("http://cdn1.streamcloud.eu:8080/2pv75zrzpwoax3ptxzkifdh2vb65cmiq442kyuejryyo7rdykwq4ctuami/video.mp4");
+        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+        FileOutputStream fos = new FileOutputStream("video.mp4");
+        long go = fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+        System.out.println(go);
+    }
+    
     public double getPorcentajeDescargado() {
         return porcentajeDescargado;
     }

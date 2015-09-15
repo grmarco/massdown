@@ -333,7 +333,7 @@ public class SeriePanel extends javax.swing.JPanel {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         mw.IrATab(mw.getBtnSearch()); 
-        
+        mw.getTxtBusqueda().setForeground(new java.awt.Color(0, 0, 0));
     }//GEN-LAST:event_jLabel1MouseClicked
 
 
